@@ -1,0 +1,3 @@
+use baga //väljer databas
+db //listar databasen du har valt
+show dbs //visar en lista med alla databaser
