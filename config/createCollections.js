@@ -1,14 +1,2 @@
-db.createCollection("Fettavskiljare");
-db.createCollection("Oljeavskiljare");
-db.createCollection("Slamavskiljare");
-db.createCollection("PaketBagaBDT");
-db.createCollection("Pumpstationer");
-db.createCollection("PumpstationerDran");
-db.createCollection("PumpstationerVilla");
-db.createCollection("BagaBioTank");
-db.createCollection("BagaSoloBDTRening");
-db.createCollection("ToalettTank");
-db.createCollection("KompaktbaddBDTKL");
-db.createCollection("BagaEasy");
-db.createCollection("Pumpar");
-db.createCollection("Reningsverk");
+db.createCollection("Objects");
+db.createCollection("Projects");
