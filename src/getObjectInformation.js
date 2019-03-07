@@ -16,6 +16,15 @@ const getPeople = async (db) => {
     return people;
 };
 
+// TODO: CHANGE THIS IN FAVOUR OF THE ACTUAL DATA
+const getObjectsByType = async (db, type) => {
+    let dbo = db.db("mydb");
+    let typeData = await dbo.collection('people').find({"address.city": type});
+
+    return typeData;
+};
+
 module.exports = {
-    getPeople
+    getPeople,
+    getObjectsByType
 };

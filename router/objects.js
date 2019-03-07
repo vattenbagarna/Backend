@@ -11,7 +11,7 @@ const objectInfo = require('../src/getObjectInformation.js');
 
 
 // get house types
-router.get("/housetypes", async (req, res) => {
+router.get("/all", async (req, res) => {
     // TODO: GET THE ACTUAL DATA FROM THE CORRECT DATABASE
     let data = await dbHandler.dbConnectPipe(objectInfo.getPeople);
 
@@ -19,8 +19,10 @@ router.get("/housetypes", async (req, res) => {
 });
 
 // get data for a specific house
-router.get("/house/:houseType", (req, res) => {
-    res.json({"error": `unable to fetch data about ${req.params.houseType}`});
+router.get("/type/:objectType", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.getObjectsByType, [req.params.objectType]);
+
+    res.json(data);
 });
 
 module.exports = router;
