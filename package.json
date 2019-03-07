@@ -26,7 +26,8 @@
   "homepage": "https://github.com/vattenbagarna/Backend#readme",
   "dependencies": {
     "eslint": "^5.14.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2"
