@@ -10,7 +10,9 @@ const getPeople = async (db) => {
     let dbo = db.db("mydb");
     //find people, this is known as a cursor
     let people = await dbo.collection('people').find({});
+
     //The data here is not the clean data but instead something that is called a cursor.
+    //Parsing that will be taken care of in the dbWrapper
     return people;
 };
 
