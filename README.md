@@ -28,5 +28,9 @@ This is where things such as database calls and calculations stored.
 A middleware activates before the request meets the router. This can be used to log
 to console or file.
 
+## Setup database
+mongo -u <username> -p <password> <database> //user
+mongo -u <username> -p <password> <database> //admin - istället för "database" skriv admin 
+
 # Licence
 For licensing in for-profit purposes or in an enterprise environment contact [BAGA](http://baga.se/).
