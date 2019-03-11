@@ -28,5 +28,8 @@ This is where things such as database calls and calculations stored.
 A middleware activates before the request meets the router. This can be used to log
 to console or file.
 
+# API Documentation
+The API is documented in [API_DOC.md](/API_DOC.md)
+
 # Licence
 For licensing in for-profit purposes or in an enterprise environment contact [BAGA](http://baga.se/).
