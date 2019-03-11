@@ -29,8 +29,8 @@ A middleware activates before the request meets the router. This can be used to 
 to console or file.
 
 ## Setup database
-mongo -u <username> -p <password> <database> //user
-mongo -u <username> -p <password> <database> //admin - istället för "database" skriv admin 
+Login as a user: `mongo -u <username> -p <password> <database>`  
+to login as admin, make sure to connect to the `admin` database.
 
 # Licence
 For licensing in for-profit purposes or in an enterprise environment contact [BAGA](http://baga.se/).
