@@ -16,7 +16,7 @@ app.use(logger.logToConsole);
 app.use("/obj/", getObjectsRouter);
 app.use("/", mainRouter);
 
-// Startup funciton
+// Startup function
 const readyServer = () => {
     console.info(`Server started on port ${serverConf.port}`);
 };
