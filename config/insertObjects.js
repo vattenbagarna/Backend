@@ -63,16 +63,19 @@ Pumpstationer = [
         "Diameter": 600,
         // Mm
         "Hojd": 700,
-		//"Ø 110 gummitätning",
-        "Inlopp": {"O": 110, "typ": "gummitätning"},
-		//"Ø 50 gummitätning",
-        "Kabelgenomforing": {"O": 50, "typ": "gummitätning"},
+        // "Ø 110 gummitätning",
+        "Inlopp": {"O": 110,
+            "typ": "gummitätning"},
+        // "Ø 50 gummitätning",
+        "Kabelgenomforing": {"O": 50,
+            "typ": "gummitätning"},
         "Modell": "Kompus 61",
         "Namn": "Pumpstation",
         "Pump": "GD-20  Skärande avloppspump, 3-fas",
         "RSK": 5886909,
-		//"G 32 mm inv. gänga"
-        "Utlopp": {"G": 32, "typ": "inv. gänga"}
+        // "G 32 mm inv. gänga"
+        "Utlopp": {"G": 32,
+            "typ": "inv. gänga"}
     }
 ];
 
@@ -85,12 +88,15 @@ PumpstationerDRAN = [
         "Hojd": 150,
         // Mm
         "Inlopp": 110,
-		//"Ø 50 gummitätning VG 1200 placering kl 6",
-        "Kabelgenomforing": {"O": 50, "typ": "gummitätning VG 1200", "placeringKL": 6},
+        // "Ø 50 gummitätning VG 1200 placering kl 6",
+        "Kabelgenomforing": {"O": 50,
+            "placeringKL": 6,
+            "typ": "gummitätning VG 1200"},
         "Namn": "Pumpstaion BAGA Drän 60",
         "Typ": "Kompus Drän 60-150",
-		//"G 32 inv. gänga",
-        "Utlopp": {"G": 32, "typ": "inv. gänga"},
+        // "G 32 inv. gänga",
+        "Utlopp": {"G": 32,
+            "typ": "inv. gänga"},
         // Mm
         "VGin": "None",
         "VGut": 500
@@ -105,19 +111,27 @@ PumpstationerVilla = [
         "Hojd": 70,
         // Mm
         "Inlopp": 110,
-		//"Ø 50 gummitätning VG 570placering kl 3",
-        "Kabelgenomforing": {"O": 50, "typ": "gummitätning VG 570", "placeringKL": 3},
+        // "Ø 50 gummitätning VG 570placering kl 3",
+        "Kabelgenomforing": {"O": 50,
+            "placeringKL": 3,
+            "typ": "gummitätning VG 570"},
         "Pump": "GC-07A 1-fas",
         "Pumpstation": "Villa 60-70",
         "RSK": 5887125,
         "Typ": "Pumpstation BAGA Villa 60",
-		//"G 32 inv. gänga",
-        "Utlopp": {"G": 32, "typ": "inv. gänga"},
-        // Mm
-		//"500 mm,  placering kl 9",
-        "VGin": {"mm": 500, "placeringKL": 9}, 
-		//"410 mm,  placering kl 12"
-        "VGut": {"mm": 410, "placeringKL": 12} 
+        // "G 32 inv. gänga",
+        "Utlopp": {"G": 32,
+            "typ": "inv. gänga"},
+
+        /*
+         * Mm
+         *"500 mm,  placering kl 9",
+         */
+        "VGin": {"mm": 500,
+            "placeringKL": 9},
+        // "410 mm,  placering kl 12"
+        "VGut": {"mm": 410,
+            "placeringKL": 12}
     }
 ];
 
@@ -133,8 +147,9 @@ BagaBioTank = [
 
 BagaSoloBDTRening = [
     {
-		//"2000x1750mm",
-        "Dimensioner": {"O": 2000, "H": 1750},
+        // "2000x1750mm",
+        "Dimensioner": {"H": 1750,
+            "O": 2000},
         "Namn": "BAGA SoloBDT-rening, allt i en tank",
         "RSK": 5622349,
         "Tillbehor": "Stativ till styrskåp, larm",
@@ -148,8 +163,9 @@ SlutenTankToalettsystem = [
         "Namn": "Sluten tank för toalettsystem",
         "Produkt": "1200 liter Liggande",
         "RSK": 5616165,
-		//"Ø 900 x 2100"
-        "Storlek": {"diameter": 900,"langd":2100}
+        // "Ø 900 x 2100"
+        "Storlek": {"diameter": 900,
+            "langd": 2100}
     }
 ];
 
@@ -189,8 +205,9 @@ Pumpar = [
         // KW
         "MotorEffekt": 0.2,
         "Namn": "Pump",
-		//lyft: m
-		"PumpKurva": {"lps":[2.25, 2, 0.5], "lyft":[1,1.9, 6]},
+        // Lyft: m
+        "PumpKurva": {"lps": [2.25, 2, 0.5],
+            "lyft": [1, 1.9, 6]},
         "RSK": 5890162,
         // Mm
         "Slang": 32,
@@ -211,12 +228,14 @@ Reningsverk = [
 
 BagaEasyPaket = [
     {
+        "AntalBioModuler": 1,
+        "AntalHus": 1,
         "Namn": "Baga Easy Paket",
-		"AntalHus": 1,
-		"RSK": 5619984,
-		"AntalBioModuler": 1
+        "RSK": 5619984
     }
 ];
+
+//test
 
 db.Objects.insert(Fettavskiljare);
 db.Objects.insert(Oljeavskiljare);
