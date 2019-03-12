@@ -1,157 +1,155 @@
 //Get Projects
 getAllProjects = {
-    _id: "getAllProjects",
-    value: function() {
-        return db.Projects.find({}, {data: 0});
-    }
-};
+	_id: "getAllProjects",
+	value: function(){
+		return db.Projects.find({}, {data: 0});
+	}
+}
 
 getProject = {
-    _id: "getProject",
-    value: function(id) {
-        if (id == undefined) {return "id not defined";}
-        return db.Projects.findOne({_id: ObjectId(id)});
-    }
-};
+	_id: "getProject",
+	value: function(id){
+		if (id == undefined) return "id not defined";
+		return db.Projects.findOne({_id: ObjectId(id)});
+	}
+}
 
 getProjectData = {
-    _id: "getProjectData",
-    value: function(id) {
-        if (id == undefined) {return "id not defined";}
-        return db.Projects.findOne({_id: ObjectId(id)}, {data: 1});
-    }
-};
+	_id: "getProjectData",
+	value: function(id){
+		if (id == undefined) return "id not defined";
+		return db.Projects.findOne({_id: ObjectId(id)}, {data: 1});
+	}
+}
 
 getProjectBasic = {
-    _id: "getProjectInfo",
-    value: function(id) {
-        if (id == undefined) {return "id not defined";}
-        return db.Projects.findOne({_id: ObjectId(id)}, {data: 0});
-    }
-};
+	_id: "getProjectInfo",
+	value: function(id){
+		if (id == undefined) return "id not defined";
+		return db.Projects.findOne({_id: ObjectId(id)}, {data: 0});
+	}
+}
 
 //Insert project
 insertProject = {
-    _id: "insertProject",
-    value: function(name, version) {
-        if (name == undefined) {return "name not defined";}
-        if (version == undefined) {return "version not defined";}
-        return db.Projects.insertOne({"name": name, "version": version, "data": []});
-    }
-};
+	_id: "insertProject",
+	value: function(name, version){
+		if (name == undefined) return "name not defined";
+		if (version == undefined) return "version not defined";
+		return db.Projects.insertOne({"name": name, "version": version, "data":[]});
+	}
+}
 
 //Update project
 
 updateProject = {
-    _id: "updateProject",
-    value: function(id, name, version) {
-        if (id == undefined) {return "id not defined";}
-        if (name == undefined) {return "name not defined";}
-        if (version == undefined) {return "version not defined";}
-        return db.Projects.updateOne({_id: ObjectId(id)},
-            {$set: {"name": name, "version": version}});
-    }
-};
+	_id: "updateProject",
+	value: function(id, name, version){
+		if (id == undefined) return "id not defined";
+		if (name == undefined) return "name not defined";
+		if (version == undefined) return "version not defined";
+		return db.Projects.updateOne({_id: ObjectId(id)},{$set:{"name": name, "version": version}});
+	}
+}
 
 updateProjectData = {
-    _id: "updateProjectData",
-    value: function(id, data) {
-        if (id == undefined) {return "id not defined";}
-        if (version == undefined) {return "version not defined";}
-        return db.Projects.updateOne({_id: ObjectId(id)}, {$set: {"data": data}});
-    }
-};
+	_id: "updateProjectData",
+	value: function(id, data){
+		if (id == undefined) return "id not defined";
+		if (version == undefined) return "version not defined";
+		return db.Projects.updateOne({_id: ObjectId(id)},{$set:{"data": data}});
+	}
+}
 
 //Delete project
 deleteProject = {
-    _id: "deleteProject",
-    value: function(id) {
-        if (id == undefined) {return "id not defined";}
-        return db.Projects.deleteOne({_id: ObjectId(id)});
-    }
-};
+	_id: "deleteProject",
+	value: function(id){
+		if (id == undefined) return "id not defined";
+		return db.Projects.deleteOne({_id: ObjectId(id)});
+	}
+}
 
 
 //Get Objects
 getAllObjects = {
-    _id: "getAllObjects",
-    value: function() {
-        return db.Objects.find({});
-    }
-};
+	_id: "getAllObjects",
+	value: function(){
+		return db.Objects.find({});
+	}
+}
 
 getAllObjectsByType = {
-    _id: "getAllObjectsByType",
-    value: function(type) {
-        if (type == undefined) {return "Type is undefined";}
-        return db.Objects.find({Namn: type});
-    }
-};
+	_id: "getAllObjectsByType",
+	value: function(type){
+		if (type == undefined) return "Type is undefined";
+		return db.Objects.find({Namn: type});
+	}
+}
 
 //Insert objects
 
 
 //Update objects
 updateObject = {
-    _id: "updateObject",
-    value: function(id, update) {
-        if (id == undefined) {return "id not defined";}
-        if (update == undefined) {return "update not defined";}
-        db.Objects.updateOne({_id: ObjectId(id)}, {$set: update});
-    }
-};
+	_id: "updateObject",
+	value: function(id, update){
+		if(id == undefined) return "id not defined";
+		if(update == undefined) return "update not defined";
+		db.Objects.updateOne({_id: ObjectId(id)}, {$set: update});
+	}
+}
 
 //Delete objects
 deleteObjectById = {
-    _id: "deleteObjectById",
-    value: function(id) {
-        if (id == undefined) {return "id not defined";}
-        db.Objects.deleteOne({_id: ObjectId(id)});
-    }
-};
+	_id: "deleteObjectById",
+	value: function(id){
+		if(id == undefined) return "id not defined";
+		db.Objects.deleteOne({_id: ObjectId(id)});
+	}
+}
 
 pumpKurva = {
-    _id: "getPumpFromValues",
-    value: function(lps, height) {
-        if (lps == undefined) {return "lps not defined";}
-        if (height == undefined) {return "height not defined";}
+	_id: "getPumpFromValues",
+	value: function(lps, height){
+		if (lps == undefined) return "lps not defined";
+		if (height == undefined) return "height not defined";
 
-        var pumpar = db.Objects.find({"Namn": "Pump"});
-        var retPumpar = {"Pumpar": []};
+		let pumpar = db.Objects.find({"Namn": "Pump"});
+		let retPumpar = {"Pumpar": []};
+		for (let i = 0; i < pumpar.length(); i++){
+			let kurva = pumpar[i].PumpKurva;
+			let kurva_lps = kurva.lps;
+			let kurva_height = kurva.lyft;
 
-        for (var i = 0; i < pumpar.length(); i++) {
-            var kurva = pumpar[i].PumpKurva;
-            var kurvaLps = kurva.lps;
-            var kurvaHeight = kurva.lyft;
-
-            for (var j = 0; j < kurvaLps.length; j++) {
-                if (lps >= kurvaLps[j]) {
-                    if (height <= kurvaHeight[j]) {
-                        retPumpar.Pumpar.push(pumpar[i]);
-                    }
-                    break;
-                }
-            }
-        }
-        return retPumpar;
-    }
-};
+			for (let j = 0; j < kurva_lps.length; j++){
+				if(lps >= kurva_lps[j]){
+					if(height <= kurva_height[j]){
+						retPumpar.Pumpar.push(pumpar[i]);
+					}
+					break;
+				}
+			}
+		}
+		return retPumpar;
+	}
+}
 
 getPumpFromLedningInlopp = {
-    _id: "getPumpFromPipeInlet",
-    value: function(outerDiam) {
-        if (outerDiam == undefined) {return "outerDiam not defined";}
-        return db.Objects.find({"Namn": "Pumpstation", "Inlopp.O": outerDiam});
-    }
-};
+	_id: "getPumpFromPipeInlet",
+	value: function(outerDiam){
+		if (outerDiam == undefined) return "outerDiam not defined";
+		return db.Objects.find({"Namn": "Pumpstation", "Inlopp.O": outerDiam});
+	}
+}
 
 getPumpFromLedningUtlopp = {
-    _id: "getPumpFromPipeOutlet",
-    value: function(outerDiam) {
-        if (outerDiam == undefined) {return "outer not defined";}
-        return db.Objects.find({"Namn": "Pumpstation", "Utlopp.G": outerDiam});
-    }
-};
+	_id: "getPumpFromPipeOutlet",
+	value: function(outerDiam){
+		if (outerDiam == undefined) return "outer not defined";
+		return db.Objects.find({"Namn": "Pumpstation", "Utlopp.G": outerDiam});
+	}
+}
 
 
 //save scripts
