@@ -12,7 +12,10 @@ const logger = require("./middleware/log.js");
 // Setting upp express
 const app = express();
 
+// Insert middlewares
 app.use(logger.logToConsole);
+
+// Mount routers
 app.use("/obj/", getObjectsRouter);
 app.use("/", mainRouter);
 
@@ -21,5 +24,5 @@ const readyServer = () => {
     console.info(`Server started on port ${serverConf.port}`);
 };
 
-// Start Server
+// Start server
 app.listen(serverConf.port, readyServer);
