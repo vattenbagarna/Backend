@@ -281,3 +281,4 @@ db.system.js.save(getPumpFromLedningInlopp);
 
 //load scripts
 db.loadServerScripts();
+//go
