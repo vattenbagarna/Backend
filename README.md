@@ -32,5 +32,8 @@ to console or file.
 Login as a user: `mongo -u <username> -p <password> <database>`  
 to login as admin, make sure to connect to the `admin` database.
 
+# API Documentation
+The API is documented in [API_DOC.md](/API_DOC.md)
+
 # Licence
 For licensing in for-profit purposes or in an enterprise environment contact [BAGA](http://baga.se/).
