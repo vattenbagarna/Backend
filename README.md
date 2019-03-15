@@ -28,6 +28,10 @@ This is where things such as database calls and calculations stored.
 A middleware activates before the request meets the router. This can be used to log
 to console or file.
 
+## Setup database
+Login as a user: `mongo -u <username> -p <password> <database>`  
+to login as admin, make sure to connect to the `admin` database.
+
 # API Documentation
 The API is documented in [API_DOC.md](/API_DOC.md)
 
