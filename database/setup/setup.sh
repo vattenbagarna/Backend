@@ -32,7 +32,7 @@ user="db.createUser(
 collections=`cat createCollections.js`
 objects=`cat insertObjects.js`
 
-login="use baga \n $collections \n $objects \n use admin \n $admin \n $user \n exit"
+login="use '$database' \n $collections \n $objects \n use admin \n $admin \n $user \n exit"
 
 echo -e "$login" | mongo
 
