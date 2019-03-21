@@ -133,7 +133,7 @@ BagaBioTank = [
         "AntalHus": 1,
         "Bestar": [5616142, 5619999],
         "Kategori": "Baga Paket",
-        "Namn": "Baga Paket bioTank 1-6 hushåll",
+        "Namn": "Paket Baga bioTank 1-6 hushåll",
         "RSK": 5619990,
         "typ": "BAGA BioTank 1"
     }
