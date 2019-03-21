@@ -8,6 +8,7 @@ const express = require("express");
 const router = new express.Router();
 const dbHandler = require('../src/dbWrapper.js');
 const objectInfo = require('../src/getObjectInformation.js');
+const validate = require('../middleware/validateInput.js');
 
 
 // get house types
@@ -19,7 +20,7 @@ router.get("/all", async (req, res) => {
 });
 
 // get data for a specific house
-router.get("/type/:objectType", async (req, res) => {
+router.get("/type/:objectType", validate.filter, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getObjectsByType, [req.params.objectType]);
 
     res.json(data);

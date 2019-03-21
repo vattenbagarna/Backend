@@ -158,7 +158,7 @@ getAllObjectsByType = {
     _id: "getAllObjectsByType",
     value: function(type) {
         if (type == undefined) {return "Type is undefined";}
-        return db.Objects.find({Namn: type});
+        return db.Objects.find({"Kategori": type});
     }
 };
 
