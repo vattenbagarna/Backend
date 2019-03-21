@@ -32,8 +32,8 @@ to console or file.
 ## Setup database
 run the `setup.sh` to secure the mongodb instance and add the content to the database
 
-#### If you want to login to your mongodb manually:
-Login as a user: `mongo -u <username> -p <password> <database>`  
+### If you want to login to your mongodb manually:
+Login as a user: `mongo <database> -u <username> -p`  
 to login as admin, make sure to connect to the `admin` database.
 
 # API Documentation
