@@ -53,7 +53,7 @@ const isInvalidVariable = (variable) => {
         return false;
     }
 
-    //check for array
+    //check for arrayString
     if (con === [].constructor) {
         for (let i = 0; i < variable.length; i++) {
             //check array values for type
@@ -80,17 +80,39 @@ const isInvalidVariable = (variable) => {
     return true;
 };
 
+/**
+ * Looks at all input variables and filters out the bad ones.
+ *
+ * @param {Request object} req request object from router
+ * @param {Response object} res is the response object that is forwarded
+ * @param {function} next is a built in express function that will step to the next segment of the router
+ * @return {void} Breaks if it is invalid, this causes the route to not load
+ */
 const filter = (req, res, next) => {
+    // This filters the request parameters in the url
     if (req.params  != undefined) {
-        console.log("=== FOUND PARAMETERS ===");
         // Itterate all parameters
         for (let value in req.params) {
-            console.log(value, ":", req.params[value]);
-
             //perform check for illegal variable types
             if (isInvalidVariable(req.params[value])) {
-                console.log("BAD VARIABLE FOUND");
-                break;
+                console.log("Bad variable detected, halting request.");
+                console.log(value, ":", req.params[value]);
+                // Return an error to the user
+                return res.json({"Error": "bad input data"});
+            }
+        }
+    }
+
+    // This filters the query parameters
+    if (req.query != undefined) {
+        // Itterate all parameters
+        for (let value in req.query) {
+            //perform check for illegal variable types
+            if (isInvalidVariable(req.query[value])) {
+                console.log("Bad variable detected, halting request.");
+                console.log(value, ":", req.query[value]);
+                // Return an error to the user
+                return res.json({"Error": "bad input data"});
             }
         }
     }
