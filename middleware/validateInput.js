@@ -85,7 +85,7 @@ const isInvalidVariable = (variable) => {
  *
  * @param {Request object} req request object from router
  * @param {Response object} res is the response object that is forwarded
- * @param {function} next is a built in express function that will step to the next segment of the router
+ * @param {function} next express function that will step to the next segment of the router
  * @return {void} Breaks if it is invalid, this causes the route to not load
  */
 const filter = (req, res, next) => {
