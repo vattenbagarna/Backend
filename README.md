@@ -4,6 +4,7 @@ Backend system for vattenbagarna
 # Workflow
 - clone the repo `git@github.com:vattenbagarna/Backend.git`
 - install npm modules `npm install`
+- setup the database. `cd setup && ./setup.sh`
 - code
 - run `npm test` to run linters etc.
 - start the server with `node index.js`
@@ -29,6 +30,9 @@ A middleware activates before the request meets the router. This can be used to 
 to console or file.
 
 ## Setup database
+run the `setup.sh` to secure the mongodb instance and add the content to the database
+
+#### If you want to login to your mongodb manually:
 Login as a user: `mongo -u <username> -p <password> <database>`  
 to login as admin, make sure to connect to the `admin` database.
 
