@@ -29,7 +29,7 @@ A middleware activates before the request meets the router. This can be used to 
 to console or file.
 
 ## Setup database
-Login as a user: `mongo -u <username> -p <password> <database>`  
+Login as a user: `mongo <database> -u <username> -p`  
 to login as admin, make sure to connect to the `admin` database.
 
 # API Documentation
