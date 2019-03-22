@@ -6,7 +6,7 @@
 
 /* Required dependencies */
 const mongoClient = require('mongodb').MongoClient;
-const dbConnectionConfig = require('../config/dbConfig.js');
+const dbConnConf = require('../config/dbConfig.js');
 
 /*
 * Connect
@@ -14,7 +14,8 @@ const dbConnectionConfig = require('../config/dbConfig.js');
 */
 const connect = async () => {
     mongoClient.connect(
-        dbConnectionConfig.connection.base_url + "/" + dbConnectionConfig.connection.database,
+        "mongodb://" + dbConnConf.connection.username + ":" +  dbConnConf.connection.password +
+        "@" + dbConnConf.connection.base_url + "/" + dbConnConf.connection.database,
         { useNewUrlParser: true },
         async (err, db) => {
             console.log("Connected");
@@ -30,7 +31,8 @@ const connect = async () => {
 const dbConnectPipe = (fExecute, fParams = undefined) => {
     return new Promise((resolve, reject) => {
         mongoClient.connect(
-            dbConnectionConfig.connection.base_url + "/" + dbConnectionConfig.connection.database,
+            "mongodb://" + dbConnConf.connection.username + ":" +  dbConnConf.connection.password +
+            "@" + dbConnConf.connection.base_url + "/" + dbConnConf.connection.database,
             { useNewUrlParser: true },
             async (err, db) => {
                 let res;
