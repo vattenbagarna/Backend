@@ -13,8 +13,7 @@ const validate = require('../middleware/validateInput.js');
 
 // get house types
 router.get("/all", async (req, res) => {
-    // TODO: GET THE ACTUAL DATA FROM THE CORRECT DATABASE
-    let data = await dbHandler.dbConnectPipe(objectInfo.getPeople);
+    let data = await dbHandler.dbConnectPipe(objectInfo.getAllObjects);
 
     res.json(data);
 });
