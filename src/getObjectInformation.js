@@ -4,27 +4,37 @@
 * from within the db wrapper.
 */
 
-// TODO: CHANGE THIS IN FAVOUR OF THE ACTUAL DATA
-const getPeople = async (db) => {
+const dbconfig = require('../config/dbConfig.js');
+
+
+/**
+* Get all objects from the database
+* @param {object} db This is the mongodb database object
+*/
+const getAllObjects = async (db) => {
     //Select database
-    let dbo = db.db("test");
-    //find people, this is known as a cursor
-    let people = await dbo.collection('Objects').find({});
+    let dbo = db.db(dbconfig.connection.database);
+    //find all objects, this is known as a cursor
+    let objects = await dbo.collection('Objects').find({});
 
     //The data here is not the clean data but instead something that is called a cursor.
     //Parsing that will be taken care of in the dbWrapper
-    return people;
+    return objects;
 };
 
-// TODO: CHANGE THIS IN FAVOUR OF THE ACTUAL DATA
+/**
+* Find all items with matching category
+* @param {object} db This is the mongodb database object
+* @param {string} type category you want to find
+*/
 const getObjectsByType = async (db, type) => {
-    let dbo = db.db("test");
-    let typeData = await dbo.collection('Objects').find({"Namn": type});
+    let dbo = db.db(dbconfig.connection.database);
+    let typeData = await dbo.collection('Objects').find({"Kategori": type});
 
     return typeData;
 };
 
 module.exports = {
-    getPeople,
+    getAllObjects,
     getObjectsByType
 };
