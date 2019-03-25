@@ -15,6 +15,13 @@ const app = express();
 // Insert middlewares
 app.use(logger.logToConsole);
 
+// Global headers
+// Set headers that apply to all routes here
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 // Mount routers
 app.use("/obj/", getObjectsRouter);
 app.use("/", mainRouter);
