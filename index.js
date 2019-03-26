@@ -7,6 +7,7 @@ const express = require("express");
 // Including js files
 const mainRouter = require("./router/main-router.js");
 const getObjectsRouter = require('./router/objects.js');
+const accountRouter = require('./router/login.js');
 const logger = require("./middleware/log.js");
 
 // Setting upp express
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 });
 
 // Mount routers
+app.use("/acc/", accountRouter);
 app.use("/obj/", getObjectsRouter);
 app.use("/", mainRouter);
 
