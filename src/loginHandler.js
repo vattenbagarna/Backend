@@ -23,7 +23,7 @@ const createNewPasswordHashSaltPair = (passwd) => {
     return {
         "password": saltedHashDigest,
         "salt": salt
-    }
+    };
 };
 
 /**
@@ -42,7 +42,7 @@ const validatePassword = (plaintext, userObject) => {
         return true;
     }
     return false;
-}
+};
 
 /**
 * Creates a user object to match how it's stored in the database.
@@ -112,7 +112,7 @@ const verifyUserLogin = async (db, userAccount) => {
         return true;
     }
     return false;
-}
+};
 
 module.exports = {
     insertUserInDatabase,
