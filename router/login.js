@@ -15,17 +15,33 @@ const loginHandler = require('../src/loginHandler.js');
 router.post("/signup", urlencodedParser, async (req, res) => {
     let tryCreateAccount = await dbHandler.dbSimpleStatement(
         loginHandler.insertUserInDatabase,
-        [loginHandler.createUser(
+        [loginHandler.createNewUser(
             req.body.username, req.body.password, req.body.admin
         )]
     );
 
-    console.log("TCA:", tryCreateAccount);
-
     if (tryCreateAccount == true) {
-        res.json({"info": "User successfully crated!"});
+        res.json({"info": "User successfully crated!", "error": false});
     } else {
         res.json({"info": "failed to create user!", "error": true});
+    }
+});
+
+//Login route
+//Takes a POST request with x-www-form-urlencoded data to try and authenticate the user
+router.post("/login", urlencodedParser, async (req, res) => {
+    let loginStatus = await dbHandler.dbSimpleStatement(
+        loginHandler.verifyUserLogin,
+        [{
+            "username": req.body.username,
+            "password": req.body.password
+        }]
+    );
+
+    if (loginStatus) {
+        res.json({"info": "User login successfull", "error": false});
+    } else {
+        res.json({"info": "User login failed", "error": true});
     }
 });
 

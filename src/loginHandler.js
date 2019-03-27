@@ -6,16 +6,43 @@
 
 //needs dbConfig to select database
 const dbconfig = require('../config/dbConfig.js');
+const crypto = require('crypto');
 
 /**
 * Salts and hashes a password.
 * @param {string} passwd the unhashed password
-* @return {string} Returns hashed and salted password
+* @return {object} Returns the hashed password and the salt that was generated
 */
-const hashPasswordSecurly = (passwd) => {
-    /* TODO: Write this function */
-    return "secure" + passwd;
+const createNewPasswordHashSaltPair = (passwd) => {
+    let hash = crypto.createHash('sha512');
+    let salt = crypto.randomBytes(128).toString('base64');
+
+    hash.update(passwd + salt);
+    let saltedHashDigest = hash.digest('hex');
+
+    return {
+        "password": saltedHashDigest,
+        "salt": salt
+    }
 };
+
+/**
+* Checks if a password matches the password hash from the userObject
+* @param {string} plaintext the plaintext password the user tries to log in with
+* @param {object} userObject a userObject containing at least password and salt
+* @return {bool} Returns true if it matches, false if it doesn't
+*/
+const validatePassword = (plaintext, userObject) => {
+    let hash = crypto.createHash('sha512');
+
+    hash.update(plaintext + userObject.salt);
+    let saltedHashFromPlaintext = hash.digest('hex');
+
+    if (saltedHashFromPlaintext == userObject.password) {
+        return true;
+    }
+    return false;
+}
 
 /**
 * Creates a user object to match how it's stored in the database.
@@ -23,10 +50,13 @@ const hashPasswordSecurly = (passwd) => {
 * @param {string} password the users password, will be ran through hashPasswordSecurly
 * @param {bool} admin sets if the user should be admin, default false
 */
-const createUser = (username, password, admin = false) => {
+const createNewUser = (username, password, admin = false) => {
+    let hashedPasswordAndSalt = createNewPasswordHashSaltPair(password);
+
     let userObject = {
         "username": username,
-        "password": hashPasswordSecurly(password),
+        "password": hashedPasswordAndSalt.password,
+        "salt": hashedPasswordAndSalt.salt,
         "isAdmin": admin
     };
 
@@ -45,8 +75,6 @@ const insertUserInDatabase = async (db, userAccount) => {
     //Search for an existing user with that username
     let existingUser = await dbo.collection('Users').findOne({"username": userAccount[0].username});
 
-    console.log("EXTU:", existingUser);
-
     //If we find an existing user, return false - a new user was not created
     if (existingUser != null) {
         return false;
@@ -60,8 +88,34 @@ const insertUserInDatabase = async (db, userAccount) => {
     return false;
 };
 
+/**
+* Check if the user login is correct
+* @param {object} db Database object
+* @param userAccount the user account that tries to login
+* @return {bool} True if login is successfull, false if it fails
+*/
+const verifyUserLogin = async (db, userAccount) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //Search for an existing user with that username
+    let existingUser = await dbo.collection('Users').findOne({"username": userAccount[0].username});
+
+    //If we don't find a user they can't log in.
+    if (existingUser == null) {
+        return false;
+    }
+
+    //Check if the user submitted password matches what is salted, hashed and stored in the database
+    let passwordIsValid = validatePassword(userAccount[0].password, existingUser);
+
+    if (passwordIsValid) {
+        return true;
+    }
+    return false;
+}
 
 module.exports = {
     insertUserInDatabase,
-    createUser
+    createNewUser,
+    verifyUserLogin
 };
