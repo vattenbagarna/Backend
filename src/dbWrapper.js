@@ -36,8 +36,7 @@ const dbConnectPipe = (fExecute, fParams = undefined) => {
                 let res;
 
                 if (fParams != undefined) {
-                    //TODO: Ajust length of params to be dynamic
-                    res = await fExecute(db, fParams[0]);
+                    res = await fExecute(db, fParams);
                 } else {
                     res = await fExecute(db);
                 }
