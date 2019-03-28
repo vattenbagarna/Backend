@@ -114,8 +114,53 @@ const verifyUserLogin = async (db, userAccount) => {
     return false;
 };
 
+/**
+* changePassword updates the new users password
+* @param {object} db Database object
+* @param {array} userChangePassword array conianing the userObject
+* @return {bool} return true if password has been changed, false if it hasn't
+*/
+const changePassword = async (db, userChangePassword) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //Search for an existing user with that username
+    let existingUser = await dbo.collection('Users').findOne(
+        {"username": userChangePassword[0].username}
+    );
+
+    //If we don't find a user they can't change their password
+    if (existingUser == null) {
+        return false;
+    }
+
+    //They have to enter their password again to change it
+    let oldPasswordMatches = validatePassword(userChangePassword[0].password, existingUser);
+
+    if (!oldPasswordMatches) {
+        return false;
+    }
+    //New password must be written twice and match
+    if (userChangePassword[0].newPassword != userChangePassword[0].confirmNewPassword) {
+        return false;
+    }
+
+    //Create new hashed password and salt and update the database
+    let newpw = await createNewPasswordHashSaltPair(userChangePassword[0].newPassword);
+    let res = await dbo.collection('Users').updateOne(
+        {"username": userChangePassword[0].username},
+        {$set: {"password": newpw.password, "salt": newpw.salt }}
+    );
+
+    //Check to make sure it went ok and the database was updated
+    if (res.result.ok == 1 && res.result.nModified == 1) {
+        return true;
+    }
+    return false;
+};
+
 module.exports = {
     insertUserInDatabase,
     createNewUser,
-    verifyUserLogin
+    verifyUserLogin,
+    changePassword
 };

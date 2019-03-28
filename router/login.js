@@ -45,4 +45,21 @@ router.post("/login", urlencodedParser, async (req, res) => {
     }
 });
 
+router.post("/changepassword", urlencodedParser, async (req, res) => {
+    let pwChange = await dbHandler.dbSimpleStatement(
+        loginHandler.changePassword, [{
+            "username": req.body.username,
+            "password": req.body.password,
+            "newPassword": req.body.newPassword,
+            "confirmNewPassword": req.body.confirmNewPassword
+        }]
+    );
+
+    if (pwChange) {
+        res.json({"info": "Password has been changed.", "error": false});
+    } else {
+        res.json({"info": "Failed to change password", "error": true});
+    }
+});
+
 module.exports = router;
