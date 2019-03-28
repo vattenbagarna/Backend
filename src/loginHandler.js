@@ -6,6 +6,7 @@
 
 //needs dbConfig to select database
 const dbconfig = require('../config/dbConfig.js');
+const jwtAuth = require('./jwtAuthentication.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -93,16 +94,16 @@ const verifyUserLogin = async (db, userAccount) => {
 
     //If we don't find a user they can't log in.
     if (existingUser == null) {
-        return false;
+        return {"error": true};
     }
 
     //Check if the user submitted password matches the hashed password in the database
     let passwordIsValid = await validatePassword(userAccount[0].password, existingUser.password);
 
     if (passwordIsValid) {
-        return true;
+        return {"error": false, token: jwtAuth.createToken(existingUser)};
     }
-    return false;
+    return {"error": true};
 };
 
 /**
