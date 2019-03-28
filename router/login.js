@@ -15,7 +15,7 @@ const loginHandler = require('../src/loginHandler.js');
 router.post("/signup", urlencodedParser, async (req, res) => {
     let tryCreateAccount = await dbHandler.dbSimpleStatement(
         loginHandler.insertUserInDatabase,
-        [loginHandler.createNewUser(
+        [await loginHandler.createNewUser(
             req.body.username, req.body.password, req.body.admin
         )]
     );
@@ -45,6 +45,9 @@ router.post("/login", urlencodedParser, async (req, res) => {
     }
 });
 
+//Change password route
+//Takes a POST request with x-www-form-urlencoded data,
+//validates current password and changes it to the new one
 router.post("/changepassword", urlencodedParser, async (req, res) => {
     let pwChange = await dbHandler.dbSimpleStatement(
         loginHandler.changePassword, [{
