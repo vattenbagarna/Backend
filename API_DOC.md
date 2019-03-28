@@ -35,7 +35,7 @@ Fetch a specific project with a `GET` Request to the route:
 ```
 /proj/id/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId,
+Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 ### Get Project Data By Id
@@ -43,7 +43,7 @@ Fetch object `data` for the map from project with a `GET` Request to the route:
 ```
 /proj/data/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId,
+Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 ### Get Project Info By Id
@@ -51,7 +51,7 @@ Fetch basic project infromation from a project with a `GET` Request to the route
 ```
 /proj/info/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId,
+Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 ### Create New Project
@@ -66,7 +66,7 @@ Delete a project with a `GET` Request to the route:
 ```
 /proj/delete/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId,
+Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 
@@ -75,7 +75,7 @@ Update basic project infromation with a `POST` Request with `name` and `version`
 ```
 /proj/update/info/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId,
+Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 ### Update Project Data
@@ -83,6 +83,6 @@ Update/Save object data for the map with a `POST` Request with an `Array` to the
 ```
 /proj/update/data/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId,
+Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
