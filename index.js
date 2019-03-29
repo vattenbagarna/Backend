@@ -3,6 +3,7 @@ const serverConf = require("./config/serverParameters.js");
 
 // Adding node module dependencies
 const express = require("express");
+const crypto = require("crypto");
 
 // Including js files
 const mainRouter = require("./router/main-router.js");
@@ -13,6 +14,16 @@ const tokenValidation = require("./middleware/authValidator.js");
 
 // Setting upp express
 const app = express();
+
+// Startup function
+const readyServer = () => {
+    //generate jwt signing secret (this should only run once at startup)
+    global.jwtSecret = crypto.randomBytes(512).toString('base64');
+
+    //inform the system that we are ready
+    console.info(`Server started on port ${serverConf.port}`);
+};
+
 
 // Insert middlewares
 app.use(logger.logToConsole);
@@ -35,11 +46,6 @@ app.use(tokenValidation.checkToken);
 // Mount authenticated routes
 // NOTICE: All routes mounted here will require a access token
 app.use("/obj/", getObjectsRouter);
-
-// Startup function
-const readyServer = () => {
-    console.info(`Server started on port ${serverConf.port}`);
-};
 
 // Start server
 app.listen(serverConf.port, readyServer);
