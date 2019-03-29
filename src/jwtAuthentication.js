@@ -5,12 +5,14 @@ const createToken = (user) => {
 };
 
 const verify = (token) => {
-    jwt.verify(token, "YourSecretGoesHere", (err, decoded)=>{
-        if (err != undefined) {
+    let verifiedToken = jwt.verify(token, "YourSecretGoesHere", (err, decoded) => {
+        if (err == null) {
             return decoded;
         }
         return false;
     });
+
+    return verifiedToken;
 };
 
 module.exports = {

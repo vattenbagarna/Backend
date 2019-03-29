@@ -9,6 +9,7 @@ const mainRouter = require("./router/main-router.js");
 const getObjectsRouter = require('./router/objects.js');
 const accountRouter = require('./router/login.js');
 const logger = require("./middleware/log.js");
+const tokenValidation = require("./middleware/authValidator.js");
 
 // Setting upp express
 const app = express();
@@ -23,10 +24,17 @@ app.use((req, res, next) => {
     next();
 });
 
-// Mount routers
-app.use("/acc/", accountRouter);
-app.use("/obj/", getObjectsRouter);
+// Mount unauthenticated routes
+// WARNING: All routes mounted here will be completely OPEN FOR ANYONE
 app.use("/", mainRouter);
+app.use("/acc/", accountRouter);
+
+// Use token validation
+app.use(tokenValidation.checkToken);
+
+// Mount authenticated routes
+// NOTICE: All routes mounted here will require a access token
+app.use("/obj/", getObjectsRouter);
 
 // Startup function
 const readyServer = () => {

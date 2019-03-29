@@ -70,4 +70,8 @@ router.post("/changepassword", urlencodedParser, async (req, res) => {
     }
 });
 
+router.get("/user", async (req, res) => {
+    res.json({"info": "hello world"});
+});
+
 module.exports = router;
