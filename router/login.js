@@ -70,6 +70,40 @@ router.post("/changepassword", urlencodedParser, async (req, res) => {
     }
 });
 
+//Request a reset token to be set for the user
+//Takes a POST request with  x-www-form-urlencoded data, sets a reset token in the database
+router.post("/requestreset", urlencodedParser, async (req, res) => {
+    await dbHandler.dbSimpleStatement(
+        loginHandler.setOneTimeKey, [{
+            "username": req.body.username,
+        }]
+    );
+
+    return res.json({
+        "info": "If the user exists, a temporary token has been created." +
+        "You should recive an email shortly.",
+        "error": false
+    });
+});
+
+
+router.post("/passwordreset", urlencodedParser, async (req, res) => {
+    let passwordReset = await dbHandler.dbSimpleStatement(
+        loginHandler.verifyOneTimeKeyAndSetPassword, [{
+            "username": req.body.username,
+            "oneTimeKey": req.body.oneTimeKey,
+            "newPassword": req.body.newPassword,
+            "confirmNewPassword": req.body.confirmNewPassword
+        }]
+    );
+
+    if (passwordReset) {
+        res.json({"info": "Your password has been updated", "error": false});
+    } else {
+        res.json({"info": "Failed to change password", "error": true});
+    }
+});
+
 router.get("/user", async (req, res) => {
     res.json({"info": "hello world"});
 });

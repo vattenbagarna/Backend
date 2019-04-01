@@ -7,6 +7,7 @@
 //needs dbConfig to select database
 const dbconfig = require('../config/dbConfig.js');
 const jwtAuth = require('./jwtAuthentication.js');
+const crypto = require("crypto");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -35,6 +36,15 @@ const validatePassword = (plaintext, hash) => {
     });
 
     return hashCompare;
+};
+
+/**
+* Generates a one time key to be stored in the database as a reset token
+* @return {string} returns the random key
+*
+*/
+const createOneTimeKey = () => {
+    return crypto.randomBytes(32).toString('base64');
 };
 
 /**
@@ -153,9 +163,105 @@ const changePassword = async (db, userChangePassword) => {
     return false;
 };
 
+/**
+* Wipes the password and issues a one time use token
+* @param {object} db Database object
+* @param {array} userToResetPassword array conianing the userObject
+* @return {bool} return true if a one time key has been created, false if it hasn't
+*/
+const setOneTimeKey = async (db, userToResetPassword) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //Search for an existing user with that username
+    let existingUser = await dbo.collection('Users').findOne(
+        {"username": userToResetPassword[0].username}
+    );
+
+    //If we don't find a user they can't change their password
+    if (existingUser == null) {
+        return false;
+    }
+
+    //Create a oneTimeKey
+    let oneTimeKey = createOneTimeKey();
+    let res  = await dbo.collection('Users').updateOne(
+        {"username": userToResetPassword[0].username},
+        {$set: {"oneTimeKey": oneTimeKey}}
+    );
+
+    //Check to make sure it went ok and the database was updated
+    if (res.result.ok == 1 && res.result.nModified == 1) {
+        //TODO: SEND THIS TOKEN VIA EMAIL INSTEAD - DO NOT SEND OVER API OR TO THE CONSOLE
+        console.log("ONE TIME KEY CREATED:", oneTimeKey);
+        return true;
+    }
+    return false;
+};
+
+/**
+* Verifies the one time token, removes it and sets the new password
+* @param {object} db Database object
+* @param {array} userToUpdatePassword array conianing the userObject
+* @return {bool} return true if the key matches and password has been changed, false if it hasn't
+*/
+const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //Search for an existing user with that username
+    let existingUser = await dbo.collection('Users').findOne(
+        {"username": userToUpdatePassword[0].username}
+    );
+
+    //If we don't find a user they can't change their password
+    if (existingUser == null) {
+        return false;
+    }
+
+    //Make sure the user has a oneTimeKey to use
+    if (
+        existingUser.oneTimeKey == undefined ||
+        existingUser.oneTimeKey == null ||
+        existingUser.oneTimeKey == ""
+    ) {
+        return false;
+    }
+
+    if (userToUpdatePassword[0].oneTimeKey != existingUser.oneTimeKey) {
+        return false;
+    }
+
+    //New password must be written twice and match
+    if (userToUpdatePassword[0].newPassword != userToUpdatePassword[0].confirmNewPassword) {
+        return false;
+    }
+
+    //Create new hashed password and salt and update the database
+    let newpw = await createNewPasswordHash(userToUpdatePassword[0].newPassword);
+    let res = await dbo.collection('Users').updateOne(
+        {"username": userToUpdatePassword[0].username},
+        {$set: {"password": newpw, "oneTimeKey": null}}
+    );
+
+    //Check to make sure it went ok and the database was updated
+    if (res.result.ok == 1 && res.result.nModified == 1) {
+        return true;
+    }
+    return false;
+};
+
+const adminCreateAccountForUser = (db, newUser) => {
+    //TODO: adminCreateAccountForUser should not only create a new user with a oneTimeKey
+    // But it should also make sure the user atempting to create a new user acctually
+    // is admin
+    console.log(db, newUser);
+};
+
 module.exports = {
     insertUserInDatabase,
     createNewUser,
     verifyUserLogin,
-    changePassword
+    changePassword,
+    setOneTimeKey,
+    verifyOneTimeKeyAndSetPassword,
+    adminCreateAccountForUser
 };
