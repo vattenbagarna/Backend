@@ -220,11 +220,11 @@ BagaEasyPaket = [
 
 Ledning = [
     {
-        "InnerDiameter": 30,
-        "Namn": "Ledning",
-        "PNKlass": "10",
-        "Typ": "PEM",
-        "YtterDiameter": 32
+        "InnerDiameter": 35.2,
+        "Kategori": "Ledning",
+        "Namn": "PEM slang",
+        "PNKlass": 6.3,
+        "Typ": 40
     }
 ];
 
