@@ -3,12 +3,12 @@
 * Router for handling accounts and login
 */
 
-const express = require("express");
-const router = new express.Router();
-const bodyParser = require("body-parser");
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const dbHandler = require('../src/dbWrapper.js');
-const loginHandler = require('../src/loginHandler.js');
+const express               = require("express");
+const router                = new express.Router();
+const bodyParser            = require("body-parser");
+const urlencodedParser      = bodyParser.urlencoded({ extended: false });
+const dbHandler             = require('../src/dbWrapper.js');
+const loginHandler          = require('../src/loginHandler.js');
 
 //signup route,
 //takes a POST request with x-www-form-urlencoded data to create a new user
@@ -86,7 +86,8 @@ router.post("/requestreset", urlencodedParser, async (req, res) => {
     });
 });
 
-
+//Sets a new password with a one time key confirmation
+//Takes a POST request with  x-www-form-urlencoded data and sets a new password
 router.post("/passwordreset", urlencodedParser, async (req, res) => {
     let passwordReset = await dbHandler.dbSimpleStatement(
         loginHandler.verifyOneTimeKeyAndSetPassword, [{
@@ -102,10 +103,6 @@ router.post("/passwordreset", urlencodedParser, async (req, res) => {
     } else {
         res.json({"info": "Failed to change password", "error": true});
     }
-});
-
-router.get("/user", async (req, res) => {
-    res.json({"info": "hello world"});
 });
 
 module.exports = router;

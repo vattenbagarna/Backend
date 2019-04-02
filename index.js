@@ -6,11 +6,12 @@ const express = require("express");
 const crypto = require("crypto");
 
 // Including js files
-const mainRouter = require("./router/main-router.js");
-const getObjectsRouter = require('./router/objects.js');
-const accountRouter = require('./router/login.js');
-const logger = require("./middleware/log.js");
-const tokenValidation = require("./middleware/authValidator.js");
+const mainRouter            = require("./router/main-router.js");
+const getObjectsRouter      = require('./router/objects.js');
+const accountRouter         = require('./router/login.js');
+const adminRouter           = require('./router/admin.js');
+const logger                = require("./middleware/log.js");
+const tokenValidation       = require("./middleware/authValidator.js");
 
 // Setting upp express
 const app = express();
@@ -46,6 +47,7 @@ app.use(tokenValidation.checkToken);
 // Mount authenticated routes
 // NOTICE: All routes mounted here will require a access token
 app.use("/obj/", getObjectsRouter);
+app.use("/admin/", adminRouter);
 
 // Start server
 app.listen(serverConf.port, readyServer);
