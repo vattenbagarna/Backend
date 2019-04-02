@@ -249,11 +249,43 @@ const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
     return false;
 };
 
-const adminCreateAccountForUser = (db, newUser) => {
-    //TODO: adminCreateAccountForUser should not only create a new user with a oneTimeKey
-    // But it should also make sure the user atempting to create a new user acctually
-    // is admin
-    console.log(db, newUser);
+/**
+* Admin user action to create a new account for a user
+* @param {object} db Database object
+* @param {array} newUser array conianing the userObject
+* @return {bool} return true if the user was created, false if it wasn't
+*/
+const adminCreateAccountForUser = async (db, newUser) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //Search for an existing user with that username
+    let existingUser = await dbo.collection('Users').findOne(
+        {"username": newUser[0].username}
+    );
+
+    //If we find an existing user, return false - a new user was not created
+    if (existingUser != null) {
+        return false;
+    }
+
+    //Create a oneTimeKey
+    let generatedOneTimeKey = createOneTimeKey();
+    //Create a user account with one time key without a password
+    let userAccount = {
+        "username": newUser[0].username,
+        "isAdmin": newUser[0].admin,
+        "oneTimeKey": generatedOneTimeKey
+    };
+    //We have no existing user with this name, insert the new one.
+    let res = await dbo.collection('Users').insertOne(userAccount);
+    //Check to make sure it went ok and the database was updated
+
+    if (res.result.ok == 1 && res.result.n == 1) {
+        //TODO: SEND THIS TOKEN VIA EMAIL INSTEAD - DO NOT SEND OVER API OR TO THE CONSOLE
+        console.log("ONE TIME KEY CREATED:", generatedOneTimeKey);
+        return true;
+    }
+    return false;
 };
 
 module.exports = {

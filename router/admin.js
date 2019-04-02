@@ -5,10 +5,10 @@
 
 const express               = require("express");
 const router                = new express.Router();
-// const bodyParser            = require("body-parser");
-// const urlencodedParser      = bodyParser.urlencoded({ extended: false });
-// const dbHandler             = require('../src/dbWrapper.js');
-// const loginHandler          = require('../src/loginHandler.js');
+const bodyParser            = require("body-parser");
+const urlencodedParser      = bodyParser.urlencoded({ extended: false });
+const dbHandler             = require('../src/dbWrapper.js');
+const loginHandler          = require('../src/loginHandler.js');
 const jwtAuth               = require('../src/jwtAuthentication.js');
 
 const checkAdmin = (req, res, next) => {
@@ -43,6 +43,22 @@ router.get("/user", checkAdmin, async (req, res) => {
             "isAdmin": user.isAdmin
         }
     });
+});
+
+router.post("/createaccount", checkAdmin, urlencodedParser, async (req, res) => {
+    let tryCreateAccount = await dbHandler.dbSimpleStatement(
+        loginHandler.adminCreateAccountForUser,
+        [{
+            "username": req.body.username,
+            "isAdmin": req.body.admin
+        }]
+    );
+
+    if (tryCreateAccount == true) {
+        res.json({"info": "User successfully crated!", "error": false});
+    } else {
+        res.json({"info": "failed to create user!", "error": true});
+    }
 });
 
 module.exports = router;
