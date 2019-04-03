@@ -11,6 +11,12 @@ const dbHandler             = require('../src/dbWrapper.js');
 const loginHandler          = require('../src/loginHandler.js');
 const jwtAuth               = require('../src/jwtAuthentication.js');
 
+/**
+* checkAdmin is a middleware function to check that the token belongs to an admin
+* @param {object} req express http request object
+* @param {object} res express response object
+* @param {object} next continues the express stack
+*/
 const checkAdmin = (req, res, next) => {
     let user = jwtAuth.verify(req.query.token);
 
@@ -22,7 +28,7 @@ const checkAdmin = (req, res, next) => {
         return false;
     }
 
-    if (user.isAdmin == false) {
+    if (user.isAdmin == false || user.isAdmin == null || user.isAdmin == undefined) {
         res.json({
             "error": true,
             "info": "user is not admin"
@@ -33,6 +39,7 @@ const checkAdmin = (req, res, next) => {
     return true;
 };
 
+// GET /user shows user data from the token.
 router.get("/user", checkAdmin, async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
 
@@ -45,12 +52,14 @@ router.get("/user", checkAdmin, async (req, res) => {
     });
 });
 
+// Creates a new account for a new user
+//Takes a POST request with  x-www-form-urlencoded with an email for the new user
 router.post("/createaccount", checkAdmin, urlencodedParser, async (req, res) => {
     let tryCreateAccount = await dbHandler.dbSimpleStatement(
         loginHandler.adminCreateAccountForUser,
         [{
             "username": req.body.username,
-            "isAdmin": req.body.admin
+            "isAdmin": req.body.isAdmin
         }]
     );
 

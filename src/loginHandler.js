@@ -5,11 +5,13 @@
 */
 
 //needs dbConfig to select database
-const dbconfig = require('../config/dbConfig.js');
-const jwtAuth = require('./jwtAuthentication.js');
-const crypto = require("crypto");
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const dbconfig          = require('../config/dbConfig.js');
+const jwtAuth           = require('./jwtAuthentication.js');
+const mailman           = require('./smtpMailman.js');
+const emailValidator    = require("email-validator");
+const crypto            = require("crypto");
+const bcrypt            = require('bcrypt');
+const saltRounds        = 10;
 
 /**
 * Salts and hashes a password with bcrypt.
@@ -71,6 +73,10 @@ const createNewUser = async (username, password, admin = false) => {
 * @return {bool} specifies if the insert statement was successfull or not.
 */
 const insertUserInDatabase = async (db, userAccount) => {
+    // Check that email is valid, if not - return false
+    if (!emailValidator.validate(userAccount[0].username)) {
+        return false;
+    }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //Search for an existing user with that username
@@ -256,6 +262,10 @@ const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
 * @return {bool} return true if the user was created, false if it wasn't
 */
 const adminCreateAccountForUser = async (db, newUser) => {
+    // Check that email is valid, if not - return false
+    if (!emailValidator.validate(newUser[0].username)) {
+        return false;
+    }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //Search for an existing user with that username
@@ -271,18 +281,24 @@ const adminCreateAccountForUser = async (db, newUser) => {
     //Create a oneTimeKey
     let generatedOneTimeKey = createOneTimeKey();
     //Create a user account with one time key without a password
+
+    console.log(newUser[0]);
     let userAccount = {
         "username": newUser[0].username,
-        "isAdmin": newUser[0].admin,
+        "isAdmin": newUser[0].isAdmin,
         "oneTimeKey": generatedOneTimeKey
     };
     //We have no existing user with this name, insert the new one.
     let res = await dbo.collection('Users').insertOne(userAccount);
     //Check to make sure it went ok and the database was updated
 
+    //Check that the result is correctly inserted into the database
     if (res.result.ok == 1 && res.result.n == 1) {
-        //TODO: SEND THIS TOKEN VIA EMAIL INSTEAD - DO NOT SEND OVER API OR TO THE CONSOLE
-        console.log("ONE TIME KEY CREATED:", generatedOneTimeKey);
+        //Send the user an email with the token that they need to signup
+        mailman.sendEmail(
+            newUser[0].username,
+            mailman.createNewAccountTokenEmail(generatedOneTimeKey)
+        );
         return true;
     }
     return false;

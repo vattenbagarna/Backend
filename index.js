@@ -6,6 +6,7 @@ const express = require("express");
 const crypto = require("crypto");
 
 // Including js files
+const mailman               = require('./src/smtpMailman.js');
 const mainRouter            = require("./router/main-router.js");
 const getObjectsRouter      = require('./router/objects.js');
 const accountRouter         = require('./router/login.js');
@@ -20,6 +21,9 @@ const app = express();
 const readyServer = () => {
     //generate jwt signing secret (this should only run once at startup)
     global.jwtSecret = crypto.randomBytes(512).toString('base64');
+
+    //Verify that we can send out emails, without it the system breaks
+    mailman.testSmtpConnection();
 
     //inform the system that we are ready
     console.info(`Server started on port ${serverConf.port}`);
