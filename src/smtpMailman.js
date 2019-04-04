@@ -71,6 +71,43 @@ const createNewAccountTokenEmail = (tokenToSend) => {
 };
 
 /**
+* Creates an email object about resetting a password
+* @param {string} tokenToSend the user account token
+* @return {object} Returns the email object
+*/
+const createResetTokenEmail = (tokenToSend) => {
+    let email = {};
+
+    email.subject = "Återställa lösenord";
+    email.plain = `En begäran om återställning av ditt lösenord har gjorts. I detta
+    mail finner du en Återställningsnyckel. Den kan användas en gång för att sätta
+    ett nytt lösenord. Var det inte du som begärde den? Isåfall kan du ignorera det
+    här mailet och fortsätta använda samma lösenord som tidigare.\r\n\r\n
+    ÅTERSTÄLLNINGSNYCKEL: ` + tokenToSend + `\r\n\r\n Du kan inte svara på detta mail.`;
+
+    email.html = `<div style="text-align:center;font-family:sans-serif;">
+    <h3 style="font-weight:400;">Återställa lösenord i Baga Aqua System</h3>
+    <hr style="width:50%;border-color:rgba(18, 128, 196, 1);border-radius:50%">
+    <br>
+    <p>En begäran om återställning av ditt lösenord har gjorts. I detta
+    mail finner du en Återställningsnyckel. Den kan användas en gång för att sätta
+    ett nytt lösenord. Var det inte du som begärde den? Isåfall kan du ignorera det
+    här mailet och fortsätta använda samma lösenord som tidigare.</p>
+    <br>
+    <div>
+    <h4>ÅTERSTÄLLNINGSNYCKEL</h4>
+    <span style="padding:1rem;border:2px solid rgba(18, 128, 196, 1);">` + tokenToSend +
+    `</span>
+    </div>
+    <br><br><br>
+    <i>Du kan inte svara på det här mailet</i>
+    </div>`;
+
+    return email;
+};
+
+
+/**
 * Sends the email to the reciever
 * @param {string} reciever the email of the user that will recive the email
 * @param {object} email the email to send, containing subject, plaintext and html
@@ -108,5 +145,6 @@ const sendEmail = async (reciever, email) => {
 module.exports = {
     testSmtpConnection,
     createNewAccountTokenEmail,
+    createResetTokenEmail,
     sendEmail
 };

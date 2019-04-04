@@ -170,7 +170,7 @@ const changePassword = async (db, userChangePassword) => {
 };
 
 /**
-* Wipes the password and issues a one time use token
+* Issues a one time use token to the user
 * @param {object} db Database object
 * @param {array} userToResetPassword array conianing the userObject
 * @return {bool} return true if a one time key has been created, false if it hasn't
@@ -197,8 +197,11 @@ const setOneTimeKey = async (db, userToResetPassword) => {
 
     //Check to make sure it went ok and the database was updated
     if (res.result.ok == 1 && res.result.nModified == 1) {
-        //TODO: SEND THIS TOKEN VIA EMAIL INSTEAD - DO NOT SEND OVER API OR TO THE CONSOLE
-        console.log("ONE TIME KEY CREATED:", oneTimeKey);
+        //Send the reset token to the users email
+        mailman.sendEmail(
+            userToResetPassword[0].username,
+            mailman.createResetTokenEmail(oneTimeKey)
+        );
         return true;
     }
     return false;
