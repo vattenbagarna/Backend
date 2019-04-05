@@ -65,7 +65,7 @@ Send a `POST` request to `/acc/passwordreset` with the form data for `username`,
 This handles all the admin routes and cannot be used by non-admins. All routes are
 available over at `/admin/`
 
-### user
+### User
 This routes shows basic info about the user making the request. Made to test if
 user is an admin. Access this by sending a `GET` request to `/admin/user`.
 
