@@ -1,5 +1,6 @@
 Fettavskiljare = [
     {
+        "Kategori": "Fettavskiljare",
         "Namn": "Fettavskiljare",
         "Produkt": "3 l/s FL 3 Liggande",
         "RSK": 5624037,
@@ -9,6 +10,7 @@ Fettavskiljare = [
 
 Oljeavskiljare = [
     {
+        "Kategori": "Oljeavskiljare",
         "Namn": "Oljeavskiljare",
         "Produkt": "Lilla garagepaket",
         "RSK": 5624093,
@@ -27,6 +29,7 @@ Slamavskiljare = [
         "InloppAnslutning": 110,
         // Mm
         "InloppVG": 800,
+        "Kategori": "Slamavskiljare",
         "Namn": "Slamavskiljare",
         "OmbyggbarBAGAEASY": false,
         "PaketRSK": 5616256,
@@ -48,6 +51,7 @@ Slamavskiljare = [
 PaketBagaBDT1Hus = [
     {
         "AntalHus": 1,
+        "Kategori": "Baga Paket",
         "Namn": "BAGA Easy 10-55 hushåll",
         "RSK": 5616256,
         // M2
@@ -67,6 +71,7 @@ Pumpstationer = [
         "Inlopp": {"O": 110, "typ": "gummitätning"},
         //"Ø 50 gummitätning",
         "Kabelgenomforing": {"O": 50, "typ": "gummitätning"},
+        "Kategori": "Pumpstation",
         "Modell": "Kompus 61",
         "Namn": "Pumpstation",
         "Pump": "GD-20  Skärande avloppspump, 3-fas",
@@ -87,7 +92,8 @@ PumpstationerDRAN = [
         "Inlopp": 110,
         //"Ø 50 gummitätning VG 1200 placering kl 6",
         "Kabelgenomforing": {"O": 50, "typ": "gummitätning VG 1200", "placeringKL": 6},
-        "Namn": "Pumpstaion BAGA Drän 60",
+        "Kategori": "Pumpstation",
+        "Namn": "Pumpstation BAGA Drän 60",
         "Typ": "Kompus Drän 60-150",
         //"G 32 inv. gänga",
         "Utlopp": {"G": 32, "typ": "inv. gänga"},
@@ -107,6 +113,7 @@ PumpstationerVilla = [
         "Inlopp": 110,
         //"Ø 50 gummitätning VG 570placering kl 3",
         "Kabelgenomforing": {"O": 50, "typ": "gummitätning VG 570", "placeringKL": 3},
+        "Kategori": "Pumpstation",
         "Pump": "GC-07A 1-fas",
         "Pumpstation": "Villa 60-70",
         "RSK": 5887125,
@@ -125,6 +132,7 @@ BagaBioTank = [
     {
         "AntalHus": 1,
         "Bestar": [5616142, 5619999],
+        "Kategori": "Baga Paket",
         "Namn": "Paket Baga bioTank 1-6 hushåll",
         "RSK": 5619990,
         "typ": "BAGA BioTank 1"
@@ -135,6 +143,7 @@ BagaSoloBDTRening = [
     {
         //"2000x1750mm",
         "Dimensioner": {"O": 2000, "H": 1750},
+        "Kategori": "Baga Paket",
         "Namn": "BAGA SoloBDT-rening, allt i en tank",
         "RSK": 5622349,
         "Tillbehor": "Stativ till styrskåp, larm",
@@ -145,6 +154,7 @@ BagaSoloBDTRening = [
 
 SlutenTankToalettsystem = [
     {
+        "Kategori": "Toalettsystem",
         "Namn": "Sluten tank för toalettsystem",
         "Produkt": "1200 liter Liggande",
         "RSK": 5616165,
@@ -157,6 +167,7 @@ KompaktbaddBDTKL = [
     {
         "AntalHus": 1,
         "Bestar": "BAGA Easy grundpaket + kompaktbädd",
+        "Kategori": "Kompaktbädd",
         "Namn": "Kompaktbädd BDT+KL",
         "RSK": 5661891,
         // M2
@@ -168,6 +179,7 @@ KompaktbaddBDTKL = [
 BagaEasy = [
     {
         "AntalHus": 10,
+        "Kategori": "Baga Paket",
         "Namn": "BAGA Easy 10-55 hushåll",
         "Pumpstation": "X",
         "Reservoar": "-",
@@ -184,6 +196,7 @@ Pumpar = [
         "InvGanga": "G 32",
         "KabelLangd": 10,
         "KabelTyp": "H05RNF/H07RNF",
+        "Kategori": "Pump",
         // A
         "Markstrom": 1,
         // KW
@@ -205,12 +218,14 @@ Pumpar = [
 
 Reningsverk = [
     {
+        "Kategori": "Reningsverk",
         "Namn": "Reningsverk"
     }
 ];
 
 BagaEasyPaket = [
     {
+        "Kategori": "Baga Paket",
         "Namn": "Baga Easy Paket",
         "AntalHus": 1,
         "RSK": 5619984,
@@ -221,6 +236,7 @@ BagaEasyPaket = [
 Ledning = [
     {
         "InnerDiameter": 30,
+        "Kategori": "Ledning",
         "Namn": "Ledning",
         "PNKlass": "10",
         "Typ": "PEM",
