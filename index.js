@@ -3,14 +3,16 @@ const serverConf = require("./config/serverParameters.js");
 
 // Adding node module dependencies
 const express = require("express");
+const bodyParser = require("body-parser");
 const crypto = require("crypto");
 
 // Including js files
-const mailman               = require('./src/smtpMailman.js');
 const mainRouter            = require("./router/main-router.js");
 const getObjectsRouter      = require('./router/objects.js');
+const getProjectsRouter     = require('./router/projects.js');
 const accountRouter         = require('./router/login.js');
 const adminRouter           = require('./router/admin.js');
+const mailman               = require('./src/smtpMailman.js');
 const logger                = require("./middleware/log.js");
 const tokenValidation       = require("./middleware/authValidator.js");
 
@@ -32,6 +34,9 @@ const readyServer = () => {
 
 // Insert middlewares
 app.use(logger.logToConsole);
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 
 // Global headers
 // Set headers that apply to all routes here
@@ -50,8 +55,9 @@ app.use(tokenValidation.checkToken);
 
 // Mount authenticated routes
 // NOTICE: All routes mounted here will require a access token
-app.use("/obj/", getObjectsRouter);
 app.use("/admin/", adminRouter);
+app.use("/obj/", getObjectsRouter);
+app.use("/proj/", getProjectsRouter);
 
 // Start server
 app.listen(serverConf.port, readyServer);
