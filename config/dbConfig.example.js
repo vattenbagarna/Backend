@@ -1,5 +1,5 @@
 const connection = {
-    "base_url": "mongodb://localhost",
+    "base_url": "localhost",
     "database": "YourDatabase",
     "username": "EnterDbUsernameHere",
     "password": "EnterDbPasswordHere"

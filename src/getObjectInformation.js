@@ -4,34 +4,32 @@
  * from within the db wrapper.
  */
 
-// required to create mongodb id
-const mongoID = require("mongodb").ObjectID;
+const dbconfig = require('../config/dbConfig.js');
+
 
 /**
-  * Get all objects
-  *
-  * @returns {JSON} Mongodb response
-  */
+* Get all objects from the database
+* @param {object} db This is the mongodb database object
+*/
 const getAllObjects = async (db) => {
     //Select database
-    let dbo = db.db("test");
-    //find objects, this is known as a cursor
+    let dbo = db.db(dbconfig.connection.database);
+    //find all objects, this is known as a cursor
     let objects = await dbo.collection('Objects').find({});
+
     //The data here is not the clean data but instead something that is called a cursor.
     //Parsing that will be taken care of in the dbWrapper
     return objects;
 };
 
 /**
-  * Get all objects by searching for category
-  *
-  * @param {Array} [0] = category to search for
-  * @returns {JSON} Mongodb response
-  */
-const getObjectsByType = async (db, params) => {
-    let dbo = db.db("test");
-
-    let typeData = await dbo.collection('Objects').find({"Kategori": params[0]});
+* Find all items with matching category
+* @param {object} db This is the mongodb database object
+* @param {string} type category you want to find
+*/
+const getObjectsByType = async (db, type) => {
+    let dbo = db.db(dbconfig.connection.database);
+    let typeData = await dbo.collection('Objects').find({"Kategori": type});
 
     return typeData;
 };
