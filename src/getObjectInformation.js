@@ -57,6 +57,7 @@ const getObjectById = async (db, params) => {
     let dbo = db.db("test");
 
     let check = await checkInvalidID(db, params[0]);
+
     if (check != undefined) {return check;}
 
     let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])});
@@ -75,9 +76,10 @@ const deleteObjects = async (db, params) => {
 
     //Check for invalid projectId
     let check = await checkInvalidID(db, params[0]);
+
     if (check != undefined) {return check;}
 
-    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]) ,"creatorID": {"$in": [params[1]]}});
+    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]), "creatorID": {"$in": [params[1]]}});
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
 
     return types;
@@ -111,11 +113,12 @@ const updateObjects = async (db, params) => {
 
     //Check for invalid projectId
     let check = await checkInvalidID(db, params[1]);
+
     if (check != undefined) {return check;}
 
-    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]) ,
+    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
         "creatorID": {"$in": [params[2]]}},
-        {"$set": params[0]});
+    {"$set": params[0]});
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[2]]}});
 
     return types;
@@ -144,7 +147,6 @@ module.exports = {
     getObjectsByType,
     getCreatedObjects,
     getObjectById,
-    getObjectTypes,
     deleteObjects,
     insertObject,
     updateObjects
