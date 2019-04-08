@@ -11,7 +11,7 @@ const objectInfo = require('../src/getObjectInformation.js');
 const validate = require('../middleware/validateInput.js');
 
 
-// get house types
+// get all houses
 router.get("/all", async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getAllObjects);
 
@@ -21,6 +21,44 @@ router.get("/all", async (req, res) => {
 // get data for a specific house
 router.get("/type/:objectType", validate.filter, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getObjectsByType, [req.params.objectType]);
+
+    res.json(data);
+});
+
+// get your created objects
+router.get("/created/:userId", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.getCreatedObjects, [req.params.userId]);
+
+    res.json(data);
+});
+
+// get specific object with id
+router.get("/id/:objectId", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.getObjectById, [req.params.objectId]);
+
+    res.json(data);
+});
+
+// TODO: get all available categories?
+
+
+// delete project by id
+router.get("/delete/:objectId/:userId", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.deleteObjects, [req.params.objectId, req.params.userId]);
+
+    res.json(data);
+});
+
+// insert new object
+router.post("/insert/:userId", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.insertObject, [req.body, req.params.userId]);
+
+    res.json(data);
+});
+
+// update object with id
+router.post("/update/:objectId/:userId", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.updateObjects, [req.body, req.params.objectId, req.params.userId]);
 
     res.json(data);
 });
