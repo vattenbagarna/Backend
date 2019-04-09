@@ -123,11 +123,13 @@ Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 ### Create New Project
-Insert new project with a `POST` Request with `name` and `version` as values to the route:
+Insert new project with a `POST` Request with `name`, `version` and `access` as values to the route:
 ```
 /proj/insert/<YourUserIdHere>
 ```
 Where `<YourUserIdHere>` is your userId.
+The `access` value is an Array with a number of JSON objects in it. The JSON object should have `name` and `permission` as values.
+
 
 ### Delete Project By Id
 Delete a project with a `GET` Request to the route:
