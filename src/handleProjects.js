@@ -5,6 +5,32 @@
 *
 */
 const mongoID = require("mongodb").ObjectID;
+const dbconfig = require('../config/dbConfig.js');
+
+/**
+  * Get a predefined find project query where we see if a userId is
+  * in the access value
+  *
+  * @param {String} UserId to find
+  * @returns {JSON} JSON query
+  *
+  */
+const findProjectQuery = (name) => {
+    return {"access": { "$all": [{"$elemMatch": {"userID": name}}] }};
+};
+
+/**
+  * Get a predefined find project query where we see if a userId is
+  * in the access value and if the id matches
+  *
+  * @param {String} MongodbID to find
+  * @param {String} UserId to find
+  * @returns {JSON} JSON query
+  *
+  */
+const findProjectQueryWithId = (id, name) => {
+    return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
+};
 
 /**
   * Get all project info for user
@@ -15,10 +41,10 @@ const mongoID = require("mongodb").ObjectID;
   */
 const getProjects = async (db, params) => {
     //Select database
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //find all projects
 
-    let projects = await dbo.collection('Projects').find({"creatorID": {"$in": [params[0]]}},
+    let projects = await dbo.collection('Projects').find(findProjectQuery(params[0]),
         {projection: {"data": 0}});
 
     return projects;
@@ -32,14 +58,14 @@ const getProjects = async (db, params) => {
   *
   */
 const getProject = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
     let check = await checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
-    let project = await dbo.collection('Projects').find({"_id": mongoID(params[0]),
-        "creatorID": {"$in": [params[1]]}});
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[0],
+        params[1]));
 
     return project;
 };
@@ -52,14 +78,14 @@ const getProject = async (db, params) => {
   *
   */
 const getProjectData = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
     let check = await checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
-    let project = await dbo.collection('Projects').find({"_id": mongoID(params[0]),
-        "creatorID": {"$in": [params[1]]}}, {projection: {"data": 1}});
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[0],
+        params[1]), {projection: {"data": 1}});
 
     return project;
 };
@@ -72,14 +98,14 @@ const getProjectData = async (db, params) => {
   *
   */
 const getProjectInfo = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
     let check = await checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
-    let project = await dbo.collection('Projects').find({"_id": mongoID(params[0]),
-        "creatorID": {"$in": [params[1]]}}, {projection: {"data": 0}});
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[0],
+        params[1]), {projection: {"data": 0}});
 
     return project;
 };
@@ -92,13 +118,22 @@ const getProjectInfo = async (db, params) => {
   *
   */
 const insertProject = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     let dict = params[0];
 
+    let creatorIDs = [{"userID": params[1], "permission": "w", "creator": 1}];
+
+    if (dict["access"] != undefined) {
+        for (let i = 0; i < dict["access"].length; i++) {
+            dict["access"][i]["creator"] = 0;
+            creatorIDs.push(dict["access"][i]);
+        }
+    }
+
     if ("name" in dict && "version" in dict) {
         await dbo.collection('Projects').insertOne({"name": dict["name"],
-            "version": dict["version"], "creatorID": [params[1]], "data": []});
+            "version": dict["version"], "access": creatorIDs, "data": []});
     }
     let projects = await dbo.collection('Projects').find({}, {projection: {"data": 0}});
 
@@ -113,15 +148,15 @@ const insertProject = async (db, params) => {
   *
   */
 const deleteProject = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
     let check = await checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').deleteOne({"_id": mongoID(params[0]),
-        "creatorID": {"$in": [params[1]]}});
-    let project = await dbo.collection('Projects').find({}, {projection: {"data": 0}});
+    await dbo.collection('Projects').deleteOne(findProjectQueryWithId(params[0], params[1]));
+    let project = await dbo.collection('Projects').find(findProjectQuery(params[1]),
+        {projection: {"data": 0}});
 
     return project;
 };
@@ -134,7 +169,7 @@ const deleteProject = async (db, params) => {
   *
   */
 const updateProject = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
     let check = await checkInvalidID(db, params[1]);
 
@@ -142,12 +177,10 @@ const updateProject = async (db, params) => {
 
     let dict = params[0];
 
-    if ("name" in dict && "version" in dict) {
-        await dbo.collection('Projects').updateOne({"_id": mongoID(params[1]),
-            "creatorID": {"$in": [params[2]]}}, {"$set": {"name": dict["name"],
-            "version": dict["version"]}});
-    }
-    let project = await dbo.collection('Projects').find({"creatorID": {"$in": [params[2]]}},
+    await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
+        params[2]), {"$set": dict});
+
+    let project = await dbo.collection('Projects').find(findProjectQuery(params[2]),
         {projection: {"data": 0}});
 
     return project;
@@ -161,15 +194,15 @@ const updateProject = async (db, params) => {
   *
   */
 const updateProjectData = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
     let check = await checkInvalidID(db, params[1]);
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').updateOne({"_id": mongoID(params[1]),
-        "creatorID": {"$in": [params[2]]}}, {"$set": {"data": params[0]}});
-    let project = await dbo.collection('Projects').find({"creatorID": {"$in": [params[2]]}});
+    await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
+        params[2]), {"$set": {"data": params[0]}});
+    let project = await dbo.collection('Projects').find(findProjectQuery(params[2]));
 
     return project;
 };
@@ -182,7 +215,7 @@ const updateProjectData = async (db, params) => {
   *
   */
 const checkInvalidID = async (db, id) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     if (!mongoID.isValid(id)) {
         //TODO: change to something not retarded

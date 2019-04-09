@@ -56,11 +56,11 @@ const getCreatedObjects = async (db, params) => {
   */
 const getObjectById = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
-    console.log(params[0]);
+
     let check = await checkInvalidID(db, params[0]);
+
     if (check != undefined) {return check;}
 
-    console.log("check");
     let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])});
 
     return types;
@@ -80,7 +80,8 @@ const deleteObjects = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]), "creatorID": {"$in": [params[1]]}});
+    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]),
+        "creatorID": {"$in": [params[1]]}});
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
 
     return types;
