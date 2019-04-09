@@ -131,11 +131,17 @@ const insertProject = async (db, params) => {
         }
     }
 
+    let insertedID = "";
     if ("name" in dict && "version" in dict) {
-        await dbo.collection('Projects').insertOne({"name": dict["name"],
-            "version": dict["version"], "access": creatorIDs, "data": []});
+        let toInsert = {"name": dict["name"],
+            "version": dict["version"], "access": creatorIDs, "data": []};
+
+        await dbo.collection('Projects').insertOne(toInsert);
+        insertedID = toInsert._id;
     }
-    let projects = await dbo.collection('Projects').find({}, {projection: {"data": 0}});
+    console.log("outside: " + insertedID);
+    let projects = await dbo.collection('Projects').find({"_id": insertedID},
+        {projection: {"data": 0}});
 
     return projects;
 };
@@ -154,7 +160,8 @@ const deleteProject = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').deleteOne(findProjectQueryWithId(params[0], params[1]));
+    await dbo.collection('Projects').deleteOne(findProjectQueryWithId(params[0],
+        params[1]));
     let project = await dbo.collection('Projects').find(findProjectQuery(params[1]),
         {projection: {"data": 0}});
 
@@ -180,7 +187,8 @@ const updateProject = async (db, params) => {
     await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
         params[2]), {"$set": dict});
 
-    let project = await dbo.collection('Projects').find(findProjectQuery(params[2]),
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
+        params[2]),
         {projection: {"data": 0}});
 
     return project;
@@ -202,7 +210,8 @@ const updateProjectData = async (db, params) => {
 
     await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
         params[2]), {"$set": {"data": params[0]}});
-    let project = await dbo.collection('Projects').find(findProjectQuery(params[2]));
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
+        params[2]));
 
     return project;
 };

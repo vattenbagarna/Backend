@@ -99,7 +99,7 @@ const insertObject = async (db, params) => {
     console.log("inserting");
     params[0]["creatorID"] = [params[1]];
     await dbo.collection('Objects').insertOne(params[0]);
-    let object = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
+    let object = await dbo.collection('Objects').find({"_id": params[0]._id});
 
     return object;
 };
@@ -121,7 +121,7 @@ const updateObjects = async (db, params) => {
     await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
         "creatorID": {"$in": [params[2]]}},
     {"$set": params[0]});
-    let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[2]]}});
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
 
     return types;
 };
