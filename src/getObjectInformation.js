@@ -5,6 +5,7 @@
  */
 
 const dbconfig = require('../config/dbConfig.js');
+const mongoID = require("mongodb").ObjectID;
 
 
 /**
@@ -41,7 +42,7 @@ const getObjectsByType = async (db, type) => {
   * @returns {JSON} Mongodb response
   */
 const getCreatedObjects = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[0]]}});
 
     return types;
@@ -54,12 +55,12 @@ const getCreatedObjects = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const getObjectById = async (db, params) => {
-    let dbo = db.db("test");
-
+    let dbo = db.db(dbconfig.connection.database);
+    console.log(params[0]);
     let check = await checkInvalidID(db, params[0]);
-
     if (check != undefined) {return check;}
 
+    console.log("check");
     let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])});
 
     return types;
@@ -72,7 +73,7 @@ const getObjectById = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const deleteObjects = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     //Check for invalid projectId
     let check = await checkInvalidID(db, params[0]);
@@ -92,7 +93,7 @@ const deleteObjects = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const insertObject = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     console.log("inserting");
     params[0]["creatorID"] = [params[1]];
@@ -109,7 +110,7 @@ const insertObject = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const updateObjects = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     //Check for invalid projectId
     let check = await checkInvalidID(db, params[1]);
@@ -132,7 +133,7 @@ const updateObjects = async (db, params) => {
   *
   */
 const checkInvalidID = async (db, id) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     if (!mongoID.isValid(id)) {
         //TODO: change to something not retarded
