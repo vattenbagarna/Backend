@@ -32,6 +32,9 @@ to console or file.
 ## Setup database
 run the `setup.sh` to secure the mongodb instance and add the content to the database
 
+## Setup email
+The server needs to be able to send emails to users. Copy or rename the file `/config/emailConfig.example.js` to `/config/emailConfig.js` and update the settings acordingly to work with your email server.
+
 ### If you want to login to your mongodb manually:
 Login as a user: `mongo <database> -u <username> -p`  
 to login as admin, make sure to connect to the `admin` database.
