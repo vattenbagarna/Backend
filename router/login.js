@@ -43,7 +43,8 @@ router.post("/login", urlencodedParser, async (req, res) => {
         res.json({
             "info": "User login successfull",
             "error": false,
-            "token": loginStatus.token
+            "token": loginStatus.token,
+            "username": req.body.username
         });
     } else {
         res.json({"info": "User login failed", "error": true});
