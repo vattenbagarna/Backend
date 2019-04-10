@@ -11,6 +11,7 @@ const mainRouter            = require("./router/main-router.js");
 const getObjectsRouter      = require('./router/objects.js');
 const getProjectsRouter     = require('./router/projects.js');
 const accountRouter         = require('./router/login.js');
+const userRouter            = require('./router/user.js');
 const adminRouter           = require('./router/admin.js');
 const mailman               = require('./src/smtpMailman.js');
 const logger                = require("./middleware/log.js");
@@ -56,6 +57,7 @@ app.use(tokenValidation.checkToken);
 // Mount authenticated routes
 // NOTICE: All routes mounted here will require a access token
 app.use("/admin/", adminRouter);
+app.use("/user/", userRouter);
 app.use("/obj/", getObjectsRouter);
 app.use("/proj/", getProjectsRouter);
 

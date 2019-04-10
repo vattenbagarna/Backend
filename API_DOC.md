@@ -24,6 +24,7 @@ This is the documentation for the backend system and it's API routes.
     * Change password
     * Request password reset
     * Password Reset
+    * Fetch all users
 * Admin
     * User
     * Create account
@@ -180,6 +181,10 @@ email. Send a `POST` request to `/acc/requestreset` with the form data of `usern
 With the one time reset token from the requestreset route the user can set a new password.
 Send a `POST` request to `/acc/passwordreset` with the form data for `username`, `oneTimeKey`,
 `newPassword` and `confirmNewPassword`
+
+### Fetch all users
+Fetching all users ID and username is done by sending a `GET` request to `/user/all` while logged in with a token.
+Admin access is not required.
 
 ## Admin
 This handles all the admin routes and cannot be used by non-admins. All routes are
