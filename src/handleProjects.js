@@ -131,10 +131,18 @@ const insertProject = async (db, params) => {
         }
     }
 
+    let defaultValues = {};
+
+    if (dict["default"] != undefined) {
+        defaultValues = dict["default"];
+    }
+
     let insertedID = "";
+
     if ("name" in dict && "version" in dict) {
         let toInsert = {"name": dict["name"],
-            "version": dict["version"], "access": creatorIDs, "data": []};
+            "version": dict["version"], "access": creatorIDs,
+            "default": defaultValues, "data": []};
 
         await dbo.collection('Projects').insertOne(toInsert);
         insertedID = toInsert._id;
@@ -188,8 +196,7 @@ const updateProject = async (db, params) => {
         params[2]), {"$set": dict});
 
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
-        params[2]),
-        {projection: {"data": 0}});
+        params[2]), {projection: {"data": 0}});
 
     return project;
 };
