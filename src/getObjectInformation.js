@@ -5,6 +5,7 @@
  */
 
 const dbconfig = require('../config/dbConfig.js');
+const mongoID = require("mongodb").ObjectID;
 
 
 /**
@@ -41,7 +42,7 @@ const getObjectsByType = async (db, type) => {
   * @returns {JSON} Mongodb response
   */
 const getCreatedObjects = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[0]]}});
 
     return types;
@@ -54,7 +55,7 @@ const getCreatedObjects = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const getObjectById = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     let check = await checkInvalidID(db, params[0]);
 
@@ -72,14 +73,15 @@ const getObjectById = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const deleteObjects = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     //Check for invalid projectId
     let check = await checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]), "creatorID": {"$in": [params[1]]}});
+    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]),
+        "creatorID": {"$in": [params[1]]}});
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
 
     return types;
@@ -92,12 +94,12 @@ const deleteObjects = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const insertObject = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     console.log("inserting");
     params[0]["creatorID"] = [params[1]];
     await dbo.collection('Objects').insertOne(params[0]);
-    let object = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
+    let object = await dbo.collection('Objects').find({"_id": params[0]._id});
 
     return object;
 };
@@ -109,7 +111,7 @@ const insertObject = async (db, params) => {
   * @returns {JSON} Mongodb response
   */
 const updateObjects = async (db, params) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     //Check for invalid projectId
     let check = await checkInvalidID(db, params[1]);
@@ -119,7 +121,7 @@ const updateObjects = async (db, params) => {
     await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
         "creatorID": {"$in": [params[2]]}},
     {"$set": params[0]});
-    let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[2]]}});
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
 
     return types;
 };
@@ -132,7 +134,7 @@ const updateObjects = async (db, params) => {
   *
   */
 const checkInvalidID = async (db, id) => {
-    let dbo = db.db("test");
+    let dbo = db.db(dbconfig.connection.database);
 
     if (!mongoID.isValid(id)) {
         //TODO: change to something not retarded
