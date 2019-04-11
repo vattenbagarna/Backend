@@ -24,6 +24,7 @@ This is the documentation for the backend system and it's API routes.
     * Change password
     * Request password reset
     * Password Reset
+    * Fetch all users
 * Admin
     * User
     * Create account
@@ -123,11 +124,14 @@ Where `<YourUserIdHere>` is your userId
 and `<ProjectIdHere>` is the projectId.
 
 ### Create New Project
-Insert new project with a `POST` Request with `name` and `version` as values to the route:
+Insert new project with a `POST` Request with `name`, `version`, `access` and `default` as values to the route:
 ```
 /proj/insert/<YourUserIdHere>
 ```
 Where `<YourUserIdHere>` is your userId.
+The `access` value is an Array with a number of JSON objects in it. The JSON object should have `name` and `permission` as values.
+The `default` value is a JSON object and can have any values.
+
 
 ### Delete Project By Id
 Delete a project with a `GET` Request to the route:
@@ -177,6 +181,10 @@ email. Send a `POST` request to `/acc/requestreset` with the form data of `usern
 With the one time reset token from the requestreset route the user can set a new password.
 Send a `POST` request to `/acc/passwordreset` with the form data for `username`, `oneTimeKey`,
 `newPassword` and `confirmNewPassword`
+
+### Fetch all users
+Fetching all users ID and username is done by sending a `GET` request to `/user/all` while logged in with a token.
+Admin access is not required.
 
 ## Admin
 This handles all the admin routes and cannot be used by non-admins. All routes are
