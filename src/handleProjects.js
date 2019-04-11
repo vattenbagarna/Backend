@@ -132,6 +132,7 @@ const insertProject = async (db, params) => {
     }
 
     let insertedID = "";
+
     if ("name" in dict && "version" in dict) {
         let toInsert = {"name": dict["name"],
             "version": dict["version"], "access": creatorIDs, "data": []};
@@ -189,7 +190,7 @@ const updateProject = async (db, params) => {
 
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
         params[2]),
-        {projection: {"data": 0}});
+    {projection: {"data": 0}});
 
     return project;
 };
