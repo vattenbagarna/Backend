@@ -52,7 +52,7 @@ where `<YourTypeHere>` is the type you want to find items for.
 ### Get Created Objects
 Fetch items a user has created with a `GET` Request on the route:
 ```
-/obj/<YourUserIdHere>
+/obj/created
 ```
 Where `<YourUserIdHere>` is your userId.
 
@@ -66,26 +66,23 @@ Where `<YourObjectIdHere>` is the id of a object.
 ### Delete Object By Id
 Delete a object by id with a `GET` Request on the route:
 ```
-/obj/delete/<YourObjectIdHere>/<YourUserIdHere>
+/obj/delete/<YourObjectIdHere>
 ```
-Where `<YourObjectIdHere>` is the id of a object
-and `<YourUserIdHere>` is your userId.
+Where `<YourObjectIdHere>` is the id of a object.
 
 ### Create New Object
 Create a new object with a `POST` Request with a `JSON` object with any values to the route:
 ```
-/obj/insert/<YourObjectIdHere>/<YourUserIdHere>
+/obj/insert/<YourObjectIdHere>
 ```
-Where `<YourObjectIdHere>` is the id of a object
-and `<YourUserIdHere>` is your userId.
+Where `<YourObjectIdHere>` is the id of a object.
 
 ### Update Object By Id
  Update a object with a `POST` Request with a `JSON` object with any values to the route:
 ```
-/obj/update/<YourObjectIdHere>/<YourUserIdHere>
+/obj/update/<YourObjectIdHere>
 ```
-Where `<YourObjectIdHere>` is the id of a object
-and `<YourUserIdHere>` is your userId.
+Where `<YourObjectIdHere>` is the id of a object.
 
 
 
