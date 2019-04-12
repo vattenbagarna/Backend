@@ -30,7 +30,7 @@ const getAllObjects = async (db) => {
 */
 const getObjectsByType = async (db, type) => {
     let dbo = db.db(dbconfig.connection.database);
-    let typeData = await dbo.collection('Objects').find({"Kategori": type});
+    let typeData = await dbo.collection('Objects').find({"Kategori": type[0]});
 
     return typeData;
 };
