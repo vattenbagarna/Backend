@@ -52,7 +52,7 @@ where `<YourTypeHere>` is the type you want to find items for.
 ### Get Created Objects
 Fetch items a user has created with a `GET` Request on the route:
 ```
-/obj/<YourUserIdHere>
+/obj/created
 ```
 Where `<YourUserIdHere>` is your userId.
 
@@ -66,26 +66,23 @@ Where `<YourObjectIdHere>` is the id of a object.
 ### Delete Object By Id
 Delete a object by id with a `GET` Request on the route:
 ```
-/obj/delete/<YourObjectIdHere>/<YourUserIdHere>
+/obj/delete/<YourObjectIdHere>
 ```
-Where `<YourObjectIdHere>` is the id of a object
-and `<YourUserIdHere>` is your userId.
+Where `<YourObjectIdHere>` is the id of a object.
 
 ### Create New Object
 Create a new object with a `POST` Request with a `JSON` object with any values to the route:
 ```
-/obj/insert/<YourObjectIdHere>/<YourUserIdHere>
+/obj/insert/<YourObjectIdHere>
 ```
-Where `<YourObjectIdHere>` is the id of a object
-and `<YourUserIdHere>` is your userId.
+Where `<YourObjectIdHere>` is the id of a object.
 
 ### Update Object By Id
  Update a object with a `POST` Request with a `JSON` object with any values to the route:
 ```
-/obj/update/<YourObjectIdHere>/<YourUserIdHere>
+/obj/update/<YourObjectIdHere>
 ```
-Where `<YourObjectIdHere>` is the id of a object
-and `<YourUserIdHere>` is your userId.
+Where `<YourObjectIdHere>` is the id of a object.
 
 
 
@@ -95,40 +92,35 @@ The projects are reachable under the `/proj/` route.
 ### Get All Projects
 Fetch all projects with a `GET` Request to the route:
 ```
-/proj/all/<YourUserIdHere>
+/proj/all
 ```
-Where `<YourUserIdHere>` is your userId.
 
 ### Get Project By Id
 Fetch a specific project with a `GET` Request to the route:
 ```
-/proj/id/<ProjectIdHere>/<YourUserIdHere>
+/proj/id/<ProjectIdHere>
 ```
-Where `<YourUserIdHere>` is your userId
-and `<ProjectIdHere>` is the projectId.
+Where `<ProjectIdHere>` is the projectId.
 
 ### Get Project Data By Id
 Fetch object `data` for the map from project with a `GET` Request to the route:
 ```
 /proj/data/<ProjectIdHere>/<YourUserIdHere>
 ```
-Where `<YourUserIdHere>` is your userId
-and `<ProjectIdHere>` is the projectId.
+Where `<ProjectIdHere>` is the projectId.
 
 ### Get Project Info By Id
 Fetch basic project infromation from a project with a `GET` Request to the route:
 ```
-/proj/info/<ProjectIdHere>/<YourUserIdHere>
+/proj/info/<ProjectIdHere>
 ```
-Where `<YourUserIdHere>` is your userId
-and `<ProjectIdHere>` is the projectId.
+Where `<ProjectIdHere>` is the projectId.
 
 ### Create New Project
 Insert new project with a `POST` Request with `name`, `version`, `access` and `default` as values to the route:
 ```
-/proj/insert/<YourUserIdHere>
+/proj/insert
 ```
-Where `<YourUserIdHere>` is your userId.
 The `access` value is an Array with a number of JSON objects in it. The JSON object should have `name` and `permission` as values.
 The `default` value is a JSON object and can have any values.
 
@@ -136,27 +128,24 @@ The `default` value is a JSON object and can have any values.
 ### Delete Project By Id
 Delete a project with a `GET` Request to the route:
 ```
-/proj/delete/<ProjectIdHere>/<YourUserIdHere>
+/proj/delete/<ProjectIdHere>
 ```
-Where `<YourUserIdHere>` is your userId
-and `<ProjectIdHere>` is the projectId.
+Where `<ProjectIdHere>` is the projectId.
 
 
 ### Update Project Info
 Update basic project infromation with a `POST` Request with `name` and `version` as values to the route:
 ```
-/proj/update/info/<ProjectIdHere>/<YourUserIdHere>
+/proj/update/info/<ProjectIdHere>
 ```
-Where `<YourUserIdHere>` is your userId
-and `<ProjectIdHere>` is the projectId.
+Where `<ProjectIdHere>` is the projectId.
 
 ### Update Project Data
 Update/Save object data for the map with a `POST` Request with an `Array` to the route:
 ```
-/proj/update/data/<ProjectIdHere>/<YourUserIdHere>
+/proj/update/data/<ProjectIdHere>
 ```
-Where `<YourUserIdHere>` is your userId
-and `<ProjectIdHere>` is the projectId.
+Where `<ProjectIdHere>` is the projectId.
 ## Users
 User routes can be found under the `/acc/` route.
 

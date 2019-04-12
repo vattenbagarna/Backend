@@ -4,72 +4,81 @@
 */
 
 // Load dependencies
-const express = require("express");
-const router = new express.Router();
-const dbHandler = require('../src/dbWrapper.js');
-const projectHandler = require('../src/handleProjects.js');
+const express               = require("express");
+const router                = new express.Router();
+const dbHandler             = require('../src/dbWrapper.js');
+const projectHandler        = require('../src/handleProjects.js');
+const jwtAuth               = require('../src/jwtAuthentication.js');
 
 
 // get all projects
-router.get("/all/:userId", async (req, res) => {
+router.get("/all", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.getProjects,
-        [req.params.userId]);
+        [user._id]);
 
     res.json(data);
 });
 
 // get specific project
-router.get("/id/:projectId/:userId", async (req, res) => {
+router.get("/id/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.getProject,
-        [req.params.projectId, req.params.userId]);
+        [req.params.projectId, user._id]);
 
     res.json(data);
 });
 
 //get specific project data
-router.get("/data/:projectId/:userId", async (req, res) => {
+router.get("/data/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.getProjectData,
-        [req.params.projectId, req.params.userId]);
+        [req.params.projectId, user._id]);
 
     res.json(data);
 });
 
 //get specific project info
-router.get("/info/:projectId/:userId", async (req, res) => {
+router.get("/info/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.getProjectInfo,
-        [req.params.projectId, req.params.userId]);
+        [req.params.projectId, user._id]);
 
     res.json(data);
 });
 
 //insert new project
-router.post("/insert/:userId", async (req, res) => {
+router.post("/insert", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.insertProject,
-        [req.body, req.params.userId]);
+        [req.body, user._id]);
 
     res.json(data);
 });
 
 //delete project
-router.get("/delete/:projectId/:userId", async (req, res) => {
+router.get("/delete/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.deleteProject,
-        [req.params.projectId, req.params.userId]);
+        [req.params.projectId, user._id]);
 
     res.json(data);
 });
 
 //update project info
-router.post("/update/info/:projectId/:userId", async (req, res) => {
+router.post("/update/info/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.updateProject,
-        [req.body, req.params.projectId, req.params.userId]);
+        [req.body, req.params.projectId, user._id]);
 
     res.json(data);
 });
 
 //update project data
-router.post("/update/data/:projectId/:userId", async (req, res) => {
+router.post("/update/data/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.updateProjectData,
-        [req.body, req.params.projectId, req.params.userId]);
+        [req.body, req.params.projectId, user._id]);
 
     res.json(data);
 });
