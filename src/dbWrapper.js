@@ -43,9 +43,13 @@ const dbConnectPipe = (fExecute, fParams = undefined) => {
                     res = await fExecute(db);
                 }
 
-                res.toArray((err, data) => {
-                    err ? reject(err) : resolve(data);
-                });
+                if (res.constructor == Object) {
+                    resolve(res);
+                } else {
+                    res.toArray((err, data) => {
+                        err ? reject(err) : resolve(data);
+                    });
+                }
                 db.close();
             }
         );
