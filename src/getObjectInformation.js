@@ -118,10 +118,16 @@ const updateObjects = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
-        "creatorID": {"$in": [params[2]]}},
-    {"$set": params[0]});
-    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
+    let access = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}});
+
+    //Update values
+    //await dbo.collection('Objects').replaceOne({"_id": mongoID(params[1]),
+    //    "creatorID": {"$in": [params[2]]}}, params[0]);
+
+    //Get updated object
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}});
 
     return types;
 };
