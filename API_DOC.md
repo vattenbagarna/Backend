@@ -84,7 +84,11 @@ Where `<YourObjectIdHere>` is the id of a object.
 ```
 Where `<YourObjectIdHere>` is the id of a object.
 
-
+### List All Object Categories
+ Fetch all available categories with a `GET` Request to the route:
+```
+/obj/categories
+```
 
 ## Projects
 The projects are reachable under the `/proj/` route.

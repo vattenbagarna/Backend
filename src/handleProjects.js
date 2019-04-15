@@ -16,7 +16,8 @@ const dbconfig = require('../config/dbConfig.js');
   *
   */
 const findProjectQuery = (name) => {
-    return {"access": { "$all": [{"$elemMatch": {"userID": name}}] }};
+    return {"$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator": name}]};
+    //return {"access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
 /**
@@ -29,7 +30,23 @@ const findProjectQuery = (name) => {
   *
   */
 const findProjectQueryWithId = (id, name) => {
-    return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
+    return {"_id": mongoID(id),
+        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator": name}]};
+    //return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
+};
+
+const checkValidPermission = (creatorIDs, dict) => {
+    if (dict["access"] != undefined) {
+        for (let i = 0; i < dict["access"].length; i++) {
+            let permission = dict["access"][i]["permission"];
+
+            if (permission != undefined && permission !== "w" && permission !== "r") {
+                return {"error": true, "info": "Invalid permission"};
+            }
+            creatorIDs.push(dict["access"][i]);
+        }
+    }
+    return undefined;
 };
 
 /**
@@ -122,13 +139,12 @@ const insertProject = async (db, params) => {
 
     let dict = params[0];
 
-    let creatorIDs = [{"userID": params[1], "permission": "w", "creator": 1}];
+    let creatorIDs = [];
 
-    if (dict["access"] != undefined) {
-        for (let i = 0; i < dict["access"].length; i++) {
-            dict["access"][i]["creator"] = 0;
-            creatorIDs.push(dict["access"][i]);
-        }
+    let error = checkValidPermission(creatorIDs, dict);
+
+    if (error != undefined) {
+        return error;
     }
 
     let defaultValues = {};
@@ -142,13 +158,12 @@ const insertProject = async (db, params) => {
     if ("name" in dict && "version" in dict) {
         let toInsert = {"name": dict["name"],
             "version": dict["version"], "access": creatorIDs,
-            "default": defaultValues, "data": []};
+            "default": defaultValues, "creator": params[1], "data": []};
 
         await dbo.collection('Projects').insertOne(toInsert);
         insertedID = toInsert._id;
     }
-    console.log("outside: " + insertedID);
-    let projects = await dbo.collection('Projects').find({"_id": insertedID},
+    let projects = await dbo.collection('Projects').findOne({"_id": insertedID},
         {projection: {"data": 0}});
 
     return projects;
@@ -192,11 +207,26 @@ const updateProject = async (db, params) => {
 
     let dict = params[0];
 
+    if (dict['access'] != undefined) {
+        for (let i = 0; i < dict['access'].length; i++) {
+            let permission = dict['access'][i]['permission'];
+
+            if (permission != undefined && permission !== "w" && permission !== "r") {
+                return {"error": true, "info": "Invalid permission"};
+            }
+        }
+    }
+
+    //delete creator value if submitted
+    if (dict['creator'] != undefined) {
+        delete dict['creator'];
+    }
+
     await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
         params[2]), {"$set": dict});
 
-    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1], params[2]),
-        {projection: {"data": 0}});
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
+        params[2]), {projection: {"data": 0}});
 
     return project;
 };
