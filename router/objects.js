@@ -44,9 +44,6 @@ router.get("/id/:objectId", async (req, res) => {
     res.json(data);
 });
 
-// TODO: get all available categories?
-
-
 // delete project by id
 router.get("/delete/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
@@ -70,6 +67,12 @@ router.post("/update/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.updateObjects,
         [req.body, req.params.objectId, user._id]);
+
+    res.json(data);
+});
+
+router.get("/categories", async (req, res) => {
+    let data = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
 
     res.json(data);
 });
