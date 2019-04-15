@@ -126,7 +126,7 @@ const updateObjects = async (db, params) => {
     return types;
 };
 
-const listCategories = async (db, params) => {
+const listCategories = async (db) => {
     let dbo = db.db(dbconfig.connection.database);
 
     let types = await dbo.collection('Objects').distinct("Kategori");
