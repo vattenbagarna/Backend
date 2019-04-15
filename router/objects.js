@@ -4,21 +4,22 @@
 */
 
 // Load dependencies
-const express = require("express");
-const router = new express.Router();
-const dbHandler = require('../src/dbWrapper.js');
-const objectInfo = require('../src/getObjectInformation.js');
-const validate = require('../middleware/validateInput.js');
+const express       = require("express");
+const router        = new express.Router();
+const dbHandler     = require('../src/dbWrapper.js');
+const objectInfo    = require('../src/getObjectInformation.js');
+const validate      = require('../middleware/validateInput.js');
+const jwtAuth       = require('../src/jwtAuthentication.js');
 
 
-// get all houses
+// get all objects
 router.get("/all", async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getAllObjects);
 
     res.json(data);
 });
 
-// get data for a specific house
+// get data for a specific object
 router.get("/type/:objectType", validate.filter, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getObjectsByType,
         [req.params.objectType]);
@@ -27,9 +28,10 @@ router.get("/type/:objectType", validate.filter, async (req, res) => {
 });
 
 // get your created objects
-router.get("/created/:userId", async (req, res) => {
+router.get("/created", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.getCreatedObjects,
-        [req.params.userId]);
+        [user._id]);
 
     res.json(data);
 });
@@ -46,25 +48,28 @@ router.get("/id/:objectId", async (req, res) => {
 
 
 // delete project by id
-router.get("/delete/:objectId/:userId", async (req, res) => {
+router.get("/delete/:objectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.deleteObjects,
-        [req.params.objectId, req.params.userId]);
+        [req.params.objectId, user._id]);
 
     res.json(data);
 });
 
 // insert new object
-router.post("/insert/:userId", async (req, res) => {
+router.post("/insert", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.insertObject,
-        [req.body, req.params.userId]);
+        [req.body, user._id]);
 
     res.json(data);
 });
 
 // update object with id
-router.post("/update/:objectId/:userId", async (req, res) => {
+router.post("/update/:objectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.updateObjects,
-        [req.body, req.params.objectId, req.params.userId]);
+        [req.body, req.params.objectId, user._id]);
 
     res.json(data);
 });

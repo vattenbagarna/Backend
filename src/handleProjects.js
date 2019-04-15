@@ -225,8 +225,8 @@ const updateProject = async (db, params) => {
     await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
         params[2]), {"$set": dict});
 
-    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
-        params[2]), {projection: {"data": 0}});
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1], params[2]),
+        {projection: {"data": 0}});
 
     return project;
 };
