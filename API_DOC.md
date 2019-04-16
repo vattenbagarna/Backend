@@ -150,6 +150,14 @@ Update/Save object data for the map with a `POST` Request with an `Array` to the
 /proj/update/data/<ProjectIdHere>
 ```
 Where `<ProjectIdHere>` is the projectId.
+
+### Get User Access For Project
+Fetch the permissions for a user from a project with a `GET` Request to the route:
+```
+/proj/permission/<ProjectIdHere>
+```
+Where `<ProjectIdHere>` is the projectId.
+
 ## Users
 User routes can be found under the `/acc/` route.
 

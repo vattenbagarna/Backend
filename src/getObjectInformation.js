@@ -96,7 +96,6 @@ const deleteObjects = async (db, params) => {
 const insertObject = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    console.log("inserting");
     params[0]["creatorID"] = [params[1]];
     await dbo.collection('Objects').insertOne(params[0]);
     let object = await dbo.collection('Objects').find({"_id": params[0]._id});
@@ -118,14 +117,22 @@ const updateObjects = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
-        "creatorID": {"$in": [params[2]]}},
-    {"$set": params[0]});
-    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
+    //Update values
+    await dbo.collection('Objects').replaceOne({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}}, params[0]);
+
+    //Get updated object
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}});
 
     return types;
 };
 
+/**
+  * List unique categories in object collection
+  *
+  * @returns {Array} Mongodb response with an array
+  */
 const listCategories = async (db) => {
     let dbo = db.db(dbconfig.connection.database);
 

@@ -83,4 +83,31 @@ router.post("/update/data/:projectId", async (req, res) => {
     res.json(data);
 });
 
+//get permissions for user in project
+router.get("/permission/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
+    let data = await dbHandler.dbConnectPipe(projectHandler.getUsersPermission,
+        [req.body, req.params.projectId, user._id]);
+
+    data = data[0];
+
+    let access = {"error": true, "info": "User not found in access list"};
+
+    if (data != undefined) {
+        if (data.access != undefined) {
+            for (let i = 0; i < data.access.length; i++) {
+                if (data.access[i].userID === user._id) {
+                    access = {"permission": data.access[i].permission};
+                    break;
+                }
+            }
+        }
+        if (data.creator != undefined && data.creator === user._id) {
+            access = {"permission": "w"};
+        }
+    }
+
+    res.json(access);
+});
+
 module.exports = router;
