@@ -36,6 +36,22 @@ const findProjectQueryWithId = (id, name) => {
 };
 
 /**
+  * Get a predefined find project query where we see if a userId is
+  * in the access value and if the id matches and if has permission/creator
+  * (creator is the same as highest permission)
+  *
+  * @param {String} MongodbID to find
+  * @param {String} UserId to find
+  * @param {String} Permission to find
+  * @returns {JSON} JSON query
+  *
+  */
+const findPermissionQuery = (id, name, permission) => {
+    return {"_id": mongoID(id),
+        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name, "permission": permission}}] }}, {"creator": name}]};
+};
+
+/**
   * Check if object has correct permissions under access.permission
   *
   * @param {JSON} JSON to check permissions
@@ -250,8 +266,8 @@ const updateProjectData = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
-        params[2]), {"$set": {"data": params[0]}});
+    await dbo.collection('Projects').replaceOne(findPermissionQuery(params[1],
+        "asd2", "w"), {"$set": {"data": params[0]}});
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
         params[2]));
 
