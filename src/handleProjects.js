@@ -51,8 +51,7 @@ const checkValidPermission = (dict) => {
                 return {"error": true, "info": "Invalid permission"};
             }
         }
-    }
-    else {
+    } else {
         dict['access'] = [];
     }
 
@@ -164,9 +163,11 @@ const insertProject = async (db, params) => {
     let insertedID = "";
 
     if ("name" in dict && "version" in dict) {
-        let toInsert = {"name": dict["name"],
+        let toInsert = {
+            "name": dict["name"],
             "version": dict["version"], "access": dict['access'],
-            "default": defaultValues, "creator": params[1], "data": []};
+            "default": defaultValues, "creator": params[1], "data": []
+        };
 
         await dbo.collection('Projects').insertOne(toInsert);
         insertedID = toInsert._id;
