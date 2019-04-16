@@ -184,10 +184,27 @@ GC07A = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 10,
     "Vikt: kg": 13,
-    "Pumpkurva": {
-        "lyfthöjd: m": [10, 10, 9, 5.5, 2.5, 1.5],
-        "lps": [0, 0.5, 1, 1.5, 2, 2.5, 2.7]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 10,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 10,
+        "lps": 0.5
+      }, {
+        "lyfthöjd: m": 9,
+        "lps": 1
+      }, {
+        "lyfthöjd: m": 5.5,
+        "lps": 1.5
+      }, {
+        "lyfthöjd: m": 2.5,
+        "lps": 2.5
+      }, {
+        "lyfthöjd: m": 1.5,
+        "lps": 2.7
+      }
+    ]
 }];
 
 GD3053 = [{
@@ -202,10 +219,27 @@ GD3053 = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 10,
     "Vikt: kg": 38,
-    "Pumpkurva": {
-        "lyfthöjd: m": [36, 32.5, 27, 2.5],
-        "lps": [0, 1, 2, 3]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 36,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 32.5,
+        "lps": 1
+      }, {
+        "lyfthöjd: m": 27,
+        "lps": 2
+      }, {
+        "lyfthöjd: m": 20,
+        "lps": 2.5
+      }, {
+        "lyfthöjd: m": 15,
+        "lps": 2.7
+      }, {
+        "lyfthöjd: m": 2.5,
+        "lps": 3
+      }
+    ]
 }];
 
 GD20 = [{
@@ -220,10 +254,33 @@ GD20 = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 10,
     "Vikt: kg": 32,
-    "Pumpkurva": {
-        "lyfthöjd: m": [25, 22, 20, 17, 15, 12, 8, 2],
-        "lps": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5]
+    "Pumpkurva": [
+    {
+      "lyfthöjd: m": 25,
+      "lps": 0
+    }, {
+      "lyfthöjd: m": 22,
+      "lps": 0.5
+    }, {
+      "lyfthöjd: m": 20,
+      "lps": 1
+    }, {
+      "lyfthöjd: m": 17,
+      "lps": 1.5
+    }, {
+      "lyfthöjd: m": 15,
+      "lps": 2
+    }, {
+      "lyfthöjd: m": 12,
+      "lps": 2.5
+    }, {
+      "lyfthöjd: m": 8,
+      "lps": 3
+    }, {
+      "lyfthöjd: m": 2,
+      "lps": 3.5
     }
+  ]
 }];
 
 GD20A = [{
@@ -238,10 +295,33 @@ GD20A = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 10,
     "Vikt: kg": 32,
-    "Pumpkurva": {
-        "lyfthöjd: m": [25, 22, 20, 17, 15, 12, 8, 2],
-        "lps": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 25,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 22,
+        "lps": 0.5
+      }, {
+        "lyfthöjd: m": 20,
+        "lps": 1
+      }, {
+        "lyfthöjd: m": 17,
+        "lps": 1.5
+      }, {
+        "lyfthöjd: m": 15,
+        "lps": 2
+      }, {
+        "lyfthöjd: m": 12,
+        "lps": 2.5
+      }, {
+        "lyfthöjd: m": 8,
+        "lps": 3
+      }, {
+        "lyfthöjd: m": 2,
+        "lps": 3.5
+      }
+    ]
 }];
 
 GD30 = [{
@@ -256,10 +336,33 @@ GD30 = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 10,
     "Vikt: kg": 35,
-    "Pumpkurva": {
-        "lyfthöjd: m": [28, 26, 24, 22, 20, 17, 14, 6],
-        "lps": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 28,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 26,
+        "lps": 0.5
+      }, {
+        "lyfthöjd: m": 24,
+        "lps": 1
+      }, {
+        "lyfthöjd: m": 22,
+        "lps": 1.5
+      }, {
+        "lyfthöjd: m": 20 ,
+        "lps": 2
+      }, {
+        "lyfthöjd: m": 17,
+        "lps": 2.5
+      }, {
+        "lyfthöjd: m": 14,
+        "lps": 3
+      }, {
+        "lyfthöjd: m": 6,
+        "lps": 3.5
+      }
+    ]
 }];
 
 GS15 = [{
@@ -273,10 +376,24 @@ GS15 = [{
     "Varvtal: rpm": 1450,
     "Kabellängd: m": 10,
     "Vikt: kg": 40,
-    "Pumpkurva": {
-        "lyfthöjd: m": [70, 65, 40, 25, 5],
-        "lps": [0, 0.2, 0.4, 0.6, 0.8]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 70,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 65,
+        "lps": 0.2
+      }, {
+        "lyfthöjd: m": 40,
+        "lps": 0.4
+      }, {
+        "lyfthöjd: m": 25,
+        "lps": 0.6
+      }, {
+        "lyfthöjd: m": 5,
+        "lps": 0.8
+      }
+    ]
 }];
 
 JK20A = [{
@@ -290,10 +407,33 @@ JK20A = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 10,
     "Vikt: kg": 32,
-    "Pumpkurva": {
-        "lyfthöjd: m": [14, 12, 10, 8, 6, 4, 2, 0],
-        "lps": [0, 3, 5, 6.2, 7.5, 8.2, 9.5, 10.2]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 14,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 12,
+        "lps": 3
+      }, {
+        "lyfthöjd: m": 10,
+        "lps": 5
+      }, {
+        "lyfthöjd: m": 8,
+        "lps": 6.2
+      }, {
+        "lyfthöjd: m": 6,
+        "lps": 7.5
+      }, {
+        "lyfthöjd: m": 4,
+        "lps": 8.2
+      }, {
+        "lyfthöjd: m": 2,
+        "lps": 9.5
+      }, {
+        "lyfthöjd: m": 0,
+        "lps": 10.2
+      }
+    ]
 }];
 
 BAV205A = [{
@@ -309,10 +449,30 @@ BAV205A = [{
     "Kabeltyp": "H05RNF/H07RNF",
     "Kabellängd: m": 10,
     "Vikt: kg": 6,
-    "Pumpkurva": {
-        "lyfthöjd: m": [8, 6, 5, 4, 3, 2, 1],
-        "lps": [0, 1.1, 1.7, 2.2, 2.7, 3, 3.1]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 8,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 6,
+        "lps": 1.1
+      }, {
+        "lyfthöjd: m": 5,
+        "lps": 1.7
+      }, {
+        "lyfthöjd: m": 4,
+        "lps": 2.2
+      }, {
+        "lyfthöjd: m": 3,
+        "lps": 2.7
+      }, {
+        "lyfthöjd: m": 2,
+        "lps": 3
+      }, {
+        "lyfthöjd: m": 1,
+        "lps": 3.1
+      }
+    ]
 }];
 
 DSPK30 = [{
@@ -327,11 +487,32 @@ DSPK30 = [{
     "Varvtal: rpm": 2900,
     "Kabellängd: m": 8,
     "Vikt: kg": 42,
-    "Pumpkurva": {
-        "lyfthöjd: m": [19, 16.5, 14, 11.5, 9, 6, 2],
-        "lps": [0, 2.5, 5, 7.5, 10, 12.5, 15]
-    }
+    "Pumpkurva": [
+      {
+        "lyfthöjd: m": 19,
+        "lps": 0
+      }, {
+        "lyfthöjd: m": 16.5,
+        "lps": 2.5
+      }, {
+        "lyfthöjd: m": 14,
+        "lps": 5
+      }, {
+        "lyfthöjd: m": 11.5,
+        "lps": 7.5
+      }, {
+        "lyfthöjd: m": 9,
+        "lps": 10
+      }, {
+        "lyfthöjd: m": 6,
+        "lps": 12.5
+      }, {
+        "lyfthöjd: m": 2,
+        "lps": 15
+      }
+    ]
 }];
+
 // tror inte vi kommer använda paket
 BagaEasyPaket = [{
     "Kategori": "Baga Paket",
