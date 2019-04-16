@@ -48,7 +48,9 @@ const findProjectQueryWithId = (id, name) => {
   */
 const findPermissionQuery = (id, name, permission) => {
     return {"_id": mongoID(id),
-        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name, "permission": permission}}] }}, {"creator": name}]};
+        "$or": [{"access": { "$all":
+        [{"$elemMatch": {"userID": name, "permission": permission}}] }},
+        {"creator": name}]};
 };
 
 /**
@@ -267,7 +269,7 @@ const updateProjectData = async (db, params) => {
     if (check != undefined) {return check;}
 
     await dbo.collection('Projects').replaceOne(findPermissionQuery(params[1],
-        "asd2", "w"), {"$set": {"data": params[0]}});
+        params[2], "w"), {"$set": {"data": params[0]}});
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
         params[2]));
 
