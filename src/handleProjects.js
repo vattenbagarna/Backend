@@ -35,7 +35,14 @@ const findProjectQueryWithId = (id, name) => {
     //return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
-const checkValidPermission = (creatorIDs, dict) => {
+/**
+  * Check if object has correct permissions under access.permission
+  *
+  * @param {JSON} JSON to check permissions
+  * @returns {JSON} if invalid permission, an error. If not, undefined
+  *
+  */
+const checkValidPermission = (dict) => {
     if (dict["access"] != undefined) {
         for (let i = 0; i < dict["access"].length; i++) {
             let permission = dict["access"][i]["permission"];
@@ -43,9 +50,12 @@ const checkValidPermission = (creatorIDs, dict) => {
             if (permission != undefined && permission !== "w" && permission !== "r") {
                 return {"error": true, "info": "Invalid permission"};
             }
-            creatorIDs.push(dict["access"][i]);
         }
     }
+    else {
+        dict['access'] = [];
+    }
+
     return undefined;
 };
 
@@ -139,9 +149,7 @@ const insertProject = async (db, params) => {
 
     let dict = params[0];
 
-    let creatorIDs = [];
-
-    let error = checkValidPermission(creatorIDs, dict);
+    let error = checkValidPermission(dict);
 
     if (error != undefined) {
         return error;
@@ -157,7 +165,7 @@ const insertProject = async (db, params) => {
 
     if ("name" in dict && "version" in dict) {
         let toInsert = {"name": dict["name"],
-            "version": dict["version"], "access": creatorIDs,
+            "version": dict["version"], "access": dict['access'],
             "default": defaultValues, "creator": params[1], "data": []};
 
         await dbo.collection('Projects').insertOne(toInsert);
@@ -207,14 +215,10 @@ const updateProject = async (db, params) => {
 
     let dict = params[0];
 
-    if (dict['access'] != undefined) {
-        for (let i = 0; i < dict['access'].length; i++) {
-            let permission = dict['access'][i]['permission'];
+    let error = checkValidPermission(dict);
 
-            if (permission != undefined && permission !== "w" && permission !== "r") {
-                return {"error": true, "info": "Invalid permission"};
-            }
-        }
+    if (error != undefined) {
+        return error;
     }
 
     //delete creator value if submitted

@@ -83,6 +83,7 @@ router.post("/update/data/:projectId", async (req, res) => {
     res.json(data);
 });
 
+//get permissions for user in project
 router.get("/permission/:projectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.getUsersPermission,
