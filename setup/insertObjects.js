@@ -195,7 +195,7 @@ GC07A = [{
         "lyfthöjd: m": 9,
         "lps": 1
       }, {
-        "lyfthöjd: m": 5,5,
+        "lyfthöjd: m": 5.5,
         "lps": 1.5
       }, {
         "lyfthöjd: m": 2.5,
