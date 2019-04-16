@@ -253,6 +253,19 @@ const updateProjectData = async (db, params) => {
     return project;
 };
 
+const getUsersPermission = async (db, params) => {
+    let dbo = db.db(dbconfig.connection.database);
+    //Check for valid mongodb objectId
+    let check = await checkInvalidID(db, params[1]);
+
+    if (check != undefined) {return check;}
+
+    let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
+        params[2]), {projection: {"access": 1, "creator": 1}});
+
+    return project;
+};
+
 /**
   * Check if string is valid mongoId
   *
@@ -279,5 +292,6 @@ module.exports = {
     insertProject,
     deleteProject,
     updateProject,
-    updateProjectData
+    updateProjectData,
+    getUsersPermission
 };
