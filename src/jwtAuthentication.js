@@ -14,6 +14,7 @@ const createToken = (user) => {
     exp.setTime(new Date(exp.getTime() + 6*24*60*60));
     //Add expiery to JWT object
     user.exp = exp.getTime();
+    user.iat = Date.now();
     //Return JWT
     return jwt.sign(user, global.jwtSecret);
 };
@@ -36,8 +37,8 @@ const verify = (token) => {
         if (token.exp > currentTime) {
             return false;
         }
-        //If the token has less than a day left, renew it.
-        if (token.exp - currentTime <= 60*60*24) {
+        //If the token was issued more than a day ago, renew it
+        if (currentTime - token.iat > 60*60*24) {
             decoded = createToken(decoded);
         }
         //All checks passed, return token.
