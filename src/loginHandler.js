@@ -113,6 +113,11 @@ const verifyUserLogin = async (db, userAccount) => {
         return {"error": true};
     }
 
+    // Make sure we don't throw an unhandled promise rejection if the password does not exist
+    if (userAccount[0].password == undefined || userAccount[0].password == undefined) {
+        return {"error": true};
+    }
+
     //Check if the user submitted password matches the hashed password in the database
     let passwordIsValid = await validatePassword(userAccount[0].password, existingUser.password);
 
@@ -138,6 +143,13 @@ const changePassword = async (db, userChangePassword) => {
 
     //If we don't find a user they can't change their password
     if (existingUser == null) {
+        return false;
+    }
+
+    // Make sure we don't throw an unhandled promise rejection if the password does not exist
+    if (
+        userChangePassword[0].password == undefined ||
+        userChangePassword[0].password == undefined) {
         return false;
     }
 
@@ -267,7 +279,7 @@ const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
 const adminCreateAccountForUser = async (db, newUser) => {
     // Check that email is valid, if not - return false
     if (!emailValidator.validate(newUser[0].username)) {
-        return false;
+        return {"error": true, "info": "not a valid email address."};
     }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
@@ -278,7 +290,7 @@ const adminCreateAccountForUser = async (db, newUser) => {
 
     //If we find an existing user, return false - a new user was not created
     if (existingUser != null) {
-        return false;
+        return {"error": true};
     }
 
     //Create a oneTimeKey
@@ -302,9 +314,9 @@ const adminCreateAccountForUser = async (db, newUser) => {
             newUser[0].username,
             mailman.createNewAccountTokenEmail(generatedOneTimeKey)
         );
-        return true;
+        return {"error": false};
     }
-    return false;
+    return {"error": true};
 };
 
 module.exports = {

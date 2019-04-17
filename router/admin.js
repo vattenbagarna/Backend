@@ -63,10 +63,14 @@ router.post("/createaccount", checkAdmin, urlencodedParser, async (req, res) => 
         }]
     );
 
-    if (tryCreateAccount == true) {
+    if (tryCreateAccount.error == false) {
         res.json({"info": "User successfully crated!", "error": false});
     } else {
-        res.json({"info": "failed to create user!", "error": true});
+        if (tryCreateAccount.info == undefined) {
+            tryCreateAccount.info = "Failed to create user!";
+        }
+        res.json(tryCreateAccount);
+        // res.json({"info": "failed to create user!", "error": true});
     }
 });
 
