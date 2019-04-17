@@ -51,7 +51,7 @@ router.get("/info/:projectId", async (req, res) => {
 router.post("/insert", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.insertProject,
-        [req.body, user._id]);
+        [req.body, user._id, user.username]);
 
     res.json(data);
 });

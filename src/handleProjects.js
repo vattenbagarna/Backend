@@ -16,7 +16,7 @@ const dbconfig = require('../config/dbConfig.js');
   *
   */
 const findProjectQuery = (name) => {
-    return {"$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator": name}]};
+    return {"$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator.userID": name}]};
     //return {"access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
@@ -31,7 +31,7 @@ const findProjectQuery = (name) => {
   */
 const findProjectQueryWithId = (id, name) => {
     return {"_id": mongoID(id),
-        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator": name}]};
+        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator.userID": name}]};
     //return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
@@ -50,7 +50,7 @@ const findPermissionQuery = (id, name, permission) => {
     return {"_id": mongoID(id),
         "$or": [{"access": { "$all":
         [{"$elemMatch": {"userID": name, "permission": permission}}] }},
-        {"creator": name}]};
+        {"creator.userID": name}]};
 };
 
 /**
@@ -169,7 +169,7 @@ const getProjectInfo = async (db, params) => {
 /**
   * Insert new project for user
   *
-  * @param {Array} [0] = JSON POST request, [1] = UserId
+  * @param {Array} [0] = JSON POST request, [1] = UserId, [2] username
   * @returns {JSON} mongodb response
   *
   */
@@ -196,7 +196,9 @@ const insertProject = async (db, params) => {
         let toInsert = {
             "name": dict["name"],
             "version": dict["version"], "access": dict['access'],
-            "default": defaultValues, "creator": params[1], "data": []
+            "default": defaultValues,
+            "creator": {"userID": params[1], "username": params[2]},
+            "data": []
         };
 
         await dbo.collection('Projects').insertOne(toInsert);
