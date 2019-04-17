@@ -36,6 +36,36 @@ const findProjectQueryWithId = (id, name) => {
 };
 
 /**
+  * Get a predefined find project query where we see if a userId is
+  * in the access value and if the id matches and if has permission/creator
+  * (creator is the same as highest permission)
+  *
+  * @param {String} MongodbID to find
+  * @param {String} UserId to find
+  * @param {String} Permission to find
+  * @returns {JSON} JSON query
+  *
+  */
+const findPermissionQuery = (id, name, permission) => {
+    return {"_id": mongoID(id),
+        "$or": [{"access": { "$all":
+        [{"$elemMatch": {"userID": name, "permission": permission}}] }},
+        {"creator": name}]};
+};
+
+/**
+  * Get predefined query of find project with correct id and creator
+  *
+  * @param {String} MongodbID to find
+  * @param {String} UserId to find in creator
+  * @returns {JSON} JSON query
+  *
+  */
+const findCreatorQueryWithId = (id, name) => {
+    return {"_id": mongoID(id), "creator": name};
+};
+
+/**
   * Check if object has correct permissions under access.permission
   *
   * @param {JSON} JSON to check permissions
@@ -51,8 +81,7 @@ const checkValidPermission = (dict) => {
                 return {"error": true, "info": "Invalid permission"};
             }
         }
-    }
-    else {
+    } else {
         dict['access'] = [];
     }
 
@@ -164,9 +193,11 @@ const insertProject = async (db, params) => {
     let insertedID = "";
 
     if ("name" in dict && "version" in dict) {
-        let toInsert = {"name": dict["name"],
+        let toInsert = {
+            "name": dict["name"],
             "version": dict["version"], "access": dict['access'],
-            "default": defaultValues, "creator": params[1], "data": []};
+            "default": defaultValues, "creator": params[1], "data": []
+        };
 
         await dbo.collection('Projects').insertOne(toInsert);
         insertedID = toInsert._id;
@@ -191,7 +222,7 @@ const deleteProject = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').deleteOne(findProjectQueryWithId(params[0],
+    await dbo.collection('Projects').deleteOne(findCreatorQueryWithId(params[0],
         params[1]));
     let project = await dbo.collection('Projects').find(findProjectQuery(params[1]),
         {projection: {"data": 0}});
@@ -226,7 +257,7 @@ const updateProject = async (db, params) => {
         delete dict['creator'];
     }
 
-    await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
+    await dbo.collection('Projects').updateOne(findCreatorQueryWithId(params[1],
         params[2]), {"$set": dict});
 
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
@@ -249,8 +280,8 @@ const updateProjectData = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
-        params[2]), {"$set": {"data": params[0]}});
+    await dbo.collection('Projects').replaceOne(findPermissionQuery(params[1],
+        params[2], "w"), {"$set": {"data": params[0]}});
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
         params[2]));
 
