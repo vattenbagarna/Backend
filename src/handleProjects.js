@@ -16,7 +16,8 @@ const dbconfig = require('../config/dbConfig.js');
   *
   */
 const findProjectQuery = (name) => {
-    return {"$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator.userID": name}]};
+    return {"$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }},
+        {"creator.userID": name}]};
     //return {"access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
@@ -31,7 +32,8 @@ const findProjectQuery = (name) => {
   */
 const findProjectQueryWithId = (id, name) => {
     return {"_id": mongoID(id),
-        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }}, {"creator.userID": name}]};
+        "$or": [{"access": { "$all": [{"$elemMatch": {"userID": name}}] }},
+            {"creator.userID": name}]};
     //return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
@@ -62,7 +64,7 @@ const findPermissionQuery = (id, name, permission) => {
   *
   */
 const findCreatorQueryWithId = (id, name) => {
-    return {"_id": mongoID(id), "creator": name};
+    return {"_id": mongoID(id), "creator.userID": name};
 };
 
 /**
