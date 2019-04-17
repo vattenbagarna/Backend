@@ -53,6 +53,11 @@ const findPermissionQuery = (id, name, permission) => {
         {"creator": name}]};
 };
 
+const findCreatorQueryWithId = (id, name) => {
+    return {"_id": mongoID(id), "creator": name};
+    //return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
+};
+
 /**
   * Check if object has correct permissions under access.permission
   *
@@ -210,7 +215,7 @@ const deleteProject = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    await dbo.collection('Projects').deleteOne(findProjectQueryWithId(params[0],
+    await dbo.collection('Projects').deleteOne(findCreatorQueryWithId(params[0],
         params[1]));
     let project = await dbo.collection('Projects').find(findProjectQuery(params[1]),
         {projection: {"data": 0}});
@@ -245,7 +250,7 @@ const updateProject = async (db, params) => {
         delete dict['creator'];
     }
 
-    await dbo.collection('Projects').updateOne(findProjectQueryWithId(params[1],
+    await dbo.collection('Projects').updateOne(findCreatorQueryWithId(params[1],
         params[2]), {"$set": dict});
 
     let project = await dbo.collection('Projects').find(findProjectQueryWithId(params[1],
