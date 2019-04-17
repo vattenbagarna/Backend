@@ -53,9 +53,16 @@ const findPermissionQuery = (id, name, permission) => {
         {"creator": name}]};
 };
 
+/**
+  * Get predefined query of find project with correct id and creator
+  *
+  * @param {String} MongodbID to find
+  * @param {String} UserId to find in creator
+  * @returns {JSON} JSON query
+  *
+  */
 const findCreatorQueryWithId = (id, name) => {
     return {"_id": mongoID(id), "creator": name};
-    //return {"_id": mongoID(id), "access": { "$all": [{"$elemMatch": {"userID": name}}] }};
 };
 
 /**
