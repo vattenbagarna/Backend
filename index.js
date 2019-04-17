@@ -43,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // Set headers that apply to all routes here
 app.use((req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
 
