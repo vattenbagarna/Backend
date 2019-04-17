@@ -73,9 +73,9 @@ Where `<YourObjectIdHere>` is the id of a object.
 ### Create New Object
 Create a new object with a `POST` Request with a `JSON` object with any values to the route:
 ```
-/obj/insert/<YourObjectIdHere>
+/obj/insert/
 ```
-Where `<YourObjectIdHere>` is the id of a object.
+The `JSON` object requires the values `Kategori` and `Modell`.
 
 ### Update Object By Id
  Update a object with a `POST` Request with a `JSON` object with any values to the route:
@@ -109,7 +109,7 @@ Where `<ProjectIdHere>` is the projectId.
 ### Get Project Data By Id
 Fetch object `data` for the map from project with a `GET` Request to the route:
 ```
-/proj/data/<ProjectIdHere>/<YourUserIdHere>
+/proj/data/<ProjectIdHere>/
 ```
 Where `<ProjectIdHere>` is the projectId.
 
@@ -125,7 +125,7 @@ Insert new project with a `POST` Request with `name`, `version`, `access` and `d
 ```
 /proj/insert
 ```
-The `access` value is an Array with a number of JSON objects in it. The JSON object should have `name` and `permission` as values.
+The `access` value is an Array with a number of JSON objects in it. The JSON object should have `userID` and `permission` as values.
 The `default` value is a JSON object and can have any values.
 
 
