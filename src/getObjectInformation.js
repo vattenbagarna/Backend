@@ -142,6 +142,56 @@ const listCategories = async (db) => {
 };
 
 /**
+  * Get icon for category
+  *
+  * @param {Array} [0] = Category to find
+  * @returns {JSON} Mongodb response with images
+  */
+const getCategoryIcon = async (db, params) => {
+    let dbo = db.db(dbconfig.connection.database);
+
+    let types = await dbo.collection('Icons').find({"Kategori": params[0]});
+
+    return types;
+};
+
+/**
+  * Get icon for all categories
+  *
+  * @returns {JSON} Mongodb response with images
+  */
+const getAllCategoryIcons = async (db) => {
+    let dbo = db.db(dbconfig.connection.database);
+
+    let types = await dbo.collection('Icons').find({});
+
+    return types;
+};
+
+/**
+  * Insert icon for category
+  *
+  * @param {Array} [0] = JSON object with Kategori and imgData
+  * @returns {JSON} Mongodb response with images
+  */
+const insertCategoryIcon = async (db, params) => {
+    let dbo = db.db(dbconfig.connection.database);
+
+    let dict = params[0];
+    //check if correct values is set
+    if(dict['Kategori'] == undefined || dict['imgData'] == undefined){
+        return {"error": true, "info": "Kategori or imgData not set"}
+    }
+
+    let toInsert = {"Kategori": dict['Kategori'], "imgData": dict['imgData']};
+    await dbo.collection('Icons').insertOne(toInsert);
+    let types = await dbo.collection('Icons').find({"_id": toInsert._id},
+        {projection: {"imgData": 0}});
+
+    return types;
+};
+
+/**
   * Check if string is valid mongoId
   *
   * @param {Array} [0] = JSON POST request, [1] = ProjectId, [2] = UserId
@@ -167,5 +217,8 @@ module.exports = {
     deleteObjects,
     insertObject,
     updateObjects,
-    listCategories
+    listCategories,
+    getCategoryIcon,
+    getAllCategoryIcons,
+    insertCategoryIcon
 };
