@@ -14,7 +14,6 @@ const jwtAuth       = require('../src/jwtAuthentication.js');
 
 // get all objects
 router.get("/all", async (req, res) => {
-    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.getAllObjects);
 
     res.json(data);
@@ -74,7 +73,6 @@ router.post("/update/:objectId", async (req, res) => {
 
 //list all categories
 router.get("/categories", async (req, res) => {
-    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
 
     res.json(data);
@@ -82,7 +80,6 @@ router.get("/categories", async (req, res) => {
 
 //get icons for category by name
 router.get("/categories/icon/type/:category", async (req, res) => {
-    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.getCategoryIcon,
         [req.params.category]);
 
@@ -91,7 +88,6 @@ router.get("/categories/icon/type/:category", async (req, res) => {
 
 //get all icons for categories
 router.get("/categories/icon/all", async (req, res) => {
-    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.getAllCategoryIcons);
 
     res.json(data);
@@ -99,7 +95,6 @@ router.get("/categories/icon/all", async (req, res) => {
 
 //insert a new icon for a category
 router.post("/categories/icon/insert", async (req, res) => {
-    let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.insertCategoryIcon,
         [req.body]);
 

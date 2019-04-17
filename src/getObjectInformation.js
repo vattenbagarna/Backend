@@ -179,11 +179,13 @@ const insertCategoryIcon = async (db, params) => {
 
     let dict = params[0];
     //check if correct values is set
-    if(dict['Kategori'] == undefined || dict['imgData'] == undefined){
-        return {"error": true, "info": "Kategori or imgData not set"}
+
+    if (dict['Kategori'] == undefined || dict['imgData'] == undefined) {
+        return {"error": true, "info": "Kategori or imgData not set"};
     }
 
     let toInsert = {"Kategori": dict['Kategori'], "imgData": dict['imgData']};
+
     await dbo.collection('Icons').insertOne(toInsert);
     let types = await dbo.collection('Icons').find({"_id": toInsert._id},
         {projection: {"imgData": 0}});
