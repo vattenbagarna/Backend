@@ -89,6 +89,23 @@ Where `<YourObjectIdHere>` is the id of a object.
 ```
 /obj/categories
 ```
+### Get Icon For Category
+Fetch icon for category with a `GET` Request to the route:
+```
+/obj/categories/icon/type/<InsertCategoryHere>
+```
+Where `InsertCategoryHere` is the category you want to search for.
+### Get Icons For All Categories
+Fetch icon for all categories with a `GET` Request to the route:
+```
+/obj/categories/icon/all
+```
+
+### Create New Icon For Category
+Insert new icon for category with a `POST` Request with a `JSON` object with `Kategori` and `imgData` as values to the route:
+```
+/obj/categories/icon/insert
+```
 
 ## Projects
 The projects are reachable under the `/proj/` route.

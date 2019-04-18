@@ -71,8 +71,32 @@ router.post("/update/:objectId", async (req, res) => {
     res.json(data);
 });
 
+//list all categories
 router.get("/categories", async (req, res) => {
     let data = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
+
+    res.json(data);
+});
+
+//get icons for category by name
+router.get("/categories/icon/type/:category", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.getCategoryIcon,
+        [req.params.category]);
+
+    res.json(data);
+});
+
+//get all icons for categories
+router.get("/categories/icon/all", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.getAllCategoryIcons);
+
+    res.json(data);
+});
+
+//insert a new icon for a category
+router.post("/categories/icon/insert", async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(objectInfo.insertCategoryIcon,
+        [req.body]);
 
     res.json(data);
 });
