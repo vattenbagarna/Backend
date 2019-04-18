@@ -122,7 +122,9 @@ const verifyUserLogin = async (db, userAccount) => {
     let passwordIsValid = await validatePassword(userAccount[0].password, existingUser.password);
 
     if (passwordIsValid) {
-        return {"error": false, token: jwtAuth.createToken(existingUser)};
+        let tokengine = jwtAuth.createToken(existingUser);
+
+        return {"error": false, "token": tokengine};
     }
     return {"error": true};
 };

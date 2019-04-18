@@ -1,5 +1,11 @@
 const jwtAuth = require('../src/jwtAuthentication.js');
 
+/**
+* Check if a token is valid
+* @param {object} req express request object
+* @param {object} res express response object
+* @param {function} next express next function
+*/
 const checkToken = (req, res, next) => {
     let token = req.query.token;
 

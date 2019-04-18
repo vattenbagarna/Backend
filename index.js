@@ -5,6 +5,7 @@ const serverConf = require("./config/serverParameters.js");
 const express = require("express");
 const bodyParser = require("body-parser");
 const crypto = require("crypto");
+const cookieParser = require('cookie-parser');
 
 // Including js files
 const mainRouter            = require("./router/main-router.js");
@@ -37,7 +38,7 @@ const readyServer = () => {
 app.use(logger.logToConsole);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+app.use(cookieParser()); // support cookies
 
 // Global headers
 // Set headers that apply to all routes here

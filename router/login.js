@@ -40,11 +40,10 @@ router.post("/login", urlencodedParser, async (req, res) => {
 
     //Return error status, info to the user and if successfull an API token
     if (loginStatus.error == false) {
+        res.cookie("token", loginStatus.token, { maxAge: 9000000, httpOnly: false });
         res.json({
             "info": "User login successfull",
-            "error": false,
-            "token": loginStatus.token,
-            "username": req.body.username
+            "error": false
         });
     } else {
         res.json({"info": "User login failed", "error": true});
