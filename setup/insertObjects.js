@@ -1,14 +1,79 @@
-Kompus61_81_82 = [{
+Kompus61 = [{
     "Kategori": "Pumpstationer",
-    "Modell": "Kompus 61, 81, 82",
+    "Modell": "Kompus 61",
     "Diameter": "600 mm",
     "Höjd": "700 mm",
     "Utlopp": "G: 32, typ: inv. gänga, VG: 410",
     "Inlopp": "O: 110, typ: gummitätning, VG: 500",
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
-    "Antal pumpar": "1 eller 2",
-    "Pump": "GD-20  Skärande avloppspump, 3-fas",
+    "Antal pumpar": "1",
+    "Pump": "GD-20A",
     "RSK": 5886909,
+}];
+
+Kompus61 = [{
+    "Kategori": "Pumpstationer",
+    "Modell": "Kompus 61",
+    "Diameter": "600 mm",
+    "Höjd": "700 mm",
+    "Utlopp": "G: 32, typ: inv. gänga, VG: 410",
+    "Inlopp": "O: 110, typ: gummitätning, VG: 500",
+    "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
+    "Antal pumpar": "1",
+    "Pump": "GD-30A",
+    "RSK": 5886909,
+}];
+
+Kompus81 = [{
+	"Kategori": "Pumpstationer",
+	"Modell": "Kompus 81",
+	"Diameter": "600 mm",
+	"Höjd": "700 mm",
+	"Utlopp": "G: 32, typ: inv. gänga, VG: 410",
+	"Inlopp": "O: 110, typ: gummitätning, VG: 500",
+	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
+	"Antal pumpar": "1",
+	"Pump": "GD-20A",
+	"RSK": 5886909,
+}];
+
+Kompus81 = [{
+	"Kategori": "Pumpstationer",
+	"Modell": "Kompus 81",
+	"Diameter": "600 mm",
+	"Höjd": "700 mm",
+	"Utlopp": "G: 32, typ: inv. gänga, VG: 410",
+	"Inlopp": "O: 110, typ: gummitätning, VG: 500",
+	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
+	"Antal pumpar": "1",
+	"Pump": "GD-20A",
+	"RSK": 5886909,
+}];
+
+Kompus82 = [{
+	"Kategori": "Pumpstationer",
+	"Modell": "Kompus 82",
+	"Diameter": "600 mm",
+	"Höjd": "700 mm",
+	"Utlopp": "G: 32, typ: inv. gänga, VG: 410",
+	"Inlopp": "O: 110, typ: gummitätning, VG: 500",
+	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
+	"Antal pumpar": "2",
+	"Pump": "GD-20",
+	"RSK": 5886909,
+}];
+
+Kompus82 = [{
+	"Kategori": "Pumpstationer",
+	"Modell": "Kompus 82",
+	"Diameter": "600 mm",
+	"Höjd": "700 mm",
+	"Utlopp": "G: 32, typ: inv. gänga, VG: 410",
+	"Inlopp": "O: 110, typ: gummitätning, VG: 500",
+	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
+	"Antal pumpar": "2",
+	"Pump": "GD-30",
+	"RSK": 5886909,
 }];
 
 Kompus06_1 = [{
@@ -20,8 +85,8 @@ Kompus06_1 = [{
     "Inlopp": "O: 110, typ: gummitätning, VG: 850",
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
-    "Pump": "GD-20  Skärande avloppspump, 3-fas",
-    "ArtikelNr": "K06-1GD20A",
+    "Pump": "GD-20",
+    "Modell": "K06-1GD20A",
 }];
 
 Kompus08_1 = [{
@@ -33,7 +98,7 @@ Kompus08_1 = [{
     "Inlopp": "O: 110, typ: gummitätning, VG: 850",
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
-    "Pump": "GD-20  Skärande avloppspump, 3-fas",
+    "Pump": "GD-20",
     "RSK": 5886910,
 }];
 
@@ -46,8 +111,8 @@ Kompus10_1 = [{
     "Inlopp": "O: 160, typ: PVC rör, VG: 850",
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
-    "Pump": "GD-20  Skärande avloppspump, 3-fas",
-    "ArtikelNr": "10-1GD20",
+    "Pump": "GD-20",
+    "Modell": "10-1GD20",
 }];
 
 Kompus10_2 = [{
@@ -59,8 +124,8 @@ Kompus10_2 = [{
     "Inlopp": "O: 160, typ: PVC rör, VG: 850",
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 2,
-    "Pump": "GD-20  Skärande avloppspump, 3-fas",
-    "ArtikelNr": "10-2GD20",
+    "Pump": "GD-20",
+    "Modell": "10-2GD20",
 }];
 
 Kompus12_2 = [{
@@ -73,7 +138,7 @@ Kompus12_2 = [{
     "Inlopp": "O: 160, typ: PVC rör, VG: 900",
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 2,
-    "Pump": "GD-20  Skärande avloppspump, 3-fas",
+    "Pump": "GD-20",
     "RSK": 5886928,
 }];
 
@@ -174,7 +239,7 @@ BagaEasy = [{
 
 GC07A = [{
     "Kategori": "Pump",
-    "Artikelnr.": "GC-07 A",
+    "Modell": "GC-07 A",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 1,
     "Märkspänning: Volt": 230,
@@ -186,30 +251,30 @@ GC07A = [{
     "Vikt: kg": 13,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 10,
-        "lps": 0
+        "y": 10,
+        "x": 0
       }, {
-        "lyfthöjd: m": 10,
-        "lps": 0.5
+        "y": 10,
+        "x": 0.5
       }, {
-        "lyfthöjd: m": 9,
-        "lps": 1
+        "y": 9,
+        "x": 1
       }, {
-        "lyfthöjd: m": 5.5,
-        "lps": 1.5
+        "y": 5.5,
+        "x": 1.5
       }, {
-        "lyfthöjd: m": 2.5,
-        "lps": 2.5
+        "y": 2.5,
+        "x": 2.5
       }, {
-        "lyfthöjd: m": 1.5,
-        "lps": 2.7
+        "y": 1.5,
+        "x": 2.7
       }
     ]
 }];
 
 GD3053 = [{
     "Kategori": "Pump",
-    "Artikelnr.": "GD-3053",
+    "Modell": "GD-3053",
     "Anslutning: Fläns": 65,
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -221,30 +286,30 @@ GD3053 = [{
     "Vikt: kg": 38,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 36,
-        "lps": 0
+        "y": 36,
+        "x": 0
       }, {
-        "lyfthöjd: m": 32.5,
-        "lps": 1
+        "y": 32.5,
+        "x": 1
       }, {
-        "lyfthöjd: m": 27,
-        "lps": 2
+        "y": 27,
+        "x": 2
       }, {
-        "lyfthöjd: m": 20,
-        "lps": 2.5
+        "y": 20,
+        "x": 2.5
       }, {
-        "lyfthöjd: m": 15,
-        "lps": 2.7
+        "y": 15,
+        "x": 2.7
       }, {
-        "lyfthöjd: m": 2.5,
-        "lps": 3
+        "y": 2.5,
+        "x": 3
       }
     ]
 }];
 
 GD20 = [{
     "Kategori": "Pump",
-    "Artikelnr.": "GD-20",
+    "Modell": "GD-20",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -256,36 +321,36 @@ GD20 = [{
     "Vikt: kg": 32,
     "Pumpkurva": [
     {
-      "lyfthöjd: m": 25,
-      "lps": 0
+      "y": 25,
+      "x": 0
     }, {
-      "lyfthöjd: m": 22,
-      "lps": 0.5
+      "y": 22,
+      "x": 0.5
     }, {
-      "lyfthöjd: m": 20,
-      "lps": 1
+      "y": 20,
+      "x": 1
     }, {
-      "lyfthöjd: m": 17,
-      "lps": 1.5
+      "y": 17,
+      "x": 1.5
     }, {
-      "lyfthöjd: m": 15,
-      "lps": 2
+      "y": 15,
+      "x": 2
     }, {
-      "lyfthöjd: m": 12,
-      "lps": 2.5
+      "y": 12,
+      "x": 2.5
     }, {
-      "lyfthöjd: m": 8,
-      "lps": 3
+      "y": 8,
+      "x": 3
     }, {
-      "lyfthöjd: m": 2,
-      "lps": 3.5
+      "y": 2,
+      "x": 3.5
     }
   ]
 }];
 
 GD20A = [{
     "Kategori": "Pump",
-    "Artikelnr.": "GD-20 A",
+    "Modell": "GD-20 A",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -297,36 +362,36 @@ GD20A = [{
     "Vikt: kg": 32,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 25,
-        "lps": 0
+        "y": 25,
+        "x": 0
       }, {
-        "lyfthöjd: m": 22,
-        "lps": 0.5
+        "y": 22,
+        "x": 0.5
       }, {
-        "lyfthöjd: m": 20,
-        "lps": 1
+        "y": 20,
+        "x": 1
       }, {
-        "lyfthöjd: m": 17,
-        "lps": 1.5
+        "y": 17,
+        "x": 1.5
       }, {
-        "lyfthöjd: m": 15,
-        "lps": 2
+        "y": 15,
+        "x": 2
       }, {
-        "lyfthöjd: m": 12,
-        "lps": 2.5
+        "y": 12,
+        "x": 2.5
       }, {
-        "lyfthöjd: m": 8,
-        "lps": 3
+        "y": 8,
+        "x": 3
       }, {
-        "lyfthöjd: m": 2,
-        "lps": 3.5
+        "y": 2,
+        "x": 3.5
       }
     ]
 }];
 
 GD30 = [{
     "Kategori": "Pump",
-    "Artikelnr.": "GD-30",
+    "Modell": "GD-30",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -338,36 +403,36 @@ GD30 = [{
     "Vikt: kg": 35,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 28,
-        "lps": 0
+        "y": 28,
+        "x": 0
       }, {
-        "lyfthöjd: m": 26,
-        "lps": 0.5
+        "y": 26,
+        "x": 0.5
       }, {
-        "lyfthöjd: m": 24,
-        "lps": 1
+        "y": 24,
+        "x": 1
       }, {
-        "lyfthöjd: m": 22,
-        "lps": 1.5
+        "y": 22,
+        "x": 1.5
       }, {
-        "lyfthöjd: m": 20 ,
-        "lps": 2
+        "y": 20 ,
+        "x": 2
       }, {
-        "lyfthöjd: m": 17,
-        "lps": 2.5
+        "y": 17,
+        "x": 2.5
       }, {
-        "lyfthöjd: m": 14,
-        "lps": 3
+        "y": 14,
+        "x": 3
       }, {
-        "lyfthöjd: m": 6,
-        "lps": 3.5
+        "y": 6,
+        "x": 3.5
       }
     ]
 }];
 
 GS15 = [{
     "Kategori": "Pump",
-    "Artikelnr.": "GS-15",
+    "Modell": "GS-15",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -378,27 +443,27 @@ GS15 = [{
     "Vikt: kg": 40,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 70,
-        "lps": 0
+        "y": 70,
+        "x": 0
       }, {
-        "lyfthöjd: m": 65,
-        "lps": 0.2
+        "y": 65,
+        "x": 0.2
       }, {
-        "lyfthöjd: m": 40,
-        "lps": 0.4
+        "y": 40,
+        "x": 0.4
       }, {
-        "lyfthöjd: m": 25,
-        "lps": 0.6
+        "y": 25,
+        "x": 0.6
       }, {
-        "lyfthöjd: m": 5,
-        "lps": 0.8
+        "y": 5,
+        "x": 0.8
       }
     ]
 }];
 
 JK20A = [{
     "Kategori": "Pump",
-    "Artikelnr.": "JK-20A",
+    "Modell": "JK-20A",
     "Anslutning: Slang": "DN 80",
     "Märkspänning: Fas": 1,
     "Märkspänning: Volt": 230,
@@ -409,36 +474,36 @@ JK20A = [{
     "Vikt: kg": 32,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 14,
-        "lps": 0
+        "y": 14,
+        "x": 0
       }, {
-        "lyfthöjd: m": 12,
-        "lps": 3
+        "y": 12,
+        "x": 3
       }, {
-        "lyfthöjd: m": 10,
-        "lps": 5
+        "y": 10,
+        "x": 5
       }, {
-        "lyfthöjd: m": 8,
-        "lps": 6.2
+        "y": 8,
+        "x": 6.2
       }, {
-        "lyfthöjd: m": 6,
-        "lps": 7.5
+        "y": 6,
+        "x": 7.5
       }, {
-        "lyfthöjd: m": 4,
-        "lps": 8.2
+        "y": 4,
+        "x": 8.2
       }, {
-        "lyfthöjd: m": 2,
-        "lps": 9.5
+        "y": 2,
+        "x": 9.5
       }, {
-        "lyfthöjd: m": 0,
-        "lps": 10.2
+        "y": 0,
+        "x": 10.2
       }
     ]
 }];
 
 BAV205A = [{
     "Kategori": "Pump",
-    "Artikelnr.": "BAV-250A",
+    "Modell": "BAV-250A",
     "Anslutning: Slang": "40 mm",
     "Inv. gänga": "G 40",
     "Märkspänning: Fas": 1,
@@ -451,33 +516,33 @@ BAV205A = [{
     "Vikt: kg": 6,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 8,
-        "lps": 0
+        "y": 8,
+        "x": 0
       }, {
-        "lyfthöjd: m": 6,
-        "lps": 1.1
+        "y": 6,
+        "x": 1.1
       }, {
-        "lyfthöjd: m": 5,
-        "lps": 1.7
+        "y": 5,
+        "x": 1.7
       }, {
-        "lyfthöjd: m": 4,
-        "lps": 2.2
+        "y": 4,
+        "x": 2.2
       }, {
-        "lyfthöjd: m": 3,
-        "lps": 2.7
+        "y": 3,
+        "x": 2.7
       }, {
-        "lyfthöjd: m": 2,
-        "lps": 3
+        "y": 2,
+        "x": 3
       }, {
-        "lyfthöjd: m": 1,
-        "lps": 3.1
+        "y": 1,
+        "x": 3.1
       }
     ]
 }];
 
 DSPK30 = [{
     "Kategori": "Pump",
-    "Artikelnr.": "DSPK-30",
+    "Modell": "DSPK-30",
     "Anslutning": "DN 80",
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -489,26 +554,26 @@ DSPK30 = [{
     "Vikt: kg": 42,
     "Pumpkurva": [
       {
-        "lyfthöjd: m": 19,
-        "lps": 0
+        "y": 19,
+        "x": 0
       }, {
-        "lyfthöjd: m": 16.5,
-        "lps": 2.5
+        "y": 16.5,
+        "x": 2.5
       }, {
-        "lyfthöjd: m": 14,
-        "lps": 5
+        "y": 14,
+        "x": 5
       }, {
-        "lyfthöjd: m": 11.5,
-        "lps": 7.5
+        "y": 11.5,
+        "x": 7.5
       }, {
-        "lyfthöjd: m": 9,
-        "lps": 10
+        "y": 9,
+        "x": 10
       }, {
-        "lyfthöjd: m": 6,
-        "lps": 12.5
+        "y": 6,
+        "x": 12.5
       }, {
-        "lyfthöjd: m": 2,
-        "lps": 15
+        "y": 2,
+        "x": 15
       }
     ]
 }];
