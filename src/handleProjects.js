@@ -118,7 +118,7 @@ const getProjects = async (db, params) => {
 const getProject = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[0]);
+    let check = checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
@@ -138,7 +138,7 @@ const getProject = async (db, params) => {
 const getProjectData = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[0]);
+    let check = checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
@@ -158,7 +158,7 @@ const getProjectData = async (db, params) => {
 const getProjectInfo = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[0]);
+    let check = checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
@@ -222,7 +222,7 @@ const insertProject = async (db, params) => {
 const deleteProject = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[0]);
+    let check = checkInvalidID(db, params[0]);
 
     if (check != undefined) {return check;}
 
@@ -244,7 +244,7 @@ const deleteProject = async (db, params) => {
 const updateProject = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[1]);
+    let check = checkInvalidID(db, params[1]);
 
     if (check != undefined) {return check;}
 
@@ -280,7 +280,7 @@ const updateProject = async (db, params) => {
 const updateProjectData = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[1]);
+    let check = checkInvalidID(db, params[1]);
 
     if (check != undefined) {return check;}
 
@@ -295,7 +295,7 @@ const updateProjectData = async (db, params) => {
 const getUsersPermission = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Check for valid mongodb objectId
-    let check = await checkInvalidID(db, params[1]);
+    let check = checkInvalidID(db, params[1]);
 
     if (check != undefined) {return check;}
 
@@ -312,12 +312,10 @@ const getUsersPermission = async (db, params) => {
   * @returns {JSON} undefined if not, empty request if yes
   *
   */
-const checkInvalidID = async (db, id) => {
-    let dbo = db.db(dbconfig.connection.database);
+const checkInvalidID = (db, id) => {
 
     if (!mongoID.isValid(id)) {
-        //TODO: change to something not retarded
-        return await dbo.collection('Projects').find({"ap0sdo": "rivshnokdvskoie"});
+        return {"error": true, "info": "Invalid Id"}
     }
     return undefined;
 };
