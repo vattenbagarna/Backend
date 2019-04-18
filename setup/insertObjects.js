@@ -8,7 +8,7 @@ Kompus61 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
     "Antal pumpar": "1",
     "Pump": "GD-20A",
-    "RSK": 5886909,
+    "RSK": 5886909
 }];
 
 Kompus61 = [{
@@ -21,7 +21,7 @@ Kompus61 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
     "Antal pumpar": "1",
     "Pump": "GD-30A",
-    "RSK": 5886909,
+    "RSK": 5886909
 }];
 
 Kompus81 = [{
@@ -34,7 +34,7 @@ Kompus81 = [{
 	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
 	"Antal pumpar": "1",
 	"Pump": "GD-20A",
-	"RSK": 5886909,
+	"RSK": 5886909
 }];
 
 Kompus81 = [{
@@ -47,12 +47,11 @@ Kompus81 = [{
 	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
 	"Antal pumpar": "1",
 	"Pump": "GD-20A",
-	"RSK": 5886909,
+	"RSK": 5886909
 }];
 
 Kompus82 = [{
 	"Kategori": "Pumpstationer",
-	"bild": "",
 	"Modell": "Kompus 82",
 	"Diameter": "600 mm",
 	"Höjd": "700 mm",
@@ -61,7 +60,7 @@ Kompus82 = [{
 	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
 	"Antal pumpar": "2",
 	"Pump": "GD-20",
-	"RSK": 5886909,
+	"RSK": 5886909
 }];
 
 Kompus82 = [{
@@ -74,7 +73,7 @@ Kompus82 = [{
 	"Kabelgenomföring": "O: 50, typ: gummitätning, VG: 500",
 	"Antal pumpar": "2",
 	"Pump": "GD-30",
-	"RSK": 5886909,
+	"RSK": 5886909
 }];
 
 Kompus06_1 = [{
@@ -87,7 +86,7 @@ Kompus06_1 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
     "Pump": "GD-20",
-    "ArtikelNr": "K06-1GD20A",
+    "ArtikelNr": "K06-1GD20A"
 }];
 
 Kompus08_1 = [{
@@ -100,7 +99,7 @@ Kompus08_1 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
     "Pump": "GD-20",
-    "RSK": 5886910,
+    "RSK": 5886910
 }];
 
 Kompus10_1 = [{
@@ -113,7 +112,7 @@ Kompus10_1 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
     "Pump": "GD-20",
-    "ArtikelNr": "10-1GD20",
+    "ArtikelNr": "10-1GD20"
 }];
 
 Kompus10_2 = [{
@@ -126,7 +125,7 @@ Kompus10_2 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 2,
     "Pump": "GD-20",
-    "Modell": "10-2GD20",
+    "Modell": "10-2GD20"
 }];
 
 Kompus12_2 = [{
@@ -140,21 +139,21 @@ Kompus12_2 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 2,
     "Pump": "GD-20",
-    "RSK": 5886928,
+    "RSK": 5886928
 }];
 
 Fettavskiljare = [{
     "Kategori": "Fettavskiljare",
     "Modell": "Liggande",
     "RSK": 5624037,
-    "Storlek": "900x2400",
+    "Storlek": "900x2400"
 }];
 
 Oljeavskiljare = [{
     "Kategori": "Oljeavskiljare",
     "Modell": "Lilla garagepaket",
     "RSK": 5624093,
-    "Storlek": "1200x15000",
+    "Storlek": "1200x15000"
 }];
 
 Slamavskiljare = [{
@@ -183,7 +182,7 @@ Slamavskiljare = [{
     // Kg
     "VatVolym": 1.2,
     // Mm
-    "Vikt": 80,
+    "Vikt": 80
 }];
 
 // tror inte vi kommer använda paket
@@ -193,7 +192,7 @@ PaketBagaBDT1Hus = [{
     "Modell": "BAGA Easy 10-55 hushåll",
     "RSK": 5616256,
     // M2
-    "inflationMarkbadd": 11,
+    "inflationMarkbadd": 11
 }];
 
 BagaBioTank = [{
@@ -202,7 +201,7 @@ BagaBioTank = [{
     "Kategori": "BioTank",
     "Modell": "Paket Baga bioTank 1-6 hushåll",
     "RSK": 5619990,
-    "typ": "BAGA BioTank 1",
+    "typ": "BAGA BioTank 1"
 }];
 
 BagaSoloBDTRening = [{
@@ -213,7 +212,7 @@ BagaSoloBDTRening = [{
     "RSK": 5622349,
     "Tillbehor": "Stativ till styrskåp, larm",
     // M2
-    "VatVolym": 2.2,
+    "VatVolym": 2.2
 }];
 
 KompaktbaddBDTKL = [{
@@ -224,7 +223,7 @@ KompaktbaddBDTKL = [{
     "RSK": 5661891,
     // M2
     "TotalYta": 3.4,
-    "Typ": "BAGA Easy kompaktbädd (paket)",
+    "Typ": "BAGA Easy kompaktbädd (paket)"
 }];
 
 // tror inte vi kommer använda paket
@@ -235,7 +234,7 @@ BagaEasy = [{
     "Pumpstation": "X",
     "Reservoar": "-",
     "Silo": "-",
-    "SlamAvskiljare": "X",
+    "SlamAvskiljare": "X"
 }];
 
 GC07A = [{
