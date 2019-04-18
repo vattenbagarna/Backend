@@ -52,6 +52,7 @@ Kompus81 = [{
 
 Kompus82 = [{
 	"Kategori": "Pumpstationer",
+	"bild": "",
 	"Modell": "Kompus 82",
 	"Diameter": "600 mm",
 	"Höjd": "700 mm",
@@ -86,7 +87,7 @@ Kompus06_1 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
     "Pump": "GD-20",
-    "Modell": "K06-1GD20A",
+    "ArtikelNr": "K06-1GD20A",
 }];
 
 Kompus08_1 = [{
@@ -112,7 +113,7 @@ Kompus10_1 = [{
     "Kabelgenomföring": "O: 50, typ: gummitätning, VG: 1800",
     "Antal pumpar": 1,
     "Pump": "GD-20",
-    "Modell": "10-1GD20",
+    "ArtikelNr": "10-1GD20",
 }];
 
 Kompus10_2 = [{
