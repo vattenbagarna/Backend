@@ -588,7 +588,9 @@ BagaEasyPaket = [{
 }];
 
 
-db.Objects.insert(Kompus61_81_82);
+db.Objects.insert(Kompus61);
+db.Objects.insert(Kompus81);
+db.Objects.insert(Kompus82);
 db.Objects.insert(Kompus08_1);
 db.Objects.insert(Kompus10_1);
 db.Objects.insert(Kompus10_2);
