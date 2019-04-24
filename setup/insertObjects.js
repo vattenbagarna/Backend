@@ -465,7 +465,7 @@ GS15 = [{
 
 JK20A = [{
     "Kategori": "Pump",
-    "Modell": "JK-20A",
+    "Modell": "JK-20 A",
     "Anslutning: Slang": "DN 80",
     "Märkspänning: Fas": 1,
     "Märkspänning: Volt": 230,
@@ -501,7 +501,7 @@ JK20A = [{
 
 BAV205A = [{
     "Kategori": "Pump",
-    "Modell": "BAV-250A",
+    "Modell": "BAV-250 A",
     "Anslutning: Slang": "40 mm",
     "Inv. gänga": "G 40",
     "Märkspänning: Fas": 1,
