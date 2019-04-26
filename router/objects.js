@@ -71,6 +71,14 @@ router.post("/update/:objectId", async (req, res) => {
     res.json(data);
 });
 
+router.post("/disable/:objectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
+    let data = await dbHandler.dbConnectPipe(objectInfo.setObjectDisabled,
+        [req.body, req.params.objectId, user._id]);
+
+    res.json(data);
+});
+
 //list all categories
 router.get("/categories", async (req, res) => {
     let data = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
