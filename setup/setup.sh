@@ -28,7 +28,6 @@ user="db.createUser(
   }
 )"
 
-#login="use $database \n $collections \n $objects \n $user \n use admin \n $admin \n exit"
 login="use $database \n load('createCollections.js')\nload('insertObjects.js')\n $user \n use admin \n $admin \n exit"
 
 echo -e "$login" | mongo
