@@ -313,9 +313,8 @@ const getUsersPermission = async (db, params) => {
   *
   */
 const checkInvalidID = (db, id) => {
-
     if (!mongoID.isValid(id)) {
-        return {"error": true, "info": "Invalid Id"}
+        return {"error": true, "info": "Invalid Id"};
     }
     return undefined;
 };

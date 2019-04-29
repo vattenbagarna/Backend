@@ -8,6 +8,7 @@ const express       = require("express");
 const router        = new express.Router();
 const dbHandler     = require('../src/dbWrapper.js');
 const objectInfo    = require('../src/getObjectInformation.js');
+const projectInfo    = require('../src/handleProjects.js');
 const validate      = require('../middleware/validateInput.js');
 const jwtAuth       = require('../src/jwtAuthentication.js');
 
@@ -18,8 +19,26 @@ router.get("/all", async (req, res) => {
 
     res.json(data);
 });
+//get all objects in project
+router.get("/all/local/:projectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
 
+    let projectData = await dbHandler.dbConnectPipe(projectInfo.getProjectInfo,
+        [req.params.projectId, user._id]);
+
+    let data = {"error": true, "info": "No project found"};
+
+    if (projectData.length > 0) {
+        data = await dbHandler.dbConnectPipe(objectInfo.getAllLocalObjects,
+            [projectData[0], user._id]);
+    }
+
+
+
+    res.json(data);
+});
 // get data for a specific object
+
 router.get("/type/:objectType", validate.filter, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getObjectsByType,
         [req.params.objectType]);
@@ -66,6 +85,14 @@ router.post("/insert", async (req, res) => {
 router.post("/update/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.updateObjects,
+        [req.body, req.params.objectId, user._id]);
+
+    res.json(data);
+});
+
+router.post("/disable/:objectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
+    let data = await dbHandler.dbConnectPipe(objectInfo.setObjectDisabled,
         [req.body, req.params.objectId, user._id]);
 
     res.json(data);

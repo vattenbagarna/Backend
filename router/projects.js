@@ -102,7 +102,7 @@ router.get("/permission/:projectId", async (req, res) => {
                 }
             }
         }
-        if (data.creator != undefined && data.creator === user._id) {
+        if (data.creator != undefined && data.creator.userID === user._id) {
             access = {"permission": "w"};
         }
     }
