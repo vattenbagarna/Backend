@@ -173,7 +173,7 @@ const setObjectDisabled = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    let disableValue = params[0]['setDisabled'];
+    let disableValue = params[0]['isDisabled'];
 
     if (disableValue !== "1" && disableValue !== "0") {
         return {"error": true, "info": "Required parameters not set"};
