@@ -6,6 +6,7 @@
 
 const dbconfig = require('../config/dbConfig.js');
 const mongoID = require("mongodb").ObjectID;
+const defaultImage = require("./defaultImage.js");
 
 
 /**
@@ -133,6 +134,10 @@ const insertObject = async (db, params) => {
     params[0]["creatorID"] = [params[1]];
     params[0]["isDisabled"] = "0";
     params[0]["approved"] = "0";
+
+	if (params[0]['Bild'] == undefined){
+		params[0]['Bild'] = defaultImage.defaultImage;
+	}
 
     await dbo.collection('Objects').insertOne(params[0]);
     let object = await dbo.collection('Objects').find({"_id": params[0]._id});
