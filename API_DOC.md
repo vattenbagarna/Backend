@@ -91,6 +91,13 @@ The `JSON` object requires the values `Kategori` and `Modell`.
 ```
 Where `<YourObjectIdHere>` is the id of a object.
 
+### Disable Object By Id
+Disable object with a `POST` Request with a `JSON` object with `isDisabled` assigned to `1` or `0` as values to the route:
+```
+/obj/disable/<YourObjectIdHere>
+```
+Where `<YourObjectIdHere>` is the id of a object.
+
 ### List All Object Categories
  Fetch all available categories with a `GET` Request to the route:
 ```
