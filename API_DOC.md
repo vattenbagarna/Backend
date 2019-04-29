@@ -42,6 +42,13 @@ Fetch all items with a `GET` Request to the route:
 ```
 /obj/all
 ```
+### All Local Objects For Project
+Fetch both global and local items for a specific project with a `GET` Request to the route:
+```
+/obj/all/local/<YourProjectIdHere>
+```
+Where <YourProjectIdHere> is your projectID.
+
 ### Find Object By Type
 Fetch items of a specific category based on the `Kategori` field in the database with a `GET` Request on the route:
 ```
