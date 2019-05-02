@@ -9,6 +9,7 @@ const bodyParser            = require("body-parser");
 const urlencodedParser      = bodyParser.urlencoded({ extended: false });
 const dbHandler             = require('../src/dbWrapper.js');
 const loginHandler          = require('../src/loginHandler.js');
+const adminFunctions        = require('../src/adminFunctions.js');
 const jwtAuth               = require('../src/jwtAuthentication.js');
 
 /**
@@ -72,6 +73,13 @@ router.post("/createaccount", checkAdmin, urlencodedParser, async (req, res) => 
         res.json(tryCreateAccount);
         // res.json({"info": "failed to create user!", "error": true});
     }
+});
+
+//Admin list all projects
+router.get("/allprojects", checkAdmin, async (req, res) => {
+    let projects = await dbHandler.dbConnectPipe(adminFunctions.getAllProjects);
+
+    res.json(projects);
 });
 
 module.exports = router;
