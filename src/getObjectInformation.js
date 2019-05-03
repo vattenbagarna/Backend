@@ -218,7 +218,7 @@ const listCategories = async (db) => {
 const getCategoryIcon = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    let types = await dbo.collection('Icons').find({"Kategori": params[0]});
+    let types = await dbo.collection('Ikoner').find({"Kategori": params[0]});
 
     return types;
 };
@@ -231,7 +231,7 @@ const getCategoryIcon = async (db, params) => {
 const getAllCategoryIcons = async (db) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    let types = await dbo.collection('Icons').find({});
+    let types = await dbo.collection('Ikoner').find({});
 
     return types;
 };
@@ -248,15 +248,15 @@ const insertCategoryIcon = async (db, params) => {
     let dict = params[0];
     //check if correct values is set
 
-    if (dict['Kategori'] == undefined || dict['imgData'] == undefined) {
-        return {"error": true, "info": "Kategori or imgData not set"};
+    if (dict['Kategori'] == undefined || dict['Bild'] == undefined) {
+        return {"error": true, "info": "Kategori or Bild not set"};
     }
 
-    let toInsert = {"Kategori": dict['Kategori'], "imgData": dict['imgData']};
+    let toInsert = {"Kategori": dict['Kategori'], "Bild": dict['Bild']};
 
-    await dbo.collection('Icons').insertOne(toInsert);
-    let types = await dbo.collection('Icons').find({"_id": toInsert._id},
-        {projection: {"imgData": 0}});
+    await dbo.collection('Ikoner').insertOne(toInsert);
+    let types = await dbo.collection('Ikoner').find({"_id": toInsert._id},
+        {projection: {"Bild": 0}});
 
     return types;
 };
