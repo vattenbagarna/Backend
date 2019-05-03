@@ -204,7 +204,7 @@ const setObjectDisabled = async (db, params) => {
 const listCategories = async (db) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    let types = await dbo.collection('Ikoner').distinct("Kategori");
+    let types = await dbo.collection('Objects').distinct("Kategori");
 
     return types;
 };
