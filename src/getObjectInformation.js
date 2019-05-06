@@ -6,17 +6,52 @@
 
 const dbconfig = require('../config/dbConfig.js');
 const mongoID = require("mongodb").ObjectID;
+const defaultImage = require("./defaultImage.js");
 
 
 /**
-* Get all objects from the database
-* @param {object} db This is the mongodb database object
-*/
+  * Get all objects from the database
+  * @param {object} db This is the mongodb database object
+  */
 const getAllObjects = async (db) => {
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //find all objects, this is known as a cursor
     let objects = await dbo.collection('Objects').find({});
+
+    //The data here is not the clean data but instead something that is called a cursor.
+    //Parsing that will be taken care of in the dbWrapper
+    return objects;
+};
+
+/**
+  * Get global and local objects for a specific project
+  *
+  * @param {object} db This is the mongodb database object
+  * @param {Array} [0] = Project data, [1] = UserID
+  * @returns {JSON} Mongodb response
+  */
+const getAllLocalObjects = async (db, params) => {
+    //Select database
+    let owner = params[0]['creator']['userID'];
+    let names = [];
+    let loopNames = params[0]['access'];
+
+    for (let i = 0; i < loopNames.length; i++) {
+        names.push(loopNames[i]['userID']);
+    }
+    names.push(owner);
+
+    let dbo = db.db(dbconfig.connection.database);
+    //find all objects, this is known as a cursor
+    let objects = await dbo.collection('Objects').find({
+        "$or": [
+            {"isDisabled": "0", "approved": "0", "creatorID": {"$in": names}},
+            {"isDisabled": "0", "approved": "1"},
+            {"isDisabled": {"$exists": false},
+                "approved": {"$exists": false}}
+        ]
+    }); //creatorID is array (for <fill>)
 
     //The data here is not the clean data but instead something that is called a cursor.
     //Parsing that will be taken care of in the dbWrapper
@@ -97,6 +132,13 @@ const insertObject = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
     params[0]["creatorID"] = [params[1]];
+    params[0]["isDisabled"] = "0";
+    params[0]["approved"] = "0";
+
+    if (params[0]['Bild'] == undefined) {
+        params[0]['Bild'] = defaultImage.defaultImage;
+    }
+
     await dbo.collection('Objects').insertOne(params[0]);
     let object = await dbo.collection('Objects').find({"_id": params[0]._id});
 
@@ -128,6 +170,32 @@ const updateObjects = async (db, params) => {
     return types;
 };
 
+const setObjectDisabled = async (db, params) => {
+    let dbo = db.db(dbconfig.connection.database);
+
+    //Check for invalid projectId
+    let check = await checkInvalidID(db, params[1]);
+
+    if (check != undefined) {return check;}
+
+    let disableValue = params[0]['isDisabled'];
+
+    if (disableValue !== "1" && disableValue !== "0") {
+        return {"error": true, "info": "Required parameters not set"};
+    }
+
+
+    //Update values
+    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}}, {"$set": {"isDisabled": disableValue}});
+
+    //Get updated object
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}});
+
+    return types;
+};
+
 /**
   * List unique categories in object collection
   *
@@ -150,7 +218,7 @@ const listCategories = async (db) => {
 const getCategoryIcon = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    let types = await dbo.collection('Icons').find({"Kategori": params[0]});
+    let types = await dbo.collection('Ikoner').find({"Kategori": params[0]});
 
     return types;
 };
@@ -163,7 +231,7 @@ const getCategoryIcon = async (db, params) => {
 const getAllCategoryIcons = async (db) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    let types = await dbo.collection('Icons').find({});
+    let types = await dbo.collection('Ikoner').find({});
 
     return types;
 };
@@ -180,15 +248,15 @@ const insertCategoryIcon = async (db, params) => {
     let dict = params[0];
     //check if correct values is set
 
-    if (dict['Kategori'] == undefined || dict['imgData'] == undefined) {
-        return {"error": true, "info": "Kategori or imgData not set"};
+    if (dict['Kategori'] == undefined || dict['Bild'] == undefined) {
+        return {"error": true, "info": "Kategori or Bild not set"};
     }
 
-    let toInsert = {"Kategori": dict['Kategori'], "imgData": dict['imgData']};
+    let toInsert = {"Kategori": dict['Kategori'], "Bild": dict['Bild']};
 
-    await dbo.collection('Icons').insertOne(toInsert);
-    let types = await dbo.collection('Icons').find({"_id": toInsert._id},
-        {projection: {"imgData": 0}});
+    await dbo.collection('Ikoner').insertOne(toInsert);
+    let types = await dbo.collection('Ikoner').find({"_id": toInsert._id},
+        {projection: {"Bild": 0}});
 
     return types;
 };
@@ -213,12 +281,14 @@ const checkInvalidID = async (db, id) => {
 //export modules
 module.exports = {
     getAllObjects,
+    getAllLocalObjects,
     getObjectsByType,
     getCreatedObjects,
     getObjectById,
     deleteObjects,
     insertObject,
     updateObjects,
+    setObjectDisabled,
     listCategories,
     getCategoryIcon,
     getAllCategoryIcons,
