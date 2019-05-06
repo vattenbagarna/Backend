@@ -82,4 +82,23 @@ router.get("/allprojects", checkAdmin, async (req, res) => {
     res.json(projects);
 });
 
+//Get all objects requesting approve 
+router.get("/obj/approve", checkAdmin, async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
+
+    let data = await dbHandler.dbConnectPipe(adminFunctions.getRequestApproveObjects);
+
+    res.json(data);
+});
+
+//Approve object request
+router.post("/obj/approve/:objectId", checkAdmin, async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
+
+    let data = await dbHandler.dbConnectPipe(adminFunctions.setObjectRequest, 
+		[req.body, req.params.objectId]);
+
+    res.json(data);
+});
+
 module.exports = router;

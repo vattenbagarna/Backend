@@ -37,6 +37,15 @@ router.get("/all/local/:projectId", async (req, res) => {
 
     res.json(data);
 });
+
+router.post("/approve/:objectId", async (req, res) => {
+    let user = jwtAuth.verify(req.query.token);
+    let data = await dbHandler.dbConnectPipe(objectInfo.setObjectRequestApprove,
+        [req.body, req.params.objectId, user._id]);
+
+    res.json(data);
+});
+
 // get data for a specific object
 
 router.get("/type/:objectType", validate.filter, async (req, res) => {
@@ -58,7 +67,7 @@ router.get("/created", async (req, res) => {
 // get specific object with id
 router.get("/id/:objectId", async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getObjectById,
-        [req.params.objectId]);
+        [req.params.objectId, "hidden"]);
 
     res.json(data);
 });
@@ -84,8 +93,13 @@ router.post("/insert", async (req, res) => {
 // update object with id
 router.post("/update/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
+
+	let obj = await dbHandler.dbConnectPipe(objectInfo.getObjectById,
+        [req.params.objectId, ""]);
+
+	obj = obj[0];
     let data = await dbHandler.dbConnectPipe(objectInfo.updateObjects,
-        [req.body, req.params.objectId, user._id]);
+        [req.body, req.params.objectId, user._id, obj]);
 
     res.json(data);
 });

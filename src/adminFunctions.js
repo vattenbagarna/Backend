@@ -19,6 +19,47 @@ const getAllProjects = async (db, params=[]) => {
     return projects;
 };
 
+/**
+  * Get all Objects that are requesting approvement
+  * 
+  * 
+  */
+const getRequestApproveObjects = async (db, params) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //find all objects, this is known as a cursor
+    let objects = await dbo.collection('Objects').find({"requestApprove": "1"}); 
+
+    return objects;
+};
+
+
+/**
+  * Approve object that are requesting approvement
+  * 
+  * 
+  */
+const setObjectRequest = async (db, params) => {
+
+    let acceptRequest = params[0]['requestApprove'];
+
+    if (acceptRequest !== "1" && acceptRequest !== "0") {
+        return {"error": true, "info": "Required parameters not set"};
+    }
+	
+    let dbo = db.db(dbconfig.connection.database);
+    //Update values
+    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1])}, 
+		{"$set": {"requestApprove": "0", "approved": acceptRequest}});
+
+    //Get updated object
+    let objects = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
+
+    return objects;
+};
+
 module.exports = {
-    getAllProjects
+    getAllProjects,
+	getRequestApproveObjects,
+	setObjectRequest
 }
