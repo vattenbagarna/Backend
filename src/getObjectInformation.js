@@ -269,8 +269,9 @@ const insertCategoryIcon = async (db, params) => {
   */
 const removeCategoryIcon = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
+
     await dbo.collection('Ikoner').deleteOne({"Kategori": params[0]});
-	return {"removed": true, "error": false};
+    return {"removed": true, "error": false};
 };
 
 /**
@@ -305,5 +306,5 @@ module.exports = {
     getCategoryIcon,
     getAllCategoryIcons,
     insertCategoryIcon,
-	removeCategoryIcon
+    removeCategoryIcon
 };
