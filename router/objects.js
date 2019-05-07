@@ -73,7 +73,7 @@ router.get("/id/:objectId", async (req, res) => {
 });
 
 // delete project by id
-router.get("/delete/:objectId", async (req, res) => {
+router.post("/delete/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.deleteObjects,
         [req.params.objectId, user._id]);

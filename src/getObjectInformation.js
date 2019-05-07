@@ -51,10 +51,10 @@ const getAllLocalObjects = async (db, params) => {
             {"isDisabled": {"$exists": false},
                 "approved": {"$exists": false}}
         ]
-    }, 
-	{ 
-		projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
-	}); //creatorID is array (for <fill>)
+    },
+    {
+        projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
+    }); //creatorID is array (for <fill>)
 
     //The data here is not the clean data but instead something that is called a cursor.
     //Parsing that will be taken care of in the dbWrapper
@@ -190,7 +190,7 @@ const updateObjects = async (db, params) => {
 
 /**
   * Disable Objects without removing it from the database
-  * 
+  *
   * @param {Array} [0] = body, [1] = objectId, [2] = userId
   * @returns {JSON} Mongodb response
   */
@@ -222,7 +222,7 @@ const setObjectDisabled = async (db, params) => {
 
 /**
   * Make request to make object global
-  * 
+  *
   * @param {Array} [0] = body, [1] = objectId, [2] = userId
   * @returns {JSON} Mongodb response
   */

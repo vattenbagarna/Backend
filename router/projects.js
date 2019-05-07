@@ -57,7 +57,7 @@ router.post("/insert", async (req, res) => {
 });
 
 //delete project
-router.get("/delete/:projectId", async (req, res) => {
+router.post("/delete/:projectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(projectHandler.deleteProject,
         [req.params.projectId, user._id]);

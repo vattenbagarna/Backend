@@ -71,7 +71,7 @@ Fetch a specific item by id with a `GET` Request on the route:
 Where `<YourObjectIdHere>` is the id of a object.
 
 ### Delete Object By Id
-Delete a object by id with a `GET` Request on the route:
+Delete a object by id with a `POST` Request on the route:
 ```
 /obj/delete/<YourObjectIdHere>
 ```
@@ -168,7 +168,7 @@ The `default` value is a JSON object and can have any values.
 
 
 ### Delete Project By Id
-Delete a project with a `GET` Request to the route:
+Delete a project with a `POST` Request to the route:
 ```
 /proj/delete/<ProjectIdHere>
 ```
