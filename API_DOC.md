@@ -98,6 +98,13 @@ Disable object with a `POST` Request with a `JSON` object with `isDisabled` assi
 ```
 Where `<YourObjectIdHere>` is the id of a object.
 
+### Send Make Object Global Request
+Send a request to an admin about making a object global with a `POST` Request with `requestApprove` as a parameter with the values 1 or 0 to the route:
+```
+/obj/approve/<YourObjectIdHere>
+```
+Where `<YourObjectIdHere>` is the id of a object.
+
 ### List All Object Categories
  Fetch all available categories with a `GET` Request to the route:
 ```
@@ -230,3 +237,16 @@ user is an admin. Access this by sending a `GET` request to `/admin/user`.
 When a new account is needed for a user an admin can create one. A logged in admin
 can send a `POST` requset with the form data `username` containing the new users **email** and
 `isAdmin` if the new user should be admin.
+
+### Get All Objects Requesting Review
+Get all objects requesting review by sending a `GET` Request to the following route:
+```
+/admin/obj/approve
+```
+
+### Approve Object Request
+Respond to a object requesting review by sending a `POST` Request with `requestApprove` as parameter with the values 1 or 0 to the following route:
+```
+/admin/obj/approve/<YourObjectIdHere>
+```
+Where <YourObjectIdHere> is your object id

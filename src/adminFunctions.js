@@ -9,7 +9,7 @@ const dbconfig = require('../config/dbConfig.js');
 * @param {object} db database object from dbWrapper
 * @param {array} params,no parameters in this case
 */
-const getAllProjects = async (db, params=[]) => {
+const getAllProjects = async (db) => {
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //find all projects
@@ -21,14 +21,15 @@ const getAllProjects = async (db, params=[]) => {
 
 /**
   * Get all Objects that are requesting approvement
-  * 
-  * 
+  *
+  * params {DB} database object
+  * returns {JSON} MongoDB response of all requested objects
   */
-const getRequestApproveObjects = async (db, params) => {
+const getRequestApproveObjects = async (db) => {
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //find all objects, this is known as a cursor
-    let objects = await dbo.collection('Objects').find({"requestApprove": "1"}); 
+    let objects = await dbo.collection('Objects').find({"requestApprove": "1"});
 
     return objects;
 };
@@ -36,21 +37,23 @@ const getRequestApproveObjects = async (db, params) => {
 
 /**
   * Approve object that are requesting approvement
-  * 
-  * 
+  *
+  * params {DB} database object
+  * params {Array} [0] = body, [1] = object id
+  * returns {JSON} MongoDB response of all requested objects
   */
 const setObjectRequest = async (db, params) => {
-
     let acceptRequest = params[0]['requestApprove'];
 
     if (acceptRequest !== "1" && acceptRequest !== "0") {
         return {"error": true, "info": "Required parameters not set"};
     }
-	
+
     let dbo = db.db(dbconfig.connection.database);
     //Update values
-    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1])}, 
-		{"$set": {"requestApprove": "0", "approved": acceptRequest}});
+
+    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1])},
+        {"$set": {"requestApprove": "0", "approved": acceptRequest}});
 
     //Get updated object
     let objects = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
@@ -60,6 +63,6 @@ const setObjectRequest = async (db, params) => {
 
 module.exports = {
     getAllProjects,
-	getRequestApproveObjects,
-	setObjectRequest
-}
+    getRequestApproveObjects,
+    setObjectRequest
+};

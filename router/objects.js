@@ -94,10 +94,10 @@ router.post("/insert", async (req, res) => {
 router.post("/update/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
 
-	let obj = await dbHandler.dbConnectPipe(objectInfo.getObjectById,
+    let obj = await dbHandler.dbConnectPipe(objectInfo.getObjectById,
         [req.params.objectId, ""]);
 
-	obj = obj[0];
+    obj = obj[0];
     let data = await dbHandler.dbConnectPipe(objectInfo.updateObjects,
         [req.body, req.params.objectId, user._id, obj]);
 

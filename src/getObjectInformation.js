@@ -51,7 +51,10 @@ const getAllLocalObjects = async (db, params) => {
             {"isDisabled": {"$exists": false},
                 "approved": {"$exists": false}}
         ]
-    }); //creatorID is array (for <fill>)
+    }, 
+	{ 
+		projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
+	}); //creatorID is array (for <fill>)
 
     //The data here is not the clean data but instead something that is called a cursor.
     //Parsing that will be taken care of in the dbWrapper
@@ -96,15 +99,16 @@ const getObjectById = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-	let extraInfo = {};
-	if(params[1] === "hidden"){
-		extraInfo = {
-			projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
-		};
-	}
+    let extraInfo = {};
 
-    let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])}, 
-		extraInfo);
+    if (params[1] === "hidden") {
+        extraInfo = {
+            projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
+        };
+    }
+
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])},
+        extraInfo);
 
     return types;
 };
@@ -125,6 +129,7 @@ const deleteObjects = async (db, params) => {
 
     await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]),
         "creatorID": {"$in": [params[1]]}});
+
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
 
     return types;
@@ -168,9 +173,9 @@ const updateObjects = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-	params[0]['isDisabled'] = params[3]['isDisabled'];
-	params[0]['approved'] = params[3]['approved'];
-	params[0]['requestApprove'] = params[3]['requestApprove'];
+    params[0]['isDisabled'] = params[3]['isDisabled'];
+    params[0]['approved'] = params[3]['approved'];
+    params[0]['requestApprove'] = params[3]['requestApprove'];
 
     //Update values
     await dbo.collection('Objects').replaceOne({"_id": mongoID(params[1]),
@@ -183,6 +188,12 @@ const updateObjects = async (db, params) => {
     return types;
 };
 
+/**
+  * Disable Objects without removing it from the database
+  * 
+  * @param {Array} [0] = body, [1] = objectId, [2] = userId
+  * @returns {JSON} Mongodb response
+  */
 const setObjectDisabled = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
@@ -209,6 +220,12 @@ const setObjectDisabled = async (db, params) => {
     return types;
 };
 
+/**
+  * Make request to make object global
+  * 
+  * @param {Array} [0] = body, [1] = objectId, [2] = userId
+  * @returns {JSON} Mongodb response
+  */
 const setObjectRequestApprove = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
@@ -226,8 +243,8 @@ const setObjectRequestApprove = async (db, params) => {
 
     //Update values
     await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
-        "creatorID": {"$in": [params[2]]}}, 
-		{"$set": {"requestApprove": requestApprove}});
+        "creatorID": {"$in": [params[2]]}},
+    {"$set": {"requestApprove": requestApprove}});
 
     //Get updated object
     let types = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
@@ -309,10 +326,8 @@ const insertCategoryIcon = async (db, params) => {
   *
   */
 const checkInvalidID = async (db, id) => {
-    let dbo = db.db(dbconfig.connection.database);
-
     if (!mongoID.isValid(id)) {
-		return {"error": true, "info": "Invalid Id"};
+        return {"error": true, "info": "Invalid Id"};
     }
     return undefined;
 };
@@ -321,7 +336,7 @@ const checkInvalidID = async (db, id) => {
 module.exports = {
     getAllObjects,
     getAllLocalObjects,
-	setObjectRequestApprove,
+    setObjectRequestApprove,
     getObjectsByType,
     getCreatedObjects,
     getObjectById,
