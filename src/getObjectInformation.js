@@ -204,7 +204,7 @@ const setObjectDisabled = async (db, params) => {
 const listCategories = async (db) => {
     let dbo = db.db(dbconfig.connection.database);
 
-    let types = await dbo.collection('Ikoner').distinct("Kategori");
+    let types = await dbo.collection('Objects').distinct("Kategori");
 
     return types;
 };
@@ -262,6 +262,19 @@ const insertCategoryIcon = async (db, params) => {
 };
 
 /**
+  * Remove Categori from icon table
+  *
+  * param {Array} [0] = categori name
+  * returns {JSON} Json object saying removed true
+  */
+const removeCategoryIcon = async (db, params) => {
+    let dbo = db.db(dbconfig.connection.database);
+
+    await dbo.collection('Ikoner').deleteOne({"Kategori": params[0]});
+    return {"removed": true, "error": false};
+};
+
+/**
   * Check if string is valid mongoId
   *
   * @param {Array} [0] = JSON POST request, [1] = ProjectId, [2] = UserId
@@ -292,5 +305,6 @@ module.exports = {
     listCategories,
     getCategoryIcon,
     getAllCategoryIcons,
-    insertCategoryIcon
+    insertCategoryIcon,
+    removeCategoryIcon
 };
