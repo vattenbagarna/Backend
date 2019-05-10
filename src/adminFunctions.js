@@ -20,6 +20,26 @@ const getAllProjects = async (db) => {
 };
 
 /**
+* getAllObjects gets all the objects for the admin
+* @param {object} db database object from dbWrapper
+* @param {array} params,no parameters in this case
+*/
+const getAllObjects = async (db) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //find all projects
+    let projects = await dbo.collection('Objects').find({
+        "$or": [
+            {"approved": "1"},
+            {"approved": {"$exists": false}}
+        ]
+    });
+
+    //return projects
+    return projects;
+};
+
+/**
   * Get all Objects that are requesting approvement
   *
   * params {DB} database object
@@ -52,8 +72,13 @@ const setObjectRequest = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
     //Update values
 
+    let check = checkInvalidID(db, params[1]);
+
+    if (check != undefined) {return check;}
+
+
     await dbo.collection('Objects').updateOne({"_id": mongoID(params[1])},
-        {"$set": {"requestApprove": "0", "approved": acceptRequest}});
+        {"$set": {"requestApprove": "0", "approved": acceptRequest, "creatorID": []}});
 
     //Get updated object
     let objects = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
@@ -61,8 +86,76 @@ const setObjectRequest = async (db, params) => {
     return objects;
 };
 
+/**
+  * Disable Objects as admin
+  *
+  * params {DB} database object
+  * params {Array} [0] = object id, [1] = disableValue
+  * returns {JSON} MongoDB response of all requested objects
+  */
+const disableObject = async (db, params) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //find all projects
+    let check = checkInvalidID(db, params[0]);
+
+    if (check != undefined) {return check;}
+
+    let disableValue = params[1];
+
+    if (disableValue !== "1" && disableValue !== "0") {
+        return {"error": true, "info": "Value has to be 1 or 0"};
+    }
+
+    await dbo.collection('Objects').updateOne({
+        "_id": mongoID(params[0])
+    },
+    {
+        "$set": {
+            "isDisabled": disableValue
+        }
+    }
+    );
+
+    let type = await dbo.collection('Objects').find({"_id": mongoID(params[0])});
+
+    //return projects
+    return type;
+};
+
+/**
+  * Delete Objects as admin
+  *
+  * params {DB} database object
+  * params {Array} [0] = object id
+  * returns {JSON} MongoDB response of all requested objects
+  */
+const deleteObject = async (db, params) => {
+    //Select database
+    let dbo = db.db(dbconfig.connection.database);
+    //find all projects
+    let check = checkInvalidID(db, params[0]);
+
+    if (check != undefined) {return check;}
+
+    await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0])});
+
+    //return projects
+    return {"error": false, "info": "Object deleted"};
+};
+
+const checkInvalidID = (db, id) => {
+    if (!mongoID.isValid(id)) {
+        return {"error": true, "info": "Invalid Id"};
+    }
+    return undefined;
+};
+
 module.exports = {
     getAllProjects,
+    getAllObjects,
     getRequestApproveObjects,
-    setObjectRequest
+    setObjectRequest,
+    disableObject,
+    deleteObject
 };

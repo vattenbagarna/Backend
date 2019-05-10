@@ -82,6 +82,13 @@ router.get("/allprojects", checkAdmin, async (req, res) => {
     res.json(projects);
 });
 
+//Admin list all projects
+router.get("/obj/all", checkAdmin, async (req, res) => {
+    let projects = await dbHandler.dbConnectPipe(adminFunctions.getAllObjects);
+
+    res.json(projects);
+});
+
 //Get all objects requesting approve
 router.get("/obj/approve", checkAdmin, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(adminFunctions.getRequestApproveObjects);
@@ -97,4 +104,21 @@ router.post("/obj/approve/:objectId", checkAdmin, async (req, res) => {
     res.json(data);
 });
 
+//Disable global object
+router.post("/obj/disable/:objectId/:enabled", checkAdmin, async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(adminFunctions.disableObject,
+        [req.params.objectId, req.params.enabled]);
+
+    res.json(data);
+});
+
+//Delete global object
+router.post("/obj/delete/:objectId", checkAdmin, async (req, res) => {
+    await dbHandler.dbConnectPipe(adminFunctions.deleteObject,
+        [req.params.objectId]);
+
+    let allObj = await dbHandler.dbConnectPipe(adminFunctions.getAllObjects);
+
+    res.json(allObj);
+});
 module.exports = router;
