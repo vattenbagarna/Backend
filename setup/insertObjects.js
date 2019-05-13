@@ -214,7 +214,7 @@ BagaEasy = [{
 
 GC07A = [{
     "Kategori": "Pump",
-    "Modell": "GC-07 A",
+    "Modell": "GC-07A",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 1,
     "Märkspänning: Volt": 230,
@@ -331,7 +331,7 @@ GD20 = [{
 
 GD20A = [{
     "Kategori": "Pump",
-    "Modell": "GD-20 A",
+    "Modell": "GD-20A",
     "Anslutning: Fläns": 32,
     "Märkspänning: Fas": 3,
     "Märkspänning: Volt": 400,
@@ -453,7 +453,7 @@ GS15 = [{
 
 JK20A = [{
     "Kategori": "Pump",
-    "Modell": "JK-20 A",
+    "Modell": "JK-20A",
     "Anslutning: Slang": "DN 80",
     "Märkspänning: Fas": 1,
     "Märkspänning: Volt": 230,
@@ -492,7 +492,7 @@ JK20A = [{
 
 BAV205A = [{
     "Kategori": "Pump",
-    "Modell": "BAV-250 A",
+    "Modell": "BAV-250A",
     "Anslutning: Slang": "40 mm",
     "Inv. gänga": "G 40",
     "Märkspänning: Fas": 1,
