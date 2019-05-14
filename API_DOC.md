@@ -258,9 +258,9 @@ Get all objects requesting review by sending a `GET` Request to the following ro
 ```
 
 ### Approve Object Request
-Respond to a object requesting review by sending a `POST` Request with `requestApprove` as parameter with the values 1 or 0 to the following route:
+Respond to a object requesting review by sending a `POST` Request containing the object id and a 1 or a 0 to approve / deny as the second parameter.
 ```
-/admin/obj/approve/<YourObjectIdHere>
+/admin/obj/approve/<YourObjectIdHere>/<1or0>
 ```
 Where <YourObjectIdHere> is your object id
 
