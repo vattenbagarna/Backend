@@ -234,9 +234,9 @@ const setObjectRequestApprove = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    let requestApprove = params[0]['requestApprove'];
+    let requestApprove = params[0];
 
-    if (requestApprove !== "1" && requestApprove !== "0") {
+    if (requestApprove != "1" && requestApprove != "0") {
         return {"error": true, "info": "Required parameters not set"};
     }
 

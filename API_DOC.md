@@ -99,9 +99,10 @@ Disable object with a `POST` Request with a `JSON` object with `isDisabled` assi
 Where `<YourObjectIdHere>` is the id of a object.
 
 ### Send Make Object Global Request
-Send a request to an admin about making a object global with a `POST` Request with `requestApprove` as a parameter with the values 1 or 0 to the route:
+Send a request to an admin about making a object global.
+This is done with a `POST` Request with your object id and a 1 or a 0 as the second parameter to request / withdraw request:
 ```
-/obj/approve/<YourObjectIdHere>
+/obj/approve/<YourObjectIdHere>/<1or0>
 ```
 Where `<YourObjectIdHere>` is the id of a object.
 
