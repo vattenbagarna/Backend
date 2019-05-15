@@ -3,6 +3,13 @@ const prompts = require('prompts');
 const loginHandler	= require('../src/loginHandler.js');
 const dbHandler		= require('../src/dbWrapper.js');
 
+/**
+  * Connect to the database and create an admin account
+  *
+  * @param{String} username
+  * @param{String} password
+  * @return {void}
+  */
 const createAccount = async (username, password) => {
 	let tryCreateAccount = await dbHandler.dbSimpleStatement(
 	    loginHandler.insertUserInDatabase,
@@ -19,7 +26,12 @@ const createAccount = async (username, password) => {
 	return tryCreateAccount;
 };
 
-const createAccountPrompt = async (username, password) => {
+/**
+  * Display a node create account prompt
+  *
+  * @return {void}
+  */
+const createAccountPrompt = async () => {
 
 	let created = false;
 
