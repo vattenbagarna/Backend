@@ -267,7 +267,7 @@ Where <YourObjectIdHere> is your object id
 ### Disable Glocal Object
 Disable Global Objects by sending a `POST` Request to the following route:
 ```
-/admin/disable/<YourObjectIdHere>/<isEnabledHere>
+/admin/obj/disable/<YourObjectIdHere>/<isEnabledHere>
 ```
 Where <YourObjectIdHere> is your object id.
 And <isEnabledHere> is the flag to set if the object should be global or not (only "1" and "0").
@@ -275,6 +275,6 @@ And <isEnabledHere> is the flag to set if the object should be global or not (on
 ### Delete Global Object
 Delete any object by sending a `POST` Request to the following route:
 ```
-/admin/delete/<YourObjectIdHere>
+/admin/obj/delete/<YourObjectIdHere>
 ```
 Where <YourObjectIdHere> is your object id.
