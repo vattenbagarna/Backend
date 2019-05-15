@@ -8,7 +8,7 @@ const dbHandler		= require('../src/dbWrapper.js');
   *
   * @param{String} username
   * @param{String} password
-  * @return {void}
+  * @return {Bool} if the account was created or not
   */
 const createAccount = async (username, password) => {
 	let tryCreateAccount = await dbHandler.dbSimpleStatement(
