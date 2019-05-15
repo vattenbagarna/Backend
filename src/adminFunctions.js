@@ -63,9 +63,9 @@ const getRequestApproveObjects = async (db) => {
   * returns {JSON} MongoDB response of all requested objects
   */
 const setObjectRequest = async (db, params) => {
-    let acceptRequest = params[0]['requestApprove'];
+    let acceptRequest = params[0];
 
-    if (acceptRequest !== "1" && acceptRequest !== "0") {
+    if (acceptRequest != "1" && acceptRequest != "0") {
         return {"error": true, "info": "Required parameters not set"};
     }
 

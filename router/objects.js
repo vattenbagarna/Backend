@@ -38,10 +38,10 @@ router.get("/all/local/:projectId", async (req, res) => {
     res.json(data);
 });
 
-router.post("/approve/:objectId", async (req, res) => {
+router.post("/approve/:objectId/:rApprove", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.setObjectRequestApprove,
-        [req.body, req.params.objectId, user._id]);
+        [req.params.rApprove, req.params.objectId, user._id]);
 
     res.json(data);
 });

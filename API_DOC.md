@@ -99,9 +99,10 @@ Disable object with a `POST` Request with a `JSON` object with `isDisabled` assi
 Where `<YourObjectIdHere>` is the id of a object.
 
 ### Send Make Object Global Request
-Send a request to an admin about making a object global with a `POST` Request with `requestApprove` as a parameter with the values 1 or 0 to the route:
+Send a request to an admin about making a object global.
+This is done with a `POST` Request with your object id and a 1 or a 0 as the second parameter to request / withdraw request:
 ```
-/obj/approve/<YourObjectIdHere>
+/obj/approve/<YourObjectIdHere>/<1or0>
 ```
 Where `<YourObjectIdHere>` is the id of a object.
 
@@ -257,16 +258,16 @@ Get all objects requesting review by sending a `GET` Request to the following ro
 ```
 
 ### Approve Object Request
-Respond to a object requesting review by sending a `POST` Request with `requestApprove` as parameter with the values 1 or 0 to the following route:
+Respond to a object requesting review by sending a `POST` Request containing the object id and a 1 or a 0 to approve / deny as the second parameter.
 ```
-/admin/obj/approve/<YourObjectIdHere>
+/admin/obj/approve/<YourObjectIdHere>/<1or0>
 ```
 Where `<YourObjectIdHere>` is your object id
 
 ### Disable Global Object
 Disable Global Objects by sending a `POST` Request to the following route:
 ```
-/admin/disable/<YourObjectIdHere>/<isEnabledHere>
+/admin/obj/disable/<YourObjectIdHere>/<isEnabledHere>
 ```
 Where <YourObjectIdHere> is your object id.
 And `<isEnabledHere>` is the flag to set if the object should be global or not (only "1" and "0").
@@ -274,6 +275,6 @@ And `<isEnabledHere>` is the flag to set if the object should be global or not (
 ### Delete Global Object
 Delete any object by sending a `POST` Request to the following route:
 ```
-/admin/delete/<YourObjectIdHere>
+/admin/obj/delete/<YourObjectIdHere>
 ```
 Where `<YourObjectIdHere>` is your object id.

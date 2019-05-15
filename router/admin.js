@@ -97,9 +97,9 @@ router.get("/obj/approve", checkAdmin, async (req, res) => {
 });
 
 //Approve object request
-router.post("/obj/approve/:objectId", checkAdmin, async (req, res) => {
+router.post("/obj/approve/:objectId/:acceptGlobal", checkAdmin, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(adminFunctions.setObjectRequest,
-        [req.body, req.params.objectId]);
+        [req.params.acceptGlobal, req.params.objectId]);
 
     res.json(data);
 });
