@@ -75,6 +75,24 @@ router.post("/createaccount", checkAdmin, urlencodedParser, async (req, res) => 
     }
 });
 
+//Remove account
+router.post("/remove/user/:userId", checkAdmin, urlencodedParser, async (req, res) => {
+    let tryRemoveAccount = await dbHandler.dbSimpleStatement(
+        loginHandler.adminRemoveAccount,
+        [req.params.userId]
+    );
+
+    if (tryRemoveAccount.error == false) {
+        res.json({"info": "User successfully removed!", "error": false});
+    } else {
+        if (tryRemoveAccount.info == undefined) {
+            tryRemoveAccount.info = "Failed to remove user!";
+        }
+        res.json(tryRemoveAccount);
+    }
+});
+
+
 //Admin list all projects
 router.get("/allprojects", checkAdmin, async (req, res) => {
     let projects = await dbHandler.dbConnectPipe(adminFunctions.getAllProjects);
@@ -82,7 +100,7 @@ router.get("/allprojects", checkAdmin, async (req, res) => {
     res.json(projects);
 });
 
-//Admin list all projects
+//Admin list all objects
 router.get("/obj/all", checkAdmin, async (req, res) => {
     let projects = await dbHandler.dbConnectPipe(adminFunctions.getAllObjects);
 
@@ -121,4 +139,5 @@ router.post("/obj/delete/:objectId", checkAdmin, async (req, res) => {
 
     res.json(allObj);
 });
+
 module.exports = router;

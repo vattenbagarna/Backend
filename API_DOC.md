@@ -239,6 +239,13 @@ When a new account is needed for a user an admin can create one. A logged in adm
 can send a `POST` requset with the form data `username` containing the new users **email** and
 `isAdmin` if the new user should be admin.
 
+### Remove account by id
+Remove user by sending a `POST` Request to the following route:
+```
+/admin/remove/user/<UserToDeleteHere>
+```
+Where `<UserToDeleteHere>` is the user to delete.
+
 ### Get All Projects
 Get all project by sending a `GET` Request to the following route:
 ```
