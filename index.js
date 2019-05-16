@@ -16,6 +16,7 @@ const adminRouter           = require('./router/admin.js');
 const mailman               = require('./src/smtpMailman.js');
 const logger                = require("./middleware/log.js");
 const tokenValidation       = require("./middleware/authValidator.js");
+const inputValidation       = require("./middleware/validateInput.js");
 
 // Setting upp express
 const app = express();
@@ -36,7 +37,7 @@ const readyServer = () => {
 app.use(logger.logToConsole);
 app.use(bodyParser.json({limit: '50mb', extended: true})); // support json encoded bodies
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true})); // support encoded bodies
-
+app.use(inputValidation.filter);
 
 // Global headers
 // Set headers that apply to all routes here
