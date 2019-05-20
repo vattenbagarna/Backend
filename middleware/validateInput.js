@@ -93,14 +93,12 @@ const filter = (req, res, next) => {
     }
     // This filters the request parameters in the url
     if (req.body  != undefined) {
-        console.log(req.body);
         // Itterate all parameters
         for (let value in req.body) {
             //perform check for illegal variable types
             if (isInvalidVariable(req.body[value]) ||
 				isInvalidVariable(value)) {
                 console.log("Bad variable detected, halting request.");
-                //console.log(value, ":", req.body[value]);
                 // Return an error to the user
                 return res.json({"Error": "bad input data"});
             }
@@ -115,7 +113,6 @@ const filter = (req, res, next) => {
             if (isInvalidVariable(req.query[value]) ||
 				isInvalidVariable(value)) {
                 console.log("Bad variable detected, halting request.");
-                //console.log(value, ":", req.query[value]);
                 // Return an error to the user
                 return res.json({"Error": "bad input data"});
             }
