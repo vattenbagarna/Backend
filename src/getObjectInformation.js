@@ -51,6 +51,9 @@ const getAllLocalObjects = async (db, params) => {
             {"isDisabled": {"$exists": false},
                 "approved": {"$exists": false}}
         ]
+    },
+    {
+        projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
     }); //creatorID is array (for <fill>)
 
     //The data here is not the clean data but instead something that is called a cursor.
@@ -96,7 +99,16 @@ const getObjectById = async (db, params) => {
 
     if (check != undefined) {return check;}
 
-    let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])});
+    let extraInfo = {};
+
+    if (params[1] === "hidden") {
+        extraInfo = {
+            projection: {"isDisabled": 0, "approved": 0, "requestApprove": 0}
+        };
+    }
+
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[0])},
+        extraInfo);
 
     return types;
 };
@@ -117,6 +129,7 @@ const deleteObjects = async (db, params) => {
 
     await dbo.collection('Objects').deleteOne({"_id": mongoID(params[0]),
         "creatorID": {"$in": [params[1]]}});
+
     let types = await dbo.collection('Objects').find({"creatorID": {"$in": [params[1]]}});
 
     return types;
@@ -134,6 +147,7 @@ const insertObject = async (db, params) => {
     params[0]["creatorID"] = [params[1]];
     params[0]["isDisabled"] = "0";
     params[0]["approved"] = "0";
+    params[0]["requestApprove"] = "0";
 
     if (params[0]['Bild'] == undefined) {
         params[0]['Bild'] = defaultImage.defaultImage;
@@ -159,6 +173,10 @@ const updateObjects = async (db, params) => {
 
     if (check != undefined) {return check;}
 
+    params[0]['isDisabled'] = params[3]['isDisabled'];
+    params[0]['approved'] = params[3]['approved'];
+    params[0]['requestApprove'] = params[3]['requestApprove'];
+
     //Update values
     await dbo.collection('Objects').replaceOne({"_id": mongoID(params[1]),
         "creatorID": {"$in": [params[2]]}}, params[0]);
@@ -170,6 +188,12 @@ const updateObjects = async (db, params) => {
     return types;
 };
 
+/**
+  * Disable Objects without removing it from the database
+  *
+  * @param {Array} [0] = body, [1] = objectId, [2] = userId
+  * @returns {JSON} Mongodb response
+  */
 const setObjectDisabled = async (db, params) => {
     let dbo = db.db(dbconfig.connection.database);
 
@@ -188,6 +212,39 @@ const setObjectDisabled = async (db, params) => {
     //Update values
     await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
         "creatorID": {"$in": [params[2]]}}, {"$set": {"isDisabled": disableValue}});
+
+    //Get updated object
+    let types = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}});
+
+    return types;
+};
+
+/**
+  * Make request to make object global
+  *
+  * @param {Array} [0] = body, [1] = objectId, [2] = userId
+  * @returns {JSON} Mongodb response
+  */
+const setObjectRequestApprove = async (db, params) => {
+    let dbo = db.db(dbconfig.connection.database);
+
+    //Check for invalid projectId
+    let check = await checkInvalidID(db, params[1]);
+
+    if (check != undefined) {return check;}
+
+    let requestApprove = params[0];
+
+    if (requestApprove != "1" && requestApprove != "0") {
+        return {"error": true, "info": "Required parameters not set"};
+    }
+
+
+    //Update values
+    await dbo.collection('Objects').updateOne({"_id": mongoID(params[1]),
+        "creatorID": {"$in": [params[2]]}},
+    {"$set": {"requestApprove": requestApprove}});
 
     //Get updated object
     let types = await dbo.collection('Objects').find({"_id": mongoID(params[1]),
@@ -282,11 +339,8 @@ const removeCategoryIcon = async (db, params) => {
   *
   */
 const checkInvalidID = async (db, id) => {
-    let dbo = db.db(dbconfig.connection.database);
-
     if (!mongoID.isValid(id)) {
-        //TODO: change to something not retarded
-        return await dbo.collection('Objects').find({"ap0sdo": "rivshnokdvskoie"});
+        return {"error": true, "info": "Invalid Id"};
     }
     return undefined;
 };
@@ -295,6 +349,7 @@ const checkInvalidID = async (db, id) => {
 module.exports = {
     getAllObjects,
     getAllLocalObjects,
+    setObjectRequestApprove,
     getObjectsByType,
     getCreatedObjects,
     getObjectById,

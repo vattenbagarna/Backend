@@ -8,10 +8,10 @@
 const dbconfig          = require('../config/dbConfig.js');
 const jwtAuth           = require('./jwtAuthentication.js');
 const mailman           = require('./smtpMailman.js');
-const emailValidator    = require("email-validator");
 const crypto            = require("crypto");
 const bcrypt            = require('bcrypt');
 const saltRounds        = 10;
+const mongoID = require("mongodb").ObjectID;
 
 /**
 * Salts and hashes a password with bcrypt.
@@ -277,10 +277,6 @@ const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
 * @return {bool} return true if the user was created, false if it wasn't
 */
 const adminCreateAccountForUser = async (db, newUser) => {
-    // Check that email is valid, if not - return false
-    if (!emailValidator.validate(newUser[0].username)) {
-        return {"error": true, "info": "not a valid email address."};
-    }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //Search for an existing user with that username
@@ -290,7 +286,7 @@ const adminCreateAccountForUser = async (db, newUser) => {
 
     //If we find an existing user, return false - a new user was not created
     if (existingUser != null) {
-        return {"error": true};
+        return {"error": true, "info": "User already exists."};
     }
 
     //Create a oneTimeKey
@@ -316,7 +312,32 @@ const adminCreateAccountForUser = async (db, newUser) => {
         );
         return {"error": false};
     }
-    return {"error": true};
+    return {"error": true, "info": "Error adding user to database."};
+};
+/**
+  * Remove an account from the database by id
+  *
+  * @param {Array} [0] = userId
+  * @return {JSON} if user was removed or not
+  */
+const adminRemoveAccount = async (db, deleteUser) => {
+    //Check for valid mongo id
+    if (!mongoID.isValid(deleteUser[0])) {
+        return {"error": true, "info": "Invalid Id"};
+    }
+
+    //Try remove from database
+    let dbo = db.db(dbconfig.connection.database);
+    let delResp = await dbo.collection('Users').deleteOne(
+        {"_id": mongoID(deleteUser[0])}
+    );
+
+    //Check if anything was deleted
+    if (delResp.deletedCount > 0) {
+        return {"error": false};
+    } else {
+        return {"error": true};
+    }
 };
 
 module.exports = {
@@ -326,5 +347,6 @@ module.exports = {
     changePassword,
     setOneTimeKey,
     verifyOneTimeKeyAndSetPassword,
-    adminCreateAccountForUser
+    adminCreateAccountForUser,
+    adminRemoveAccount
 };

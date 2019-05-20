@@ -71,7 +71,7 @@ Fetch a specific item by id with a `GET` Request on the route:
 Where `<YourObjectIdHere>` is the id of a object.
 
 ### Delete Object By Id
-Delete a object by id with a `GET` Request on the route:
+Delete a object by id with a `POST` Request on the route:
 ```
 /obj/delete/<YourObjectIdHere>
 ```
@@ -95,6 +95,14 @@ Where `<YourObjectIdHere>` is the id of a object.
 Disable object with a `POST` Request with a `JSON` object with `isDisabled` assigned to `1` or `0` as values to the route:
 ```
 /obj/disable/<YourObjectIdHere>
+```
+Where `<YourObjectIdHere>` is the id of a object.
+
+### Send Make Object Global Request
+Send a request to an admin about making a object global.
+This is done with a `POST` Request with your object id and a 1 or a 0 as the second parameter to request / withdraw request:
+```
+/obj/approve/<YourObjectIdHere>/<1or0>
 ```
 Where `<YourObjectIdHere>` is the id of a object.
 
@@ -161,7 +169,7 @@ The `default` value is a JSON object and can have any values.
 
 
 ### Delete Project By Id
-Delete a project with a `GET` Request to the route:
+Delete a project with a `POST` Request to the route:
 ```
 /proj/delete/<ProjectIdHere>
 ```
@@ -230,3 +238,50 @@ user is an admin. Access this by sending a `GET` request to `/admin/user`.
 When a new account is needed for a user an admin can create one. A logged in admin
 can send a `POST` requset with the form data `username` containing the new users **email** and
 `isAdmin` if the new user should be admin.
+
+### Remove account by id
+Remove user by sending a `POST` Request to the following route:
+```
+/admin/remove/user/<UserToDeleteHere>
+```
+Where `<UserToDeleteHere>` is the user to delete.
+
+### Get All Projects
+Get all project by sending a `GET` Request to the following route:
+```
+/admin/allprojects
+```
+
+### Get All Global Objects
+Get all global objects by sending a `GET` Request to the following route:
+```
+/admin/obj/all
+```
+
+### Get All Objects Requesting Review
+Get all objects requesting review by sending a `GET` Request to the following route:
+```
+/admin/obj/approve
+```
+
+### Approve Object Request
+Respond to a object requesting review by sending a `POST` Request containing the object id and a 1 or a 0 to approve / deny as the second parameter.
+```
+/admin/obj/approve/<YourObjectIdHere>/<1or0>
+```
+Where `<YourObjectIdHere>` is your object id
+
+### Disable Global Object
+Disable Global Objects by sending a `POST` Request to the following route:
+```
+/admin/obj/disable/<YourObjectIdHere>/<isEnabledHere>
+```
+Where <YourObjectIdHere> is your object id.
+And `<isEnabledHere>` is the flag to set if the object should be global or not (only "1" and "0").
+
+### Delete Global Object
+Delete any object by sending a `POST` Request to the following route:
+```
+/admin/obj/delete/<YourObjectIdHere>
+```
+Where `<YourObjectIdHere>` is your object id.

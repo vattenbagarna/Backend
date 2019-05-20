@@ -9,6 +9,7 @@ const bodyParser            = require("body-parser");
 const urlencodedParser      = bodyParser.urlencoded({ extended: false });
 const dbHandler             = require('../src/dbWrapper.js');
 const loginHandler          = require('../src/loginHandler.js');
+const adminFunctions        = require('../src/adminFunctions.js');
 const jwtAuth               = require('../src/jwtAuthentication.js');
 
 /**
@@ -72,6 +73,71 @@ router.post("/createaccount", checkAdmin, urlencodedParser, async (req, res) => 
         res.json(tryCreateAccount);
         // res.json({"info": "failed to create user!", "error": true});
     }
+});
+
+//Remove account
+router.post("/remove/user/:userId", checkAdmin, urlencodedParser, async (req, res) => {
+    let tryRemoveAccount = await dbHandler.dbSimpleStatement(
+        loginHandler.adminRemoveAccount,
+        [req.params.userId]
+    );
+
+    if (tryRemoveAccount.error == false) {
+        res.json({"info": "User successfully removed!", "error": false});
+    } else {
+        if (tryRemoveAccount.info == undefined) {
+            tryRemoveAccount.info = "Failed to remove user!";
+        }
+        res.json(tryRemoveAccount);
+    }
+});
+
+
+//Admin list all projects
+router.get("/allprojects", checkAdmin, async (req, res) => {
+    let projects = await dbHandler.dbConnectPipe(adminFunctions.getAllProjects);
+
+    res.json(projects);
+});
+
+//Admin list all objects
+router.get("/obj/all", checkAdmin, async (req, res) => {
+    let projects = await dbHandler.dbConnectPipe(adminFunctions.getAllObjects);
+
+    res.json(projects);
+});
+
+//Get all objects requesting approve
+router.get("/obj/approve", checkAdmin, async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(adminFunctions.getRequestApproveObjects);
+
+    res.json(data);
+});
+
+//Approve object request
+router.post("/obj/approve/:objectId/:acceptGlobal", checkAdmin, async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(adminFunctions.setObjectRequest,
+        [req.params.acceptGlobal, req.params.objectId]);
+
+    res.json(data);
+});
+
+//Disable global object
+router.post("/obj/disable/:objectId/:enabled", checkAdmin, async (req, res) => {
+    let data = await dbHandler.dbConnectPipe(adminFunctions.disableObject,
+        [req.params.objectId, req.params.enabled]);
+
+    res.json(data);
+});
+
+//Delete global object
+router.post("/obj/delete/:objectId", checkAdmin, async (req, res) => {
+    await dbHandler.dbConnectPipe(adminFunctions.deleteObject,
+        [req.params.objectId]);
+
+    let allObj = await dbHandler.dbConnectPipe(adminFunctions.getAllObjects);
+
+    res.json(allObj);
 });
 
 module.exports = router;
