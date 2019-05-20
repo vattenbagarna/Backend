@@ -8,7 +8,6 @@
 const dbconfig          = require('../config/dbConfig.js');
 const jwtAuth           = require('./jwtAuthentication.js');
 const mailman           = require('./smtpMailman.js');
-const emailValidator    = require("email-validator");
 const crypto            = require("crypto");
 const bcrypt            = require('bcrypt');
 const saltRounds        = 10;
@@ -278,10 +277,6 @@ const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
 * @return {bool} return true if the user was created, false if it wasn't
 */
 const adminCreateAccountForUser = async (db, newUser) => {
-    // Check that email is valid, if not - return false
-    if (!emailValidator.validate(newUser[0].username)) {
-        return {"error": true, "info": "Not a valid email address."};
-    }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //Search for an existing user with that username
