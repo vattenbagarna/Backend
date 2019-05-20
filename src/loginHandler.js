@@ -279,7 +279,7 @@ const verifyOneTimeKeyAndSetPassword = async (db, userToUpdatePassword) => {
 const adminCreateAccountForUser = async (db, newUser) => {
     // Check that email is valid, if not - return false
     if (!emailValidator.validate(newUser[0].username)) {
-        return {"error": true, "info": "not a valid email address."};
+        return {"error": true, "info": "Not a valid email address."};
     }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
@@ -290,7 +290,7 @@ const adminCreateAccountForUser = async (db, newUser) => {
 
     //If we find an existing user, return false - a new user was not created
     if (existingUser != null) {
-        return {"error": true};
+        return {"error": true, "info": "User already exists."};
     }
 
     //Create a oneTimeKey
@@ -316,7 +316,7 @@ const adminCreateAccountForUser = async (db, newUser) => {
         );
         return {"error": false};
     }
-    return {"error": true};
+    return {"error": true, "info": "Error adding user to database."};
 };
 
 module.exports = {
