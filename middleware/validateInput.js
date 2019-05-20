@@ -21,7 +21,7 @@ const checkIllegalChars = (string) => {
 		string.includes("$") ||
 		string.includes("<") ||
 		string.includes(">") ||
-		string.includes("\x00") 
+		string.includes("\x00")
     ) {
         console.log("Bad string: " + string);
         return true;
@@ -87,11 +87,10 @@ const isInvalidVariable = (variable) => {
  * @return {void} Breaks if it is invalid, this causes the route to not load
  */
 const filter = (req, res, next) => {
-
-	//remove "_id" if it's in the actual id location
-	if (req.body['_id'] != undefined) {
-		delete req.body['_id'];
-	}
+    //remove "_id" if it's in the actual id location
+    if (req.body['_id'] != undefined) {
+        delete req.body['_id'];
+    }
     // This filters the request parameters in the url
     if (req.body  != undefined) {
         console.log(req.body);
