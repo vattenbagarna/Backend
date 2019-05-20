@@ -12,6 +12,7 @@ const emailValidator    = require("email-validator");
 const crypto            = require("crypto");
 const bcrypt            = require('bcrypt');
 const saltRounds        = 10;
+const mongoID = require("mongodb").ObjectID;
 
 /**
 * Salts and hashes a password with bcrypt.
@@ -318,6 +319,31 @@ const adminCreateAccountForUser = async (db, newUser) => {
     }
     return {"error": true, "info": "Error adding user to database."};
 };
+/**
+  * Remove an account from the database by id
+  *
+  * @param {Array} [0] = userId
+  * @return {JSON} if user was removed or not
+  */
+const adminRemoveAccount = async (db, deleteUser) => {
+    //Check for valid mongo id
+    if (!mongoID.isValid(deleteUser[0])) {
+        return {"error": true, "info": "Invalid Id"};
+    }
+
+    //Try remove from database
+    let dbo = db.db(dbconfig.connection.database);
+    let delResp = await dbo.collection('Users').deleteOne(
+        {"_id": mongoID(deleteUser[0])}
+    );
+
+    //Check if anything was deleted
+    if (delResp.deletedCount > 0) {
+        return {"error": false};
+    } else {
+        return {"error": true};
+    }
+};
 
 module.exports = {
     insertUserInDatabase,
@@ -326,5 +352,6 @@ module.exports = {
     changePassword,
     setOneTimeKey,
     verifyOneTimeKeyAndSetPassword,
-    adminCreateAccountForUser
+    adminCreateAccountForUser,
+    adminRemoveAccount
 };

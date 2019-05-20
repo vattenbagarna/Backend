@@ -239,6 +239,13 @@ When a new account is needed for a user an admin can create one. A logged in adm
 can send a `POST` requset with the form data `username` containing the new users **email** and
 `isAdmin` if the new user should be admin.
 
+### Remove account by id
+Remove user by sending a `POST` Request to the following route:
+```
+/admin/remove/user/<UserToDeleteHere>
+```
+Where `<UserToDeleteHere>` is the user to delete.
+
 ### Get All Projects
 Get all project by sending a `GET` Request to the following route:
 ```
@@ -262,19 +269,19 @@ Respond to a object requesting review by sending a `POST` Request containing the
 ```
 /admin/obj/approve/<YourObjectIdHere>/<1or0>
 ```
-Where <YourObjectIdHere> is your object id
+Where `<YourObjectIdHere>` is your object id
 
-### Disable Glocal Object
+### Disable Global Object
 Disable Global Objects by sending a `POST` Request to the following route:
 ```
 /admin/obj/disable/<YourObjectIdHere>/<isEnabledHere>
 ```
 Where <YourObjectIdHere> is your object id.
-And <isEnabledHere> is the flag to set if the object should be global or not (only "1" and "0").
+And `<isEnabledHere>` is the flag to set if the object should be global or not (only "1" and "0").
 
 ### Delete Global Object
 Delete any object by sending a `POST` Request to the following route:
 ```
 /admin/obj/delete/<YourObjectIdHere>
 ```
-Where <YourObjectIdHere> is your object id.
+Where `<YourObjectIdHere>` is your object id.
