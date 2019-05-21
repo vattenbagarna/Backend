@@ -15,17 +15,17 @@ const checkIllegalChars = (string) => {
         string.includes("'") ||
 		string.includes('"') ||
 		string.includes("´") ||
-		string.includes(":") ||
-		string.includes(";") ||
 		string.includes("{") ||
 		string.includes("}") ||
-		string.includes("/") ||
 		string.includes("\\")||
 		string.includes("$") ||
 		string.includes("<") ||
 		string.includes(">") ||
-		string.includes("&")
-    ) {return true;}
+		string.includes("\x00")
+    ) {
+        console.log("Bad string: " + string);
+        return true;
+    }
     return false;
 };
 
@@ -38,18 +38,17 @@ const checkIllegalChars = (string) => {
  */
 const isInvalidVariable = (variable) => {
     //Check if string, int, float, array and json
+    if (variable.constructor) { return false; }
     let con = variable.constructor;
 
     //check for string
     if (con === "".constructor) {
-        console.log("found string");
         //check if string has illegal characters
         return checkIllegalChars(variable);
     }
 
     //check for number
     if (!isNaN(variable)) {
-        console.log("found number");
         return false;
     }
 
@@ -89,14 +88,18 @@ const isInvalidVariable = (variable) => {
  * @return {void} Breaks if it is invalid, this causes the route to not load
  */
 const filter = (req, res, next) => {
+    //remove "_id" if it's in the actual id location
+    if (req.body['_id'] != undefined) {
+        delete req.body['_id'];
+    }
     // This filters the request parameters in the url
-    if (req.params  != undefined) {
+    if (req.body  != undefined) {
         // Itterate all parameters
-        for (let value in req.params) {
+        for (let value in req.body) {
             //perform check for illegal variable types
-            if (isInvalidVariable(req.params[value])) {
+            if (isInvalidVariable(req.body[value]) ||
+				isInvalidVariable(value)) {
                 console.log("Bad variable detected, halting request.");
-                console.log(value, ":", req.params[value]);
                 // Return an error to the user
                 return res.json({"Error": "bad input data"});
             }
@@ -108,9 +111,9 @@ const filter = (req, res, next) => {
         // Itterate all parameters
         for (let value in req.query) {
             //perform check for illegal variable types
-            if (isInvalidVariable(req.query[value])) {
+            if (isInvalidVariable(req.query[value]) ||
+				isInvalidVariable(value)) {
                 console.log("Bad variable detected, halting request.");
-                console.log(value, ":", req.query[value]);
                 // Return an error to the user
                 return res.json({"Error": "bad input data"});
             }

@@ -305,8 +305,12 @@ const insertCategoryIcon = async (db, params) => {
     let dict = params[0];
     //check if correct values is set
 
-    if (dict['Kategori'] == undefined || dict['Bild'] == undefined) {
-        return {"error": true, "info": "Kategori or Bild not set"};
+    if (dict['Kategori'] == undefined) {
+        return {"error": true, "info": "Kategori not set"};
+    }
+
+    if (dict['Bild'] == undefined) {
+        dict['Bild'] = defaultImage.defaultImage;
     }
 
     let toInsert = {"Kategori": dict['Kategori'], "Bild": dict['Bild']};
