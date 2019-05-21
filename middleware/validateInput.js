@@ -38,6 +38,7 @@ const checkIllegalChars = (string) => {
  */
 const isInvalidVariable = (variable) => {
     //Check if string, int, float, array and json
+    if (variable.constructor) { return false; }
     let con = variable.constructor;
 
     //check for string
