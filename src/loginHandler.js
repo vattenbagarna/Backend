@@ -73,10 +73,6 @@ const createNewUser = async (username, password, admin = false) => {
 * @return {bool} specifies if the insert statement was successfull or not.
 */
 const insertUserInDatabase = async (db, userAccount) => {
-    // Check that email is valid, if not - return false
-    if (!emailValidator.validate(userAccount[0].username)) {
-        return false;
-    }
     //Select database
     let dbo = db.db(dbconfig.connection.database);
     //Search for an existing user with that username
