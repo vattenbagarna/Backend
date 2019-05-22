@@ -176,6 +176,7 @@ const updateObjects = async (db, params) => {
     params[0]['isDisabled'] = params[3]['isDisabled'];
     params[0]['approved'] = params[3]['approved'];
     params[0]['requestApprove'] = params[3]['requestApprove'];
+    params[0]["creatorID"] = params[3]["creatorID"];
 
     //Update values
     await dbo.collection('Objects').replaceOne({"_id": mongoID(params[1]),
@@ -308,6 +309,7 @@ const insertCategoryIcon = async (db, params) => {
     if (dict['Kategori'] == undefined) {
         return {"error": true, "info": "Kategori not set"};
     }
+
 
     if (dict['Bild'] == undefined) {
         dict['Bild'] = defaultImage.defaultImage;
