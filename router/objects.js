@@ -110,6 +110,12 @@ router.post("/delete/:objectId", async (req, res) => {
 // insert new object
 router.post("/insert", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
+
+    if (req.body['Kategori'] == "undefined") {
+        return {"error": true, "info": "Not valid category name"};
+    }
+
+
     let data = await dbHandler.dbConnectPipe(objectInfo.insertObject,
         [req.body, user._id]);
 
@@ -163,6 +169,10 @@ router.get("/categories/icon/all", async (req, res) => {
 //insert a new icon for a category
 router.post("/categories/icon/insert", async (req, res) => {
     let nameCheck = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
+
+    if (req.body['Kategori'] == "undefined") {
+        return {"error": true, "info": "Not valid category name"};
+    }
 
     for (let i = 0; i < nameCheck.length; i++) {
         if (req.body.Kategori == nameCheck[i]) {
