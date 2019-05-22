@@ -11,6 +11,7 @@ const dbHandler             = require('../src/dbWrapper.js');
 const loginHandler          = require('../src/loginHandler.js');
 const adminFunctions        = require('../src/adminFunctions.js');
 const jwtAuth               = require('../src/jwtAuthentication.js');
+const objectInfo			= require('../src/getObjectInformation.js');
 
 /**
 * checkAdmin is a middleware function to check that the token belongs to an admin
@@ -132,8 +133,33 @@ router.post("/obj/disable/:objectId/:enabled", checkAdmin, async (req, res) => {
 
 //Delete global object
 router.post("/obj/delete/:objectId", checkAdmin, async (req, res) => {
+    //Get object category
+    let category = await dbHandler.dbConnectPipe(objectInfo.getObjectById,
+        [req.params.objectId]);
+
     await dbHandler.dbConnectPipe(adminFunctions.deleteObject,
         [req.params.objectId]);
+
+    //Get all available categoies in object table
+    category = category[0]['Kategori'];
+    console.log(category);
+    let categories = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
+
+    //Check if categori is in list
+    let removeCat = true;
+
+    for (let i = 0; i < categories.length; i++) {
+        if (category === categories[i]) {
+            removeCat = false;
+            break;
+        }
+    }
+
+    //remove icon if not in list
+    if (removeCat) {
+        await dbHandler.dbConnectPipe(objectInfo.removeCategoryIcon,
+            [category]);
+    }
 
     let allObj = await dbHandler.dbConnectPipe(adminFunctions.getAllObjects);
 
