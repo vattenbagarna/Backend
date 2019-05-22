@@ -138,6 +138,14 @@ router.get("/categories/icon/all", async (req, res) => {
 
 //insert a new icon for a category
 router.post("/categories/icon/insert", async (req, res) => {
+    let nameCheck = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
+
+    for (let i = 0; i < nameCheck.length; i++) {
+        if (req.body.Kategori == nameCheck[i]) {
+            return {"error": true, "info": "Category is already in use"};
+        }
+    }
+
     let data = await dbHandler.dbConnectPipe(objectInfo.insertCategoryIcon,
         [req.body]);
 
