@@ -96,7 +96,7 @@ Många av systemets inställningar görs i filer, dessa måste konfigureras manu
 
 Börja med att byta namn på `dbConfig.example.js` till `dbConfig.js` i mappen `config` och öppna den för redigering. Detta kan ske många olika program så som Atom, VSCode, Notepad++ eller om inget annat finns att tillgå, notepad.exe. I filen finns 4 fält som ska redigeras. "base_url" är var databasen kan nås. I de flesta fallen så kör databasen på samma maskin som NodeJS systemet. När så är fallet så ska den ha värdet "localhost".   
 Fältet "Database" har i exemplet "YourDatabase". Detta ska bytas ut mot vad din databas heter. I den här instruktionen har vi skapat databasen "baga".    
-Slutligen har vi fälten "username" och "password" här ska du fylla i användarnamn och lösenord som du skapade i stycket "[Lägg till databasaccess för server](#Lagg-till-databasaccess-för-server)".
+Slutligen har vi fälten "username" och "password" här ska du fylla i användarnamn och lösenord som du skapade i stycket "[Lägg till databasaccess för server](#lägg-till-databasaccess-för-server)".
 
 #### emailConfig.js
 
