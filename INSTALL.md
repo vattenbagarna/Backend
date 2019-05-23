@@ -104,21 +104,21 @@ Byt namn på filen `dbConfig.example.js` till `dbConfig.js` i mappen `config` oc
 
 ### Initiera systemet
 
-Starta windows kommandotolk (nedan cmd) och navigera till din mapp. Du kan även starta cmd direkt i mappen via fältet för filsökvägen eller shift+högerklick. Efter det skriver du följande kommando: `npm install`. När det är klart kör du kommandot `cd setup ` följt utav kommandot `node createAdminAccount.js`. Detta kör ett skript som hjälper dig att skapa en första användare. Skriptet är bara tänkt att köras en gång och den som har det administrativa kontot kan sedan bjuda in både administratörer och vanliga användare. 
+Starta windows kommandotolk (nedan cmd) och navigera till din mapp. Du kan även starta cmd direkt i mappen via fältet för filsökvägen eller shift+högerklick. Efter det skriver du följande kommando: `npm install`. När det är klart kör du kommandot `cd setup ` följt utav kommandot `node createAdminAccount.js`. Detta kör ett skript som hjälper dig att skapa en första användare. Skriptet är bara tänkt att köras en gång och den som har det administrativa kontot kan sedan bjuda in både administratörer och vanliga användare.
 
 ## Starta Server
 
 ### Starta i terminalen
 
-För att starta servern ska du ha öppnat cmd i serverkatalogen och kör kommandot `node index.js`. Detta startar servern i denna terminalen. För att avsluta / stoppa servern trycker du på tangentbordet `Ctrl + c`. Notera att den inte kommer starta automatiskt om ni stoppar den eller startar om värdmaskinen. 
+För att starta servern ska du ha öppnat cmd i serverkatalogen och kör kommandot `node index.js`. Detta startar servern i denna terminalen. För att avsluta / stoppa servern trycker du på tangentbordet `Ctrl + c`. Notera att den inte kommer starta automatiskt om ni stoppar den eller startar om värdmaskinen.
 
 ### Tillåt servern i brandväggen
 
-När man startar servern för första gången så brukar Windows be en ge systemet tillgång till internet, godkänn detta. I övrigt kan du behöva justera dina brandväggar och öppna portar beroende på hur ditt nätverk ser ut. 
+När man startar servern för första gången så brukar Windows be en ge systemet tillgång till internet, godkänn detta. I övrigt kan du behöva justera dina brandväggar och öppna portar beroende på hur ditt nätverk ser ut.
 
 ## Underhåll och uppdateringar
 
-Hela projektet finns på GitHub med historik av alla förändringar. Det är rekommenderat att bihehålla git verisionshantering för projektet ifall det i framtiden kommer att vidareutvecklas. 
+Hela projektet finns på GitHub med historik av alla förändringar. Det är rekommenderat att bihehålla git verisionshantering för projektet ifall det i framtiden kommer att vidareutvecklas.
 
 # GNU/Linux
 
@@ -133,13 +133,13 @@ eller
 ubuntu:  
 
 ```
-sudo apt install node
+sudo apt install nodejs npm
 ```
 
 arch:  
 
 ```
-sudo pacman -S node
+sudo pacman -S nodejs npm
 ```
 
 Alternativt hämta binärpaketet från [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
@@ -159,4 +159,4 @@ När det är klart så kör du `node createAdminAccount.js` för att skapa den f
 
 ## Underhåll och uppdateringar
 
-Hela projektet finns på GitHub med historik av alla förändringar. Det är rekommenderat att bihehålla git verisionshantering för projektet ifall det i framtiden kommer att vidareutvecklas. 
+Hela projektet finns på GitHub med historik av alla förändringar. Det är rekommenderat att bihehålla git verisionshantering för projektet ifall det i framtiden kommer att vidareutvecklas.
