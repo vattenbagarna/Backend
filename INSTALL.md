@@ -126,7 +126,7 @@ Hela projektet finns på GitHub med historik av alla förändringar. Det är rek
 
 `git clone git@github.com:vattenbagarna/Backend.git`  
 eller  
-`https://github.com/vattenbagarna/Backend.git`
+`git clone https://github.com/vattenbagarna/Backend.git`
 
 ## Installera NodeJS
 
