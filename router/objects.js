@@ -72,13 +72,37 @@ router.get("/id/:objectId", async (req, res) => {
     res.json(data);
 });
 
-// delete project by id
+// delete object by id
 router.post("/delete/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
+
+    //Get object category
+    let category = await dbHandler.dbConnectPipe(objectInfo.getObjectById,
+        [req.params.objectId]);
 
     //Delete object
     let data = await dbHandler.dbConnectPipe(objectInfo.deleteObjects,
         [req.params.objectId, user._id]);
+
+    //Get all available categoies in object table
+    category = category[0]['Kategori'];
+    let categories = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
+
+    //Check if categori is in list
+    let removeCat = true;
+
+    for (let i = 0; i < categories.length; i++) {
+        if (category === categories[i]) {
+            removeCat = false;
+            break;
+        }
+    }
+
+    //remove icon if not in list
+    if (removeCat) {
+        await dbHandler.dbConnectPipe(objectInfo.removeCategoryIcon,
+            [category]);
+    }
 
     res.json(data);
 });
@@ -86,6 +110,12 @@ router.post("/delete/:objectId", async (req, res) => {
 // insert new object
 router.post("/insert", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
+
+    if (req.body['Kategori'] == "undefined") {
+        return {"error": true, "info": "Not valid category name"};
+    }
+
+
     let data = await dbHandler.dbConnectPipe(objectInfo.insertObject,
         [req.body, user._id]);
 
@@ -139,6 +169,10 @@ router.get("/categories/icon/all", async (req, res) => {
 //insert a new icon for a category
 router.post("/categories/icon/insert", async (req, res) => {
     let nameCheck = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
+
+    if (req.body['Kategori'] == "undefined") {
+        return {"error": true, "info": "Not valid category name"};
+    }
 
     for (let i = 0; i < nameCheck.length; i++) {
         if (req.body.Kategori == nameCheck[i]) {

@@ -310,7 +310,6 @@ const insertCategoryIcon = async (db, params) => {
         return {"error": true, "info": "Kategori not set"};
     }
 
-
     if (dict['Bild'] == undefined) {
         dict['Bild'] = defaultImage.defaultImage;
     }
