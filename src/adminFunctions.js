@@ -77,8 +77,15 @@ const setObjectRequest = async (db, params) => {
     if (check != undefined) {return check;}
 
 
+    let request = {"requestApprove": "0", "approved": acceptRequest};
+    //Approve
+
+    if (acceptRequest == "1") {
+        request = {"requestApprove": "0", "approved": acceptRequest, "creatorID": []};
+    }
+
     await dbo.collection('Objects').updateOne({"_id": mongoID(params[1])},
-        {"$set": {"requestApprove": "0", "approved": acceptRequest, "creatorID": []}});
+        {"$set": request});
 
     //Get updated object
     let objects = await dbo.collection('Objects').find({"_id": mongoID(params[1])});
