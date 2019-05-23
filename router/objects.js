@@ -38,6 +38,7 @@ router.get("/all/local/:projectId", async (req, res) => {
     res.json(data);
 });
 
+//Request object to be approved by an admin
 router.post("/approve/:objectId/:rApprove", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.setObjectRequestApprove,
@@ -47,7 +48,6 @@ router.post("/approve/:objectId/:rApprove", async (req, res) => {
 });
 
 // get data for a specific object
-
 router.get("/type/:objectType", validate.filter, async (req, res) => {
     let data = await dbHandler.dbConnectPipe(objectInfo.getObjectsByType,
         [req.params.objectType]);
@@ -136,6 +136,9 @@ router.post("/update/:objectId", async (req, res) => {
     res.json(data);
 });
 
+//Disable object
+//This will not permanently delete the object
+//Only hide it
 router.post("/disable/:objectId", async (req, res) => {
     let user = jwtAuth.verify(req.query.token);
     let data = await dbHandler.dbConnectPipe(objectInfo.setObjectDisabled,

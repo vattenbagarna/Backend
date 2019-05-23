@@ -142,7 +142,7 @@ router.post("/obj/delete/:objectId", checkAdmin, async (req, res) => {
 
     //Get all available categoies in object table
     category = category[0]['Kategori'];
-    console.log(category);
+
     let categories = await dbHandler.dbSimpleStatement(objectInfo.listCategories);
 
     //Check if categori is in list
