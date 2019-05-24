@@ -4,7 +4,7 @@
 
 # Förord
 
-Denna Installationsguide är för Baga Aqua Systems API. Systemet är byggt i NodeJS med MongoDB som databas. Arbetet är utfört av studenter på Blekinge Tekniska Högskola som en del i kursen PA1416 under vårenterminen 2019 åt Baga Water Technology AB. Denna guide är till för att underlätta vid installation av systemet. Läsaren förväntas ha kunskaper om den egna miljön som installationen sker i.
+Denna Installationsguide är för Baga Aqua Systems API. Systemet är byggt i NodeJS med MongoDB som databas. Arbetet är utfört av studenter på Blekinge Tekniska Högskola som en del i kursen PA1416 under vårenterminen 2019 åt Baga Water Technology AB. Denna guide är till för att underlätta vid installation av systemet. Du förväntas ha kunskaper om den egna miljön som installationen sker i.
 
 # Innehållsförteckning
 
@@ -118,7 +118,7 @@ När man startar servern för första gången så brukar Windows be en ge system
 
 ## Underhåll och uppdateringar
 
-Hela projektet finns på GitHub med historik av alla förändringar. Det är rekommenderat att bihehålla git verisionshantering för projektet ifall det i framtiden kommer att vidareutvecklas.
+Hela projektet finns på GitHub med historik av alla förändringar. Det är rekommenderat att bibehålla git verisionshantering för projektet ifall det i framtiden kommer att vidareutvecklas.
 
 # GNU/Linux
 
