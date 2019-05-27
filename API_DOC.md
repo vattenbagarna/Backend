@@ -25,6 +25,7 @@ This is the documentation for the backend system and it's API routes.
     * Request password reset
     * Password Reset
     * Fetch all users
+    * Verify a user token
 * Admin
     * User
     * Create account
@@ -225,6 +226,9 @@ Send a `POST` request to `/acc/passwordreset` with the form data for `username`,
 ### Fetch all users
 Fetching all users ID and username is done by sending a `GET` request to `/user/all` while logged in with a token.
 Admin access is not required.
+
+### Verify a user token
+Verify that the user is logged in by sending a `GET` request to `/user/verify` while logged in with a token.
 
 ## Admin
 This handles all the admin routes and cannot be used by non-admins. All routes are
